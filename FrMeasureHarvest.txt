@@ -1,0 +1,262 @@
+Tagged	Bolt.date	Harvest.date	BoltedatH	MaxBoltHtH	2ndBoltHtH	3rdBoltHtH	4thBoltHtH	5thBoltHtH	Max.Rose.diamH	Min.Rose.diamH	Rose.AreaH.m2	LfCountH	LfLgth	Lf.Width	CrownDiam.mm	comments
+US019-7		"Tuesday, September 06, 2011"	No						54	51	0.216292275		27	9	31.5	
+SAND-4		"Tuesday, September 06, 2011"	No						63	54	0.267184575		37	7.5	27.8	
+HU001-5		"Tuesday, September 06, 2011"	No						69	64	0.3468216		37.5	6.5	18.5	
+RU001-5	"Friday, July 08, 2011"	"Friday, July 08, 2011"	Yes	5.5					47	45	0.166106813	37	24	7	9.5	
+US017-9		"Tuesday, September 06, 2011"	No						66	65	0.336925875	33	5	6	26.1	
+TR001-8	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	10					37	32	0.0929884	10	20	5	7.7	
+EDGE-1		"Tuesday, September 06, 2011"	No						67	65	0.342030813		28	5	31	
+RO001-9		"Tuesday, September 06, 2011"	No						86	79	0.533583775		44.5	7	47.7	
+GR001-3	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	33					42	35	0.115450125	18	23	6.5	10.6	
+TR003-7	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	13.5					46	45	0.162572625	122	24.5	8	15.1	
+US002-7		"Tuesday, September 06, 2011"	No						54	49	0.207810225		31	5	14.7	
+RU008-4		"Tuesday, September 06, 2011"	No						90	84	0.5937435		43	7.7	46	
+RO003-6	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	14					36	34.5	0.097543575	57	19	5.5	11.9	
+SAND-9		"Tuesday, September 06, 2011"	No						66	65	0.336925875		33	7.5	29.2	
+RO002-1		"Tuesday, September 06, 2011"	No						54	50	0.21205125		27	6	27.1	
+HU001-4		"Tuesday, September 06, 2011"	No						67	58	0.305196725		36.5	7	27.9	
+SERG-2	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	32					40	40	0.12566	88	21	4	20.51	bolt date missed
+US019-4		"Tuesday, September 06, 2011"	No						29	29	0.066050038		16	4	17.3	
+RO002-8		"Tuesday, September 06, 2011"	No						61	49	0.234748588		32	5	25.4	
+UA003-2	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	7					52	47	0.19194565	27	27	7.5	11.02	
+CA001-4		"Tuesday, September 06, 2011"	No						57	48	0.2148786		28.5	4.5	24.7	
+RO003-9		"Tuesday, September 06, 2011"	No						34	31	0.082778525		14	2.5	15	
+US002-3		"Tuesday, September 06, 2011"	No						65	64	0.326716		36	7	28	
+RU001-7		"Tuesday, September 06, 2011"	No						42	40	0.131943		19	5	19.2	
+EDGE-83		"Tuesday, September 06, 2011"	No						51	41	0.164221913		25	5	20.3	
+US002-8		"Tuesday, September 06, 2011"	No						82	69	0.444365175		39	7	27.9	
+US018-2	"Friday, July 15, 2011"	"Friday, July 15, 2011"	Yes	15					42	40	0.131943	52	20	6.5	9.5	
+GR002-7	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	6					41	35	0.112701313	38	20	3	9.16	
+US023-3		"Tuesday, September 06, 2011"	No						63	50	0.247393125		30	7.5	32.4	
+RO001-5		"Tuesday, September 06, 2011"	No						76	69	0.41185065		33	8	53.3	
+CORY2-8	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	7.5					55	48	0.207339	121	27.5	7.5	23.27	
+BG001-5	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	22					36	36	0.1017846	85	17	4.5	12.82	
+US001-9		"Tuesday, September 06, 2011"	No						32	29	0.0728828		16	4.5	15.6	
+CA010-3		"Tuesday, September 06, 2011"	No						48	42	0.1583316		23	6	26.9	
+BG001-7	"Friday, July 01, 2011"	"Monday, July 04, 2011"	Yes	11					40.5	39.5	0.125640366	42	20.5	4.5	9.27	
+CA008-3		"Tuesday, September 06, 2011"	No						78	78	0.47782215		34	6	53.4	
+US026-6	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	30.5					41	38	0.122361425	23	20	6	10.78	
+UA008-5		"Tuesday, September 06, 2011"	No						29	27	0.061494863		16	4	11.9	
+UA004-2		"Tuesday, September 06, 2011"	No						87	86	0.587617575		57	5	38.4	
+GR003-1	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	14					32	30	0.075396	20	18	5	7.01	
+US017-8		"Tuesday, September 06, 2011"	No						51	47	0.188254388		28	5	21.9	
+US020-3		"Tuesday, September 06, 2011"	No						54	46	0.19508715		23	4.5	23.5	
+BG001-8		"Tuesday, September 06, 2011"	No						33	28	0.07256865		18.5	3	16.1	
+BG001-6		"Tuesday, September 06, 2011"	No						48	39	0.1470222		23.5	3	22.9	
+RO005-7		"Tuesday, September 06, 2011"	No						63	52	0.25728885		33	5.5	37.4	
+RO002-3		"Tuesday, September 06, 2011"	No						45	44	0.15550425		24	7	15.1	
+US026-9	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	41					34.5	34	0.092124488	14	17	6.5	10.27	
+BG001-3	"Friday, July 08, 2011"	"Monday, July 11, 2011"	Yes	3					37	29	0.084270738	146	17	4	12	
+EDGE-46	"Friday, July 01, 2011"	"Monday, July 04, 2011"	Yes	27					44	36.5	0.126131225	34	23	4	11.32	
+CA010-6		"Tuesday, September 06, 2011"	No						55	53	0.228936813		23	6	30.7	
+US013-7		"Tuesday, September 06, 2011"	No						67	64	0.3367688		39	8	34.7	
+US012-5		"Tuesday, September 06, 2011"	No						36	36	0.1017846		18	5	17.5	
+EDGE-55		"Tuesday, September 06, 2011"	No						36	31	0.08764785		18	6	24.2	
+GR001-8	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	20					42	41.5	0.136890863		23	9	9.25	
+UA008-6		"Tuesday, September 06, 2011"	No						49	45	0.173175188		23	4	32.2	
+CORY1-6	"Friday, July 01, 2011"	"Monday, July 04, 2011"	Yes	19					52	52	0.2123654	96	25	7	16.04	
+UA003-1	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	7					39	31	0.094951838	23	21.5	8	8.32	
+UA003-5		"Tuesday, September 06, 2011"	No						44	40	0.138226		21	7	27.2	
+US001-2		"Tuesday, September 06, 2011"	No						61	59	0.282656463		32	4.5	30.7	
+US023-9		"Tuesday, September 06, 2011"	No						40	35	0.1099525		21	4	18.6	
+TR001-7		"Tuesday, September 06, 2011"	No						48	46	0.1734108		25	3.5	20	
+UA003-7		"Tuesday, September 06, 2011"	No						70	66	0.36284325		32	6.5	35.3	
+EDGE-2		"Tuesday, September 06, 2011"	No						40	35	0.1099525		21	3.5	24.7	
+TR004-4		"Tuesday, September 06, 2011"	No						85	77	0.514027938		42	8	32	
+US023-7	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	8.5					41	38	0.122361425	13	22.5	5.5	7.51	
+CA008-4		"Tuesday, September 06, 2011"	No						58	50	0.22775875		27	4	48.6	
+US017-4		"Tuesday, September 06, 2011"	No						58	55	0.250534625		28	6	22.2	
+CA010-8	"Friday, July 08, 2011"	"Friday, July 08, 2011"	Yes	21	21				61	61	0.292238038	86	33	9	13.5	
+US001-4		"Tuesday, September 06, 2011"	No						77	77	0.465648838		44	7	45.2	
+CA001-9	"Monday, July 04, 2011"	"Friday, July 08, 2011"	Yes	16					71	62	0.345722075	117	35	7	19.6	
+UA007-7	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	17					54	52	0.2205333	75	26	7	16.07	
+RU008-8		"Tuesday, September 06, 2011"	No						82	74	0.47656555		40	5	30.4	
+US017-7		"Tuesday, September 06, 2011"	No						75	69	0.406431563		35	6	40.2	
+CA009-6	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	9					57	54	0.241738425	78	30	5	10.91	
+TR004-5		"Tuesday, September 06, 2011"	No						80	68	0.427244		45	9.5	32.4	
+TR003-2		"Tuesday, September 06, 2011"	No						40	38	0.119377		21	4	16.5	
+UA007-5		"Tuesday, September 06, 2011"	No						59	50	0.231685625		32	12	45.9	
+US018-7		"Tuesday, September 06, 2011"	No						40	37	0.1162355		19	6	27.8	
+CA010-4		"Tuesday, September 06, 2011"	No						78	74	0.45331845		37	12	30.6	
+TR003-5		"Tuesday, September 06, 2011"	No						80	78	0.490074		32	5	54	
+EDGE-29	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	7.5					57	54	0.241738425	75	29	6.5	14.34	
+US001-5	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	5.5					50	42	0.16492875	56	27	5.5	9.23	
+US003-6	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	26					42	41.5	0.136890863	48	24	5	10.84	
+US023-6		"Tuesday, September 06, 2011"	No						33	32	0.0829356		18	4	13.3	
+US015-6		"Tuesday, September 06, 2011"	No						62	55	0.267812875		37	5	46.9	
+TR001-3	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	26.5					55	52.5	0.226777031	44	27.5	4.5	10.87	
+US001-3		"Tuesday, September 06, 2011"	No						77	71	0.429364513		39	7	39.5	
+CA009-1	"Tuesday, July 12, 2011"	"Tuesday, July 12, 2011"	Yes	11	7				44	39	0.13477035	77	22	6	11.6	no flow
+US020-2	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	28.5					41	36	0.11592135	30	20.5	4.5	10.07	
+UA006-3	"Monday, June 27, 2011"	"Tuesday, July 12, 2011"	Yes	39	32	29	28		43	43	0.145215838	118	24	7	22.04	"no flow but 4 axes, pb n° entouré"
+US002-2	"Friday, July 08, 2011"	"Monday, July 11, 2011"	Yes	35	26	10			59	54	0.250220475	76	28	6	13.74	bolt height measured 18/07
+US019-5		"Tuesday, September 06, 2011"	No						51	50	0.200270625		27	5	50	
+UA006-6	"Friday, July 22, 2011"	"Friday, July 22, 2011"	Yes	57					55	51	0.220297688	185	28	6	22.1	
+UA003-3		"Tuesday, September 06, 2011"	No						74	73	0.424259575		38	9	45.7	
+CA008-7	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	10					62.5	56	0.27488125	45	29	8	13.39	
+US003-8		"Tuesday, September 06, 2011"	No						65	63	0.321611063		33	8	27	
+US019-6		"Tuesday, September 06, 2011"	No						70	64	0.351848		32	7.5	46	
+UA008-1	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	5.5					51	49	0.196265213	16	27	8	10.55	
+US023-2		"Tuesday, September 06, 2011"	No						43	9	0.030394013		21	6	18.3	improbable diameter measure?
+HU001-9	"Friday, July 08, 2011"	"Tuesday, July 12, 2011"	Yes	15					35	26	0.071469125	27	17.5	6	8.3	
+CA010-1		"Tuesday, September 06, 2011"	No						69	69	0.373917038		31	6	37.3	
+US014-3		"Tuesday, September 06, 2011"	No						50	48	0.18849		26	6	29.3	
+EDGE-6	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	33.5					41	40	0.1288015	95	21	7	13.28	
+CA009-4		"Tuesday, September 06, 2011"	No						60	58	0.2733105		28	10.5	34.7	
+UA003-9	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	13	12	12	7		46	46	0.16618535	48	25	9	12.2	
+US013-5		"Tuesday, September 06, 2011"	No						54	43	0.182364075		28	8	21.1	
+EDGE-70	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	28					34	33	0.088119075	10	18.5	5	6.77	
+CA010-5		"Tuesday, September 06, 2011"	No						64	59	0.2965576		30.5	7.5	32	
+US026-8	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	28					34	33	0.088119075	10	18.5	5	11.04	
+US001-1		"Tuesday, September 06, 2011"	No						77	69	0.417269738		33	6	48.3	
+RU008-5	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	13					54	50	0.21205125	35	30	7	12.6	
+GR001-1	"Friday, July 22, 2011"	"Friday, July 22, 2011"	Yes	23					22	21	0.036284325	26	12	4	8	
+HU001-6		"Tuesday, September 06, 2011"	No						98	96	0.7388808		44	11	66.4	
+UA007-9		"Tuesday, September 06, 2011"	No						53	48	0.1997994		26	7	28.1	
+RU001-1		"Tuesday, September 06, 2011"	No						80	65	0.408395		40	8	42.2	
+US022-7	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	13.5					34	32	0.0854488	33	17.5	4.5	10.45	
+US022-4	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	28					31	27	0.065735888	26	17	4	7.08	
+US014-8		"Tuesday, September 06, 2011"	No						70	65	0.357345625		30	7	37.9	
+US022-8	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	8					38	34	0.10147045	13	20.5	4	7	
+US012-1		"Tuesday, September 06, 2011"	No						70	66	0.36284325		34	9	26.5	
+CA010-2		"Tuesday, September 06, 2011"	No						78	75	0.459444375		40	6	37	
+TR001-9	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	9					60	59	0.27802275	22	30	8	10.04	
+US017-6		"Tuesday, September 06, 2011"	No						68	67	0.35781685		30	7	43.5	
+RO003-5		"Tuesday, September 06, 2011"	No						59	54	0.250220475		28	4.5	14.5	
+US023-1	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	6					42	41	0.135241575	19	22	8	9.35	
+US002-6	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	12.5					58	51	0.232313925	42	32	6	19.11	
+TR003-3		"Tuesday, September 06, 2011"	No						63	58	0.286976025		32	9	24.4	
+HU001-1		"Tuesday, September 06, 2011"	No						60	54	0.2544615		32	10	29	
+TR003-6		"Tuesday, September 06, 2011"	No						74	60	0.3487065		37	4.5	45	
+SAND-6	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	14					57	53	0.237261788	88	29	6	17.22	
+RO003-2		"Tuesday, September 06, 2011"	No						61	50	0.239539375		30	6	21.1	
+RU001-4		"Tuesday, September 06, 2011"	No						110	95	0.820716875		52	11	51	
+US014-5	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	6					33	32	0.0829356	22	16.5	3.5	7.73	
+HU001-7		"Tuesday, September 06, 2011"	No						92	80	0.578036		45	10	36.8	
+RU008-2	"Friday, July 22, 2011"	"Friday, July 22, 2011"	Yes	39.5					57	56	0.2506917	155	29	7	21.5	
+US017-1		"Tuesday, September 06, 2011"	No						93	84	0.61353495		44	5	50	
+CA001-7	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	9					59	56	0.2594879	29	30	5	12.91	
+CA009-9		"Tuesday, September 06, 2011"	No						48	42	0.1583316		25	4	43.6	
+CA001-8		"Tuesday, September 06, 2011"	No						52	50	0.2041975		29	6.5	29.1	
+GR002-2	"Friday, July 15, 2011"	"Friday, July 22, 2011"	Yes	20					26	24	0.0490074	25	13	5	8	
+CA010-9		"Tuesday, September 06, 2011"	No						60	57	0.26859825		26	7	34.2	
+CA010-7		"Tuesday, September 06, 2011"	No						56	56	0.2462936		32	7	31.2	
+UA008-3		"Tuesday, September 06, 2011"	No						52	48	0.1960296		36	4.5	30.7	
+HU001-3		"Tuesday, September 06, 2011"	No						80	61	0.383263		42	5	30.9	
+US003-1	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	17					44	43	0.14859295	66	22	8	10.1	
+SERG-7		"Tuesday, September 06, 2011"	No						57	46	0.205925325		31	6	30.8	
+US019-2		"Tuesday, September 06, 2011"	No						68	66	0.3524763		32	7	44.9	
+US013-8		"Tuesday, September 06, 2011"	No						77	68	0.41122235		37	8	28.6	
+EDGE-85	"Friday, July 22, 2011"	"Friday, July 22, 2011"	Yes	29					60	57	0.26859825	127	30	5	24.5	
+US017-5		"Tuesday, September 06, 2011"	No						61	56	0.2682841		33	7	40.6	
+US020-1		"Tuesday, September 06, 2011"	No						53	46	0.191474425		24	9	22.3	
+RU008-6	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	10	8				66	62	0.32137545	46	32	8	14.15	2 axes
+TR001-4	"Monday, July 11, 2011"	"Tuesday, July 12, 2011"	Yes	31	28				60	50	0.2356125	92	30	5	23.78	no flow
+US026-3	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	17.5					47.5	41.5	0.154817047	16	26	6	8.61	
+US022-1	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	24					44	43	0.14859295	25	21.5	6.5	12.14	
+RO005-2		"Tuesday, September 06, 2011"	No						56	52	0.2287012		28	5	26.5	
+EDGE-86		"Tuesday, September 06, 2011"	No						53	48	0.1997994		30	5	26.8	
+EDGE-91	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	14					48	46	0.1734108	42	25.5	3	8.36	
+SERG-6		"Tuesday, September 06, 2011"	No						60	50	0.2356125		27	5.5	24.2	
+BG001-1	"Friday, August 12, 2011"	"Tuesday, August 16, 2011"	Yes	23					58	44	0.2004277	515	29	6	41.3	
+RO001-8	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	14					43	37	0.124953163	19	22.5	7	9.15	
+US015-7	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	16					27	24	0.0508923	52	16.5	4.5	9.12	
+CA008-8		"Tuesday, September 06, 2011"	No						68	66	0.3524763		32	5.5	55.5	
+GR001-9	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	22					42	41	0.135241575	52	21	3.5	11.58	
+US014-4	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	13.5					33	30	0.077752125	71	17	3	11.91	
+RO003-1		"Tuesday, September 06, 2011"	No						38	38	0.11340815		19	4	19.2	
+US017-3		"Tuesday, September 06, 2011"	No						77	63	0.380985413		33	7	38.3	
+US001-6		"Tuesday, September 06, 2011"	No						58	52	0.2368691		28	9	31.9	
+EDGE-92		"Tuesday, September 06, 2011"	No						46	41	0.148121725		19	5	19.4	
+TR004-7	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	10					51	50	0.200270625	68	28.5	8	13.55	
+SAND-1		"Tuesday, September 06, 2011"	No						89	71	0.496278463		44	7	48.1	
+RU008-3		"Tuesday, September 06, 2011"	No						37	30	0.087176625		21	3.5	21.2	
+TR004-3		"Tuesday, September 06, 2011"	No						65	63	0.321611063		31	9.5	42.7	
+HU001-2		"Tuesday, September 06, 2011"	No						78	67	0.410436975		33	6.5	31.5	
+EDGE-89		"Tuesday, September 06, 2011"	No						58	55	0.250534625		28	5	38.9	
+SAND-3		"Tuesday, September 06, 2011"	No						73	64	0.3669272		37	11.5	39.4	
+US015-4	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	18.5					40	37	0.1162355	42	20	9	14.81	
+RU008-1	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	9.5	9				47	46	0.169798075	41	24	5	13.06	
+GR001-7	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	29					29	28	0.06377245	18	13.5	5	7.96	
+US018-5		"Tuesday, September 06, 2011"	No						47	44	0.16241555		21	4	26.4	
+SAND-8		"Tuesday, September 06, 2011"	No						75	71	0.418212188		35	6.5	65.3	
+US001-7	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	21.5					46	46	0.16618535	46	25	8	8.8	
+US018-4		"Tuesday, September 06, 2011"	No						50	47	0.184563125		25	5	30.8	
+US020-8		"Tuesday, September 06, 2011"	No						58	52	0.2368691		30	8	27.1	
+US023-5	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	31.5					29	25	0.056939688	24	15.5	4	9.06	
+RO002-7		"Tuesday, September 06, 2011"	No						57	50	0.223831875		27	6	23.3	
+US013-4	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	20					55	53	0.228936813	118	29	5	10.91	
+SERG-9	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	13					34	34	0.09078935	56	17	7	15.47	bolt date missed
+BG001-2		"Tuesday, September 06, 2011"	No						51	48	0.1922598		27	4.5	24.4	
+GR002-9	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	14	9	8			38	32	0.0955016	42	19	7	11.17	
+US019-9	"Monday, July 11, 2011"	"Tuesday, July 12, 2011"	Yes	32					48	39	0.1470222	36	25	6	14.4	no flow
+US022-5	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	31.5					38	36	0.1074393	32	20	3.5	10.07	
+TR003-8		"Tuesday, September 06, 2011"	No						51	49	0.196265213		23	7	32	
+UA008-7		"Tuesday, September 06, 2011"	No						43	40	0.1350845		20	7	35.7	
+US013-3		"Tuesday, September 06, 2011"	No						64	60	0.301584		31	4.5	44.5	
+SERG-3	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	10					24	21	0.0395829	28	14.5	4	6.83	
+RO001-1		"Tuesday, September 06, 2011"	No						72	60	0.339282		32	8.5	34.7	
+SAND-2		"Tuesday, September 06, 2011"	No						96	78	0.5880888		43	8	58.7	
+US022-6	"Friday, July 22, 2011"	"Friday, July 22, 2011"	Yes	31					58	52	0.2368691	165	29	4	16.5	
+US018-3		"Tuesday, September 06, 2011"	No						35	35	0.096208438		20	4.5	19.8	
+UA003-6	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	16	8	8			49	48	0.1847202	37	25	10	11.9	
+RU001-2		"Tuesday, September 06, 2011"	No						35	29	0.079715563		18	4	13.4	
+TR001-5	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	21					31	29	0.070605213	15	17.5	4	6.36	
+US020-7	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	15					30	25	0.058903125	10	17	5.5	5.64	
+RO001-4	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	14					46	43	0.155347175	102	24	6	20.26	
+UA006-4		"Tuesday, September 06, 2011"	No						87	81	0.553453763		42	10.5	59.4	
+RU008-9	"Monday, July 11, 2011"	"Tuesday, July 12, 2011"	Yes	13.5					34	25	0.066756875	67	19	4	8.8	no flow
+US003-4	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	37.5					49	47	0.180871863	79	23.5	9	12.01	
+CA009-7		"Tuesday, September 06, 2011"	No						49	47	0.180871863		25	7	22	
+US015-5	"Monday, August 08, 2011"	"Friday, August 12, 2011"	Yes	35	33	32			21	24	0.0395829	142	17	5	32.15	
+GR001-4	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	15					52	49	0.20011355	30	28	8	12.48	
+US015-9		"Tuesday, September 06, 2011"	No						44	38	0.1313147		22	6	17.2	
+GR003-5	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	23					53	47	0.195636913	17	27.5	5	9.16	
+RO001-6		"Tuesday, September 06, 2011"	No						58	50	0.22775875		28	8	41.5	
+RO001-7		"Tuesday, September 06, 2011"	No						78	74	0.45331845		34	5	48.5	
+RO001-3	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	17	12.5	12.5	11	6.5	40	39	0.1225185	96	20	5	9	
+US018-9		"Tuesday, September 06, 2011"	No						63	57	0.282028163		28	3.5	36.3	
+US003-5	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	10					51	44	0.17623815	76	24.5	5	9.84	
+US014-6		"Tuesday, September 06, 2011"	No						66	59	0.305825025		31	9	32.2	
+SERG-4	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	21					28	27	0.05937435	55	16	3	9.47	
+EDGE-87	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	10					46	45	0.162572625	46	23.5	4	8.27	
+US022-2	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	25	21	17	11		52	48	0.1960296	63	26	7	12.44	
+CA009-5	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	13	8				55	52	0.22461725	49	28	8	13.27	
+US013-9		"Tuesday, September 06, 2011"	No						53	42	0.174824475		23	7	22.5	
+RO005-5		"Tuesday, September 06, 2011"	No						56	55	0.2418955		29	5.5	27.3	
+US019-8		"Tuesday, September 06, 2011"	No						85	57	0.380514188		36	11.5	39.2	
+GR002-8	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	12					43	30	0.101313375	60	22	6	9.61	
+UA006-9		"Tuesday, September 06, 2011"	No						54	45	0.190846125		29	7	36.1	
+EDGE-88	"Thursday, June 23, 2011"	"Monday, June 27, 2011"	Yes	12.5	6				35	34	0.093459625	25	19	5	8	
+BG001-4		"Tuesday, September 06, 2011"	No						50	48	0.18849		28	6	32.9	
+GR003-7	"Monday, July 04, 2011"	"Monday, July 04, 2011"	Yes	29					37	30	0.087176625	41	18.5	4.5	8.76	
+TR001-6	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	18					40	32	0.100528	47	20.5	4	8.76	
+RO005-1		"Tuesday, September 06, 2011"	No						49	40	0.1539335		23	5.5	37.4	
+US023-4		"Tuesday, September 06, 2011"	No						52	41	0.16744195		30	3.5	40.1	
+RU001-9	"Friday, July 15, 2011"	"Friday, July 22, 2011"	Yes	26					46	44	0.1589599	50	22	6	13.5	
+CORY2-6		"Tuesday, September 06, 2011"	No						82	72	0.4636854		43.5	11	43.2	
+GR001-2	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	21.5					33	31	0.080343863	14	20	7	14.8	bolt date missed
+US022-3	"Thursday, June 16, 2011"	"Thursday, June 23, 2011"	Yes	32					36	34	0.0961299	13	20	3.5	10.97	
+US023-8	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	29					33	31	0.080343863	21	17.5	5	9.13	
+US012-8		"Tuesday, September 06, 2011"	No						82	82	0.52808615		36	7.5	36.5	
+EDGE-34	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	23.5					47	40	0.1476505	16	26	5	9.76	
+SERG-8		"Tuesday, September 06, 2011"	No						50	29	0.113879375		24	7.5	28.1	
+GR002-4	"Friday, July 01, 2011"	"Friday, July 01, 2011"	Yes	9.5					43	40	0.1350845	24	21	5.5	16.55	
+EDGE-9	"Monday, August 01, 2011"	"Monday, August 01, 2011"	Yes	19					64	56	0.2814784	241	34	6	31.3	several rosettes
+CORY2-9		"Tuesday, September 06, 2011"	No						68	52	0.2777086		32	4	28	
+US014-1	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	21					29	27	0.061494863	31	15.5	3.5	9.74	
+US022-9	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	19					35	33	0.090710813	49	16.5	3.5	6.48	
+SAND-5		"Tuesday, September 06, 2011"	No						67	57	0.299934713		34	9	38.9	
+US017-2		"Tuesday, September 06, 2011"	No						66	65	0.336925875		35	8	24.8	
+RO002-6		"Tuesday, September 06, 2011"	No						52	51	0.20828145		27	7	27.8	
+TR001-2	"Monday, June 20, 2011"	"Thursday, June 23, 2011"	Yes	23					37	32	0.0929884	17	18.5	3.5	7.44	
+US020-6		"Tuesday, September 06, 2011"	No						68	61	0.32577355		36	7	31.3	
+US014-7		"Tuesday, September 06, 2011"	No						48	31	0.1168638		23	4	18.4	
+TR004-2		"Tuesday, September 06, 2011"	No						71	67	0.373602888		33	8	36.9	
+US002-1		"Tuesday, September 06, 2011"	No						51	42	0.168227325		29	4.5	23.6	
+UA003-4		"Tuesday, September 06, 2011"	No						61	39	0.186840713		33	13	32.6	
+CA009-3	"Monday, July 11, 2011"	"Tuesday, July 12, 2011"	Yes	40	34				50	48	0.18849	7.7	25	5	16.1	"no flow, 2 axes"
+UA006-8	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	17	16	15	15	9	44	43	0.14859295	58	21	7	10.16	
+US026-2	"Thursday, June 23, 2011"	"Thursday, June 23, 2011"	Yes	10					45	36	0.12723075	16	23	5	6.65	
+RO001-2		"Tuesday, September 06, 2011"	No						74	60	0.3487065		33	10	36.5	
+UA007-6	"Monday, June 27, 2011"	"Monday, June 27, 2011"	Yes	18					52	47	0.19194565	61	33	7	8.68	
