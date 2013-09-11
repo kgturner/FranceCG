@@ -33,7 +33,7 @@ for(i in list){
 }
 
 #pop coord
-allpop <- read.table(file.choose(), header=T, sep="\t") #Popcoord.txt
+allpop <- read.table(file.choose(), header=T, sep="\t") #Popcoord_worldclim.txt
 Frpop <- allpop[allpop$Pop %in% Frdes$Pop,]
 rownames(Frpop) <- Frpop$Pop
 Frpop$Pop <- droplevels(Frpop$Pop)
@@ -43,11 +43,17 @@ for(i in Frpop$Pop){
   assign(i,SpatialPoints(as.matrix(t(c(Frpop[i,2], Frpop[i,1])))))
 }
 
-#make table
+#check that spatial points load from tiffs
 poplist <- mget(levels(Frpop$Pop), envir=globalenv())
 
 tiffvector <- unlist(list)
 
+foreach(p=poplist, .combine='cbind') %:%
+  foreach(t=tiffvector, .combine='rbind') %do%{
+    is.na(extract(t,p))
+  }
+
+#make table
 climate <- foreach(t=tiffvector, .combine='cbind') %:%    
   foreach(p=poplist, .combine='rbind') %do%{
     myValue<-extract(t, p)
@@ -60,6 +66,36 @@ colnames(Frclim) <- filenames
 
 #need to merge columns so that all bio1 columns are merged, etc. 
 #Should have total of 20 columns (19 bioclim variables + altitude)
+Frclim.1 <- Frclim
+
+#do this 20 times?
+for (i in Frclim.1[,116:120]){
+  Frclim.1[,115][is.na(Frclim.1[,115])] <- i[is.na(Frclim.1[,115])]
+  which(is.na(Frclim.1[,115]))
+  which(Frclim.1[,115] != i)
+}
+
+head(Frclim.1)
+tail(Frclim.1)
+
+for (col in Frclim.1[,seq(from=1, to=120, by=6)]) {
+  for (i in Frclim.1[,c(col+seq(from=1, to=5, by=1))]) {
+    Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
+    which(is.na(Frclim.1[,col]))
+    which(Frclim.1[,col] != i)
+  }
+    
+}
+
+col <-Frclim.1[,seq(from=1, to=120, by=6)]
+head(col)
+
+i <- Frclim.1[,c(col+seq(from=1, to=5, by=1)]
+
+check <- c(col+seq(from=1, to=5, by=1)
+
+)# extract(bio9_11.tif, CA001)
+# CA001
 
 #merge two columns
 # ## Copy BNR.y if BNR.x is missing
@@ -68,6 +104,10 @@ colnames(Frclim) <- filenames
 # which(is.na(d$BNR.x))
 # ## List the indices where BNR.x is different from BNR.y
 # which(d$BNR.x != d$BNR.y)
+
+# library(reshape2)
+# Frclim.1 <- melt(Frclim, id.vars=rownames(Frclim), measure.vars=115:120, na.rm=TRUE)
+
 
 # ####
 
