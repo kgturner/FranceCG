@@ -34,6 +34,7 @@ for(i in list){
 
 #pop coord
 allpop <- read.table(file.choose(), header=T, sep="\t") #Popcoord_worldclim.txt
+Frdes <- read.table("Frdes.txt", header=T, sep="\t")
 Frpop <- allpop[allpop$Pop %in% Frdes$Pop,]
 rownames(Frpop) <- Frpop$Pop
 Frpop$Pop <- droplevels(Frpop$Pop)
@@ -108,6 +109,9 @@ check <- c(col+seq(from=1, to=5, by=1)
 # library(reshape2)
 # Frclim.1 <- melt(Frclim, id.vars=rownames(Frclim), measure.vars=115:120, na.rm=TRUE)
 
+#write table
+write.csv(Frclim, file="Frbioclimdata.csv")
+
 
 # ####
 
@@ -122,5 +126,3 @@ names(KHbioclim)[20]<-"Population"
 #change rownames
 rownames(KHbioclim)<-NULL
 
-#write table
-write.csv(KHbioclim, file="KHbioclimdata.csv")
