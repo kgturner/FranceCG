@@ -1,25 +1,25 @@
-#to make table of climate data from WorldClim.org tiles
+#Extract climate data from WorldClim.org tiles for several locations and make data table
+#Kathryn Turner Sept 16, 2013
 
 #load packages: raster, rgdal, sp
 library(rgdal)
 library(raster)
-# library(sp)
 library(foreach)
 
-######Read files named xyz1111.csv, xyz2222.csv, etc. from http://stackoverflow.com/questions/5319839/read-multiple-csv-files-into-separate-data-frames
+#Read names of all files in directory into a list
+#from xyz1111.csv, xyz2222.csv, etc. from http://stackoverflow.com/questions/5319839/read-multiple-csv-files-into-separate-data-frames
 filenames <- list.files(path="~/grad work/Centaurea diffusa/WorldClim_2013/")
 
-# ##Create list of data frame names without the ".csv" part 
-# names <-substr(filenames,1,120)
-
-###Load all files
+#Load all geoTIFF files
 for(i in filenames){
   filepath <- file.path("~/grad work/Centaurea diffusa/WorldClim_2013/",i)
   assign(i, raster(filepath))
 }
 
-###check all files http://stackoverflow.com/questions/15387727/use-object-names-as-list-names-in-r
+#check that all files loaded properly by raster
+#from http://stackoverflow.com/questions/15387727/use-object-names-as-list-names-in-r
 list <- mget(filenames, envir=globalenv())
+
 for(i in list){
   if (hasValues(i)==FALSE){
     print(i,"hasValues error") 
@@ -32,7 +32,7 @@ for(i in list){
   }
 }
 
-#pop coord
+#get population coordinates
 allpop <- read.table(file.choose(), header=T, sep="\t") #Popcoord_worldclim.txt
 Frdes <- read.table("Frdes.txt", header=T, sep="\t")
 Frpop <- allpop[allpop$Pop %in% Frdes$Pop,]
@@ -44,7 +44,8 @@ for(i in Frpop$Pop){
   assign(i,SpatialPoints(as.matrix(t(c(Frpop[i,2], Frpop[i,1])))))
 }
 
-#check that spatial points load from tiffs
+#check that spatial points load correctly from geoTIFFs
+#no column should be entirely NAs
 poplist <- mget(levels(Frpop$Pop), envir=globalenv())
 
 tiffvector <- unlist(list)
@@ -54,7 +55,7 @@ foreach(p=poplist, .combine='cbind') %:%
     is.na(extract(t,p))
   }
 
-#make table
+#make climate data table
 climate <- foreach(t=tiffvector, .combine='cbind') %:%    
   foreach(p=poplist, .combine='rbind') %do%{
     myValue<-extract(t, p)
@@ -93,9 +94,22 @@ head(col)
 
 i <- Frclim.1[,c(col+seq(from=1, to=5, by=1)]
 
-check <- c(col+seq(from=1, to=5, by=1)
+check <- c(col+seq(from=1, to=5, by=1))
+#
 
-)# extract(bio9_11.tif, CA001)
+foreach(col=Frclim.1[,seq(from=1, to=120, by=6)], .combine="cbind") %:%
+  foreach(i=Frclim.1[,c(col+seq(from=1, to=5, by=1))], .combine="c") %do% {
+    Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
+    which(is.na(Frclim.1[,col]))
+    which(Frclim.1[,col] != i)
+  }
+  
+
+#foreach(p=poplist, .combine='cbind') %:%
+foreach(t=tiffvector, .combine='rbind') %do%{
+  is.na(extract(t,p))
+}
+# extract(bio9_11.tif, CA001)
 # CA001
 
 #merge two columns
