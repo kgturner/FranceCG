@@ -66,44 +66,113 @@ Frclim <- as.data.frame(climate)
 row.names(Frclim) <- Frpop$Pop
 colnames(Frclim) <- filenames
 
+#write table
+write.csv(Frclim, file="Frbioclimdata.csv")
+
+##################
 #need to merge columns so that all bio1 columns are merged, etc. 
 #Should have total of 20 columns (19 bioclim variables + altitude)
 Frclim.1 <- Frclim
 
 #do this 20 times?
-for (i in Frclim.1[,116:120]){
-  Frclim.1[,115][is.na(Frclim.1[,115])] <- i[is.na(Frclim.1[,115])]
-  which(is.na(Frclim.1[,115]))
-  which(Frclim.1[,115] != i)
-}
 
-head(Frclim.1)
-tail(Frclim.1)
-
-for (col in Frclim.1[,seq(from=1, to=120, by=6)]) {
-  for (i in Frclim.1[,c(col+seq(from=1, to=5, by=1))]) {
-    Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
-    which(is.na(Frclim.1[,col]))
-    which(Frclim.1[,col] != i)
-  }
-    
-}
-
-col <-Frclim.1[,seq(from=1, to=120, by=6)]
-head(col)
-
-i <- Frclim.1[,c(col+seq(from=1, to=5, by=1)]
-
-check <- c(col+seq(from=1, to=5, by=1))
-#
-
-foreach(col=Frclim.1[,seq(from=1, to=120, by=6)], .combine="cbind") %:%
-  foreach(i=Frclim.1[,c(col+seq(from=1, to=5, by=1))], .combine="c") %do% {
-    Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
-    which(is.na(Frclim.1[,col]))
-    which(Frclim.1[,col] != i)
-  }
+squish <- function(dat=dat, cols=cols, newcol="newcol"){
   
+  dat$temp <- NA
+  
+  for (i in dat[,cols]){
+    ## where is temp NA?
+    ss <- which(is.na(dat$temp))
+    ## what are the values of i there? put them in temp
+    dat$temp[ss] <- i[ss] 
+    
+    #dat$temp <- i[is.na(dat[["temp"]])]
+    #which(is.na(dat[,dat$temp]))
+    #which(dat[,dat$temp] != i)
+  }
+  #names(dat["temp"]) <- newcol
+  names(dat)[which(names(dat)=="temp")] <- newcol
+  dat[newcol]
+}
+
+Frclim.2 <- squish(dat=Frclim.1, cols=1:6)
+
+
+
+# varnames <- colnames(Frclim.1)
+# 
+# #get column #s for the same variables:
+# splitvars <- strsplit(varnames,"_")
+# vars <- sapply(splitvars,"[[",i=1)
+# unique(vars)
+# 
+# outs <- list(NULL)
+# for (k in unique(vars)){
+#   squishables <- which(vars==k)
+#   outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=k)
+# }
+# outs <- outs[-1]
+# fuckyeah <- do.call(cbind,outs)
+
+#squishing func w/Andrew
+squishr <- function(tosquish){
+  squishables <- which(vars==tosquish)
+  outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=tosquish)
+}
+
+do.call(cbind,lapply(unique(vars),squishr))
+
+# 
+# traceback()
+# 
+# dat <- Frclim
+# cols <- 1:6
+# dat$temp <- NA
+# for (i in dat[,cols]){
+#   dat$temp <- i[is.na(dat[,dat$temp])]
+#   
+#   dat[,i][is.na(dat[,dat$temp])] <- i[is.na(dat[,dat$temp])]
+#   which(is.na(dat[,dat$temp]))
+#   which(dat[,dat$temp] != i)
+# }
+# 
+# 
+# for (i in Frclim.1[,116:120]){
+#   Frclim.1[,115][is.na(Frclim.1[,115])] <- i[is.na(Frclim.1[,115])]
+#   which(is.na(Frclim.1[,115]))
+#   which(Frclim.1[,115] != i)
+# }
+# 
+# 
+# 
+# 
+# head(Frclim.1)
+# tail(Frclim.1)
+# 
+# for (col in Frclim.1[,seq(from=1, to=120, by=6)]) {
+#   for (i in Frclim.1[,c(col+seq(from=1, to=5, by=1))]) {
+#     Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
+#     which(is.na(Frclim.1[,col]))
+#     which(Frclim.1[,col] != i)
+#   }
+#     
+# }
+# 
+# col <-Frclim.1[,seq(from=1, to=120, by=6)]
+# head(col)
+# 
+# i <- Frclim.1[,c(col+seq(from=1, to=5, by=1)]
+# 
+# check <- c(col+seq(from=1, to=5, by=1))
+# #
+# 
+# foreach(col=Frclim.1[,seq(from=1, to=120, by=6)], .combine="cbind") %:%
+#   foreach(i=Frclim.1[,c(col+seq(from=1, to=5, by=1))], .combine="c") %do% {
+#     Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
+#     which(is.na(Frclim.1[,col]))
+#     which(Frclim.1[,col] != i)
+#   }
+#   
 
 #foreach(p=poplist, .combine='cbind') %:%
 foreach(t=tiffvector, .combine='rbind') %do%{
@@ -123,8 +192,7 @@ foreach(t=tiffvector, .combine='rbind') %do%{
 # library(reshape2)
 # Frclim.1 <- melt(Frclim, id.vars=rownames(Frclim), measure.vars=115:120, na.rm=TRUE)
 
-#write table
-write.csv(Frclim, file="Frbioclimdata.csv")
+
 
 
 # ####
