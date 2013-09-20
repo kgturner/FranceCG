@@ -153,7 +153,8 @@ squishr <- function(dat, squishvar){
 Frvars <- squishsplit(Frclim.1)
 test1 <- do.call(cbind,lapply(unique(Frvars),squishr,dat=Frclim.1))
 
-
+#write table
+write.table(test1, file="Frbioclimdata.txt")
 
 
 #merge two columns
