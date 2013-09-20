@@ -67,12 +67,11 @@ row.names(Frclim) <- Frpop$Pop
 colnames(Frclim) <- filenames
 
 #write table
-write.csv(Frclim, file="Frbioclimdata.csv")
+write.table(Frclim, file="Frbioclimdata.txt")
 
 #load table
-Frclim <- read.delim("Frbioclimdata.csv", header=TRUE, sep=",")
-row.names(Frclim) <- Frclim[,1]
-Frclim <- Frclim[,-1]
+Frclim <- read.table("Frbioclimdata.txt", header=TRUE)
+
 
 ##################
 #need to merge columns so that all bio1 columns are merged, etc. 
@@ -97,38 +96,43 @@ squish <- function(dat=dat, cols=cols, newcol="newcol"){
   }
   #names(dat["temp"]) <- newcol
   #newcol <- "testalt"
-  names(dat)[which(names(dat)=="temp")] <- newcol
-  dat[newcol]
+#   names(dat)[which(names(dat)=="temp")] <- newcol
+#   colnames(dat$temp) <- newcol
+  names(dat)[names(dat)=="temp"] <- newcol
+  
+
+#   return(as.data.frame(cbind(rownames(dat),dat$newcol)))
+  return(subset(dat,select=ncol(dat)))
 }
 
 #for one group of columns
-Frclim.2 <- squish(dat=Frclim.1, cols=1:6)
+Frclim.2 <- squish(dat=Frclim.1, cols=1:6, newcol="alt")
+Frclim.2
 
 
-
-varnames <- colnames(Frclim.1)
-
-#get column #s for the same variables:
-splitvars <- strsplit(varnames,"_")
-vars <- sapply(splitvars,"[[",i=1)
-unique(vars)
-
-# outs <- list(NULL)
-# for (k in unique(vars)){
-# squishables <- which(vars==k)
-# outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=k)
+# varnames <- colnames(Frclim.1)
+# 
+# #get column #s for the same variables:
+# splitvars <- strsplit(varnames,"_")
+# vars <- sapply(splitvars,"[[",i=1)
+# unique(vars)
+# 
+# # outs <- list(NULL)
+# # for (k in unique(vars)){
+# # squishables <- which(vars==k)
+# # outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=k)
+# # }
+# # outs <- outs[-1]
+# # fuckyeah <- do.call(cbind,outs)
+# 
+# #squishing func w/Andrew
+# squishr <- function(tosquish){
+#   squishables <- which(vars==tosquish)
+#   outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=tosquish)
 # }
-# outs <- outs[-1]
-# fuckyeah <- do.call(cbind,outs)
-
-#squishing func w/Andrew
-squishr <- function(tosquish){
-  squishables <- which(vars==tosquish)
-  outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=tosquish)
-}
-
-do.call(cbind,lapply(unique(vars),squishr))
-#take unique vars and put them in squishr
+# 
+# do.call(cbind,lapply(unique(vars),squishr))
+# #take unique vars and put them in squishr
 
 ####rewrite
 
@@ -140,84 +144,17 @@ squishsplit <- function(dat, split="_"){
   #   tosquish <- lapply(unique(vars))
 }
 
-squishr <- function(dat, squishvars){
-  outs <- list(NULL)
-  squishables <- which(squishvars==unique(squishvars))
-  return(squish(dat=dat, cols=squishables,newcol=names(unique(vars))))
+squishr <- function(dat, squishvar){
+#   outs <- list(NULL)
+#   squishables <- which(squishvars==unique(squishvars))
+  return(squish(dat=dat, cols=grep(squishvar,names(dat)),newcol=squishvar))
 }
 
 Frvars <- squishsplit(Frclim.1)
-test1 <- do.call(cbind,mapply(squishr, Frclim.1,Frvars))
-#test2 <- squishr(Frclim.1, Frvars)
+test1 <- do.call(cbind,lapply(unique(Frvars),squishr,dat=Frclim.1))
 
-dat <- Frclim.1
-varnames <- colnames(dat)
-splitvars <- strsplit(varnames, "_")
-vars <- sapply(splitvars,"[[",i=1)
-# tosquish <- lapply(unique(vars))
 
-outs <- list(NULL)
-squishables <- which(vars==unique(vars))
-outs[[k]] <- squish(dat=dat, cols=squishables,newcol=tosquish)
-squish(dat=dat, cols=squishables,newcol=names(unique(vars)))
-# 
-# traceback()
-# 
-# dat <- Frclim
-# cols <- 1:6
-# dat$temp <- NA
-# for (i in dat[,cols]){
-#   dat$temp <- i[is.na(dat[,dat$temp])]
-#   
-#   dat[,i][is.na(dat[,dat$temp])] <- i[is.na(dat[,dat$temp])]
-#   which(is.na(dat[,dat$temp]))
-#   which(dat[,dat$temp] != i)
-# }
-# 
-# 
-# for (i in Frclim.1[,116:120]){
-#   Frclim.1[,115][is.na(Frclim.1[,115])] <- i[is.na(Frclim.1[,115])]
-#   which(is.na(Frclim.1[,115]))
-#   which(Frclim.1[,115] != i)
-# }
-# 
-# 
-# 
-# 
-# head(Frclim.1)
-# tail(Frclim.1)
-# 
-# for (col in Frclim.1[,seq(from=1, to=120, by=6)]) {
-#   for (i in Frclim.1[,c(col+seq(from=1, to=5, by=1))]) {
-#     Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
-#     which(is.na(Frclim.1[,col]))
-#     which(Frclim.1[,col] != i)
-#   }
-#     
-# }
-# 
-# col <-Frclim.1[,seq(from=1, to=120, by=6)]
-# head(col)
-# 
-# i <- Frclim.1[,c(col+seq(from=1, to=5, by=1)]
-# 
-# check <- c(col+seq(from=1, to=5, by=1))
-# #
-# 
-# foreach(col=Frclim.1[,seq(from=1, to=120, by=6)], .combine="cbind") %:%
-#   foreach(i=Frclim.1[,c(col+seq(from=1, to=5, by=1))], .combine="c") %do% {
-#     Frclim.1[,col][is.na(Frclim.1[,col])] <- i[is.na(Frclim.1[,col])]
-#     which(is.na(Frclim.1[,col]))
-#     which(Frclim.1[,col] != i)
-#   }
-#   
 
-#foreach(p=poplist, .combine='cbind') %:%
-foreach(t=tiffvector, .combine='rbind') %do%{
-  is.na(extract(t,p))
-}
-# extract(bio9_11.tif, CA001)
-# CA001
 
 #merge two columns
 # ## Copy BNR.y if BNR.x is missing
@@ -226,23 +163,4 @@ foreach(t=tiffvector, .combine='rbind') %do%{
 # which(is.na(d$BNR.x))
 # ## List the indices where BNR.x is different from BNR.y
 # which(d$BNR.x != d$BNR.y)
-
-# library(reshape2)
-# Frclim.1 <- melt(Frclim, id.vars=rownames(Frclim), measure.vars=115:120, na.rm=TRUE)
-
-
-
-
-# ####
-
-#join value vectors into table
-KHbioclim<-rbind(valuevectorPop1,valuevectorPop2,valuevectorPop3,valuevectorPop4,valuevectorPop5,valuevectorPop6,valuevectorPop7,valuevectorPop8,valuevectorPop9,valuevectorPop10,valuevectorPop11,valuevectorPop12)
-KHbioclim<-as.data.frame(KHbioclim)
-#change col names
-colnames(KHbioclim)<-c("BIO1", "BIO2", "BIO3", "BIO4","BIO5","BIO6","BIO7","BIO8","BIO9","BIO10","BIO11","BIO12","BIO13","BIO14","BIO15","BIO16","BIO17","BIO18","BIO19")
-#add pop names
-KHbioclim<-data.frame(KHbioclim, popdata$Population)
-names(KHbioclim)[20]<-"Population"
-#change rownames
-rownames(KHbioclim)<-NULL
 
