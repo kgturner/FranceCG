@@ -69,17 +69,22 @@ colnames(Frclim) <- filenames
 #write table
 write.csv(Frclim, file="Frbioclimdata.csv")
 
+#load table
+Frclim <- read.delim("Frbioclimdata.csv", header=TRUE, sep=",")
+row.names(Frclim) <- Frclim[,1]
+Frclim <- Frclim[,-1]
+
 ##################
 #need to merge columns so that all bio1 columns are merged, etc. 
 #Should have total of 20 columns (19 bioclim variables + altitude)
 Frclim.1 <- Frclim
 
-#do this 20 times?
+#function to squish group of columns together
 
 squish <- function(dat=dat, cols=cols, newcol="newcol"){
   
   dat$temp <- NA
-  
+#   cols <- 1:6
   for (i in dat[,cols]){
     ## where is temp NA?
     ss <- which(is.na(dat$temp))
@@ -91,25 +96,27 @@ squish <- function(dat=dat, cols=cols, newcol="newcol"){
     #which(dat[,dat$temp] != i)
   }
   #names(dat["temp"]) <- newcol
+  #newcol <- "testalt"
   names(dat)[which(names(dat)=="temp")] <- newcol
   dat[newcol]
 }
 
+#for one group of columns
 Frclim.2 <- squish(dat=Frclim.1, cols=1:6)
 
 
 
-# varnames <- colnames(Frclim.1)
-# 
-# #get column #s for the same variables:
-# splitvars <- strsplit(varnames,"_")
-# vars <- sapply(splitvars,"[[",i=1)
-# unique(vars)
-# 
+varnames <- colnames(Frclim.1)
+
+#get column #s for the same variables:
+splitvars <- strsplit(varnames,"_")
+vars <- sapply(splitvars,"[[",i=1)
+unique(vars)
+
 # outs <- list(NULL)
 # for (k in unique(vars)){
-#   squishables <- which(vars==k)
-#   outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=k)
+# squishables <- which(vars==k)
+# outs[[k]] <- squish(dat=Frclim.1, cols=squishables,newcol=k)
 # }
 # outs <- outs[-1]
 # fuckyeah <- do.call(cbind,outs)
@@ -121,7 +128,38 @@ squishr <- function(tosquish){
 }
 
 do.call(cbind,lapply(unique(vars),squishr))
+#take unique vars and put them in squishr
 
+####rewrite
+
+squishsplit <- function(dat, split="_"){
+  varnames <- colnames(dat)
+  splitvars <- strsplit(varnames, split)
+  squishvars <- sapply(splitvars,"[[",i=1)
+  return(squishvars)
+  #   tosquish <- lapply(unique(vars))
+}
+
+squishr <- function(dat, squishvars){
+  outs <- list(NULL)
+  squishables <- which(squishvars==unique(squishvars))
+  return(squish(dat=dat, cols=squishables,newcol=names(unique(vars))))
+}
+
+Frvars <- squishsplit(Frclim.1)
+test1 <- do.call(cbind,mapply(squishr, Frclim.1,Frvars))
+#test2 <- squishr(Frclim.1, Frvars)
+
+dat <- Frclim.1
+varnames <- colnames(dat)
+splitvars <- strsplit(varnames, "_")
+vars <- sapply(splitvars,"[[",i=1)
+# tosquish <- lapply(unique(vars))
+
+outs <- list(NULL)
+squishables <- which(vars==unique(vars))
+outs[[k]] <- squish(dat=dat, cols=squishables,newcol=tosquish)
+squish(dat=dat, cols=squishables,newcol=names(unique(vars)))
 # 
 # traceback()
 # 
