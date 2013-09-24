@@ -1,9 +1,10 @@
 #mixed effects models, REML, using lme4
+#first round, Fall 2012
 
 #france data
-d <- read.table(file.choose(), header=T, sep="\t",quote='"', row.names=1) #measure1 Frm1DKdatdes.txt
-d2<-read.table(file.choose(), header=T, sep="\t",quote='"', row.names=1)#measure 2 Frm2DKdatdes.txt
-h <- read.table(file.choose(), header=T, sep="\t",quote='"', row.names=1) #measure harvest FrmHDKdatdes.txt
+d <- read.table("Frm1DKdatdes.txt", header=T, sep="\t",quote='"', row.names=1) #measure1 
+d2<-read.table("Frm2DKdatdes.txt", header=T, sep="\t",quote='"', row.names=1)#measure 2 
+h <- read.table("FrmHDKdatdes.txt", header=T, sep="\t",quote='"', row.names=1) #measure harvest 
 
 #remove small pops (<3)
 summary(d$Pop)
@@ -24,28 +25,28 @@ write.table(d, file="Frm1DKdatdes.txt", sep="\t", quote=F)
 write.table(d2, file="Frm2DKdatdes.txt", sep="\t", quote=F)
 write.table(h, file="FrmHDKdatdes.txt", sep="\t", quote=F)
 
-#####
-#mixed effects linear model on PC1
-source("http://bioconductor.org/biocLite.R")
-biocLite("lme4")
-library(lme4)
-
-#m1 on PC1
-str(d)
-dPCmodel1<-lmer(PC1~1+Origin+ (1|Origin/Pop), data=d)
-print(dPCmodel1)
-dPCmodel2<-lmer(PC1~Origin+(1|Origin/Pop), data=d)
-print(dPCmodel2)
-#model1 and model2 are the same
-dPCmodel3<-lmer(PC1~Origin+(1|Pop), data=d)
-print(dPCmodel3)
-summary(dPCmodel3)
-d$Mom<-factor(d$Mom)
-dPCmodel4<-lmer(PC1~Origin+(1|Origin/Pop/Mom), data=d)
-print(dPCmodel4)
-#model4 very similar results to model2...
-
-anova(dPCmodel3,dPCmodel2)
+# #####
+# #mixed effects linear model on PC1 of traits(not climate)... does that make sense?
+# source("http://bioconductor.org/biocLite.R")
+# biocLite("lme4")
+# library(lme4)
+# 
+# #m1 on PC1
+# str(d)
+# dPCmodel1<-lmer(PC1~1+Origin+ (1|Origin/Pop), data=d)
+# print(dPCmodel1)
+# dPCmodel2<-lmer(PC1~Origin+(1|Origin/Pop), data=d)
+# print(dPCmodel2)
+# #model1 and model2 are the same
+# dPCmodel3<-lmer(PC1~Origin+(1|Pop), data=d)
+# print(dPCmodel3)
+# summary(dPCmodel3)
+# d$Mom<-factor(d$Mom)
+# dPCmodel4<-lmer(PC1~Origin+(1|Origin/Pop/Mom), data=d)
+# print(dPCmodel4)
+# #model4 very similar results to model2...
+# 
+# anova(dPCmodel3,dPCmodel2)
 
 ###mixed effects linear model on transformed traits
 
