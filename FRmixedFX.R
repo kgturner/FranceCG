@@ -1,5 +1,5 @@
 #mixed effects models, REML, using lme4
-#first round, Fall 2012
+
 
 #france data
 d <- read.table("Frm1DKdatdes.txt", header=T, sep="\t",quote='"', row.names=1) #measure1 
@@ -25,7 +25,28 @@ write.table(d, file="Frm1DKdatdes.txt", sep="\t", quote=F)
 write.table(d2, file="Frm2DKdatdes.txt", sep="\t", quote=F)
 write.table(h, file="FrmHDKdatdes.txt", sep="\t", quote=F)
 
-# #####
+#load climate table
+Frclimdat2 <- read.table("FrbioclimPCAdat.txt", header=TRUE)
+
+#get rid of traitPC1
+d <- d[,-15]
+d2 <- d2[,-15]
+h <- h[,-26]
+
+#merge all the things!
+d$tagged <- row.names(d)
+d2$tagged <- row.names(d2)
+h$tagged <- row.names(h)
+
+frdat <- merge(d, d2, all=TRUE)
+frdat <- merge(frdat, h, all=TRUE)
+frdat <- merge(frdat,Frclimdat2[,c(1,13,16,19,22:27)], all.x=TRUE)
+row.names(frdat) <- frdat$tagged
+
+#write
+write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F)
+
+# #########################first round, Fall 2012################################################3
 # #mixed effects linear model on PC1 of traits(not climate)... does that make sense?
 # source("http://bioconductor.org/biocLite.R")
 # biocLite("lme4")
