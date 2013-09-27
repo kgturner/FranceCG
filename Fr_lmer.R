@@ -28,24 +28,49 @@ modelfull<-lmer(trait  ~ Origin* Trt+PC1+PC2+bio19+bio4+bio7 +(Origin|PopID/Mom)
 # modelO<-lmer(trait ~ Latitude +(1|PopID), family=gaussian,data=modeldata)
 # anova(modelO,model1) #test for significance of origin - origin only marginally sig....!
 
-# #test for one trait, one df, specify non default family
-# lfcountLR<- CGtrait.LR.int("LfCount1",al, family=poisson)
-# 
-# #test for one trait, one df
-# shootmod <- CGtrait.models.int("ShootMass.gA", al) #test one trait
-# 
-# #for all traits in a df
-# #make sure all traits analyzed this way are the same distribution
-# names(al)#find col numbers for traits of interestes
-# alLR <- lapply(names(al)[8:13],function(n) CGtrait.LR.int(n,al))#apply func to all things in list
-# names(alLR) <- names(al)[8:13]
-# almodels <- lapply(names(al)[8:13],function(n) CGtrait.models.int(n,al))#apply func to all things in list
-# names(almodels) <- names(al)[8:13]
-# 
-# #to get one model
-# almodels[[1]][1] #first number is trait in column order of df, second number is model number
-# names(almodels[1]) #to verify trait
+
+
 #
+#test for one trait, one df, specify non default (gaussian) family
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="PC1",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="bio4",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="bio19",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="Latitude",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="bio7",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="PC2",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="PC3",family=gaussian)
+CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="PC4",family=gaussian)
+
+#for all traits in a df
+#make sure all traits analyzed this way are the same distribution family
+names(frdat)#find col numbers for traits of interestes
+frGLR <- lapply(names(frdat)[41:42],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1"))#apply func to all things in list
+
+
+#to get models
+frGmodels <- lapply(names(frdat)[c(34,42)],function(n) CGtrait.models_snglcov(n,frdat, covariate="PC1"))
+names(frGmodels) <- names(frdat[c(34,42)])
+
+#to get one model
+frGmodels[[1]][1] #first number is trait in column order of df, second number is model number
+names(frGmodels[1]) #to verify trait
+
+#to check normality of residuals
+mass.lmer <- frGmodels[[1]]$model2
+plot(resid(mass.lmer) ~ fitted(mass.lmer),main="residual plot")
+abline(h=0)
+
+# checking the normality of residuals e_i:
+qqnorm(resid(mass.lmer), main="Q-Q plot for residuals")
+qqline(resid(mass.lmer))
+
+#so for each cov and distribution
+frGLR <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1"))#apply func to all things in list
+frPLR <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1", family=poisson))#apply func to all things in list
+boltLR <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC1",family=binomial)
+
+
+
 
 
 #######################example##########################

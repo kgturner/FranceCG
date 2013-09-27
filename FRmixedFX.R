@@ -43,6 +43,31 @@ frdat <- merge(frdat, h, all=TRUE)
 frdat <- merge(frdat,Frclimdat2[,c(1,13,16,19,22:27)], all.x=TRUE)
 row.names(frdat) <- frdat$tagged
 
+#formating
+frdat <- cbind(frdat, bolt.bin=as.numeric(frdat$BoltedatH)-1)
+
+#dates
+24
+head(frdat[35])
+
+frdat$Harvest.date2 <- strptime(frdat$Harvest.date, format="%A, %B %d, %Y")
+frdat$Harvest.date2 <- as.Date(frdat$Harvest.date2)
+day0 <- as.Date("2011-05-12") #planting date
+frdat$Harvest.date3 <- as.numeric(frdat$Harvest.date2-day0)
+frdat$Harvest.date <- frdat$Harvest.date3
+frdat <- frdat[,1:52]
+
+frdat$Bolt.date2 <- strptime(frdat$Bolt.date, format="%A, %B %d, %Y")
+frdat$Bolt.date2 <- as.Date(frdat$Bolt.date2)
+day0 <- as.Date("2011-05-12")
+frdat$Bolt.date3 <- as.numeric(frdat$Bolt.date2-day0)
+frdat$Bolt.date <- frdat$Bolt.date3
+frdat <- frdat[,1:52]
+
+#bolt and harvest dates agree?
+frdat[frdat$Bolt.date>=frdat$Harvest.date,]
+
+
 #write
 write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F)
 
