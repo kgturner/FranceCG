@@ -28,9 +28,40 @@ modelfull<-lmer(trait  ~ Origin* Trt+PC1+PC2+bio19+bio4+bio7 +(Origin|PopID/Mom)
 # modelO<-lmer(trait ~ Latitude +(1|PopID), family=gaussian,data=modeldata)
 # anova(modelO,model1) #test for significance of origin - origin only marginally sig....!
 
+##########does Trt matter? ###########################
+###############try Shoot.mass.gH, Bolt.date, Rose.AreaH.m2, manova of all....?
+modeldata <- frdat[!is.na(frdat$Shoot.mass.gH),]
+# modeldata$Mom <- as.factor(modeldata$Mom)
+modelg <- glm(Shoot.mass.gH~Trt, family=gaussian,data=modeldata)
+anova(modelg, test="LRT")
 
+modeldata <- frdat[!is.na(frdat$Bolt.date),]
+# modeldata$Mom <- as.factor(modeldata$Mom)
+modelg <- glm(Bolt.date~Trt, family=poisson,data=modeldata)
+anova(modelg, test="LRT")
 
-#
+modeldata <- frdat[!is.na(frdat$Rose.AreaH.m2),]
+# modeldata$Mom <- as.factor(modeldata$Mom)
+modelg <- glm(Rose.AreaH.m2~Trt, family=gaussian,data=modeldata)
+anova(modelg, test="LRT")
+
+qplot(data=modeldata, Rose.AreaH.m2, Shoot.mass.gH, color=Trt)+geom_smooth(method=glm, se=FALSE)
+
+mantraits<-cbind(frdat$Shoot.mass.gH, frdat$Rose.AreaH.m2, frdat$Bolt.date)
+#fitOrigin<-manova(m2traits~Frm2DKdatdes$Origin)
+#fittrt<-manova(m2traits~Frm2datTag$trt)
+#fitOrigintrt<-manova(m2traits~Frm2datTag$Origin+Frm2datTag$trt)
+#fitOriginbytrt<-manova(m2traits~Frm2DKdatdes$Origin+Frm2DKdatdes$Trt+Frm2DKdatdes$Origin*Frm2DKdatdes$Trt)
+man<-manova(mantraits~Trt, data=frdat)
+summary.aov(man)
+summary(man)
+
+allmantraits<-as.matrix(cbind(frdat[c(9:10,16,18:19,27:34,8,17,24,25,35)]))#all traits except bolt.bin
+allman<-manova(allmantraits~Trt, data=frdat)
+summary.aov(allman)#only sig in crown diameter
+summary(allman)#marginal
+
+#########
 #test for one trait, one df, specify non default (gaussian) family
 CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="PC1",family=gaussian)
 CGtrait.LR_snglcov(trait="Mass.log",df=frdat,covariate="bio4",family=gaussian)
@@ -65,11 +96,41 @@ qqnorm(resid(mass.lmer), main="Q-Q plot for residuals")
 qqline(resid(mass.lmer))
 
 #so for each cov and distribution
-frGLR <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1"))#apply func to all gaussian traits
-frPLR <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1", family=poisson))#apply func to all poisson traits
-boltLR <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC1",family=binomial) #apply to single binomial trait
 
+#PC1
+frGLR.PC1 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1"))#apply func to all gaussian traits
+frPLR.PC1 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1", family=poisson))#apply func to all poisson traits
+boltLR.PC1 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC1",family=binomial) #apply to single binomial trait
 
+#PC2
+frGLR.PC2 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC2"))#apply func to all gaussian traits
+frPLR.PC2 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC2", family=poisson))#apply func to all poisson traits
+boltLR.PC2 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC2",family=binomial) #apply to single binomial trait
+
+#PC3
+frGLR.PC3 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC3"))#apply func to all gaussian traits
+frPLR.PC3 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC3", family=poisson))#apply func to all poisson traits
+boltLR.PC3 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC3",family=binomial) #apply to single binomial trait
+
+#bio4
+frGLR.bio4 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio4"))#apply func to all gaussian traits
+frPLR.bio4 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio4", family=poisson))#apply func to all poisson traits
+boltLR.bio4 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio4",family=binomial) #apply to single binomial trait
+
+#bio19
+frGLR.bio19 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio19"))#apply func to all gaussian traits
+frPLR.bio19 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio19", family=poisson))#apply func to all poisson traits
+boltLR.bio19 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio19",family=binomial) #apply to single binomial trait
+
+#bio7
+frGLR.bio7 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio7"))#apply func to all gaussian traits
+frPLR.bio7 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio7", family=poisson))#apply func to all poisson traits
+boltLR.bio7 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio7",family=binomial) #apply to single binomial trait
+
+#Latitude
+frGLR.lat <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude"))#apply func to all gaussian traits
+frPLR.lat <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude", family=poisson))#apply func to all poisson traits
+boltLR.lat <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="Latitude",family=binomial) #apply to single binomial trait
 
 
 
