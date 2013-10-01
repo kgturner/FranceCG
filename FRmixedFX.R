@@ -1,7 +1,7 @@
 #mixed effects models, REML, using lme4
 
 
-#france data
+#france DK data
 d <- read.table("Frm1DKdatdes.txt", header=T, sep="\t",quote='"', row.names=1) #measure1 
 d2<-read.table("Frm2DKdatdes.txt", header=T, sep="\t",quote='"', row.names=1)#measure 2 
 h <- read.table("FrmHDKdatdes.txt", header=T, sep="\t",quote='"', row.names=1) #measure harvest 
@@ -46,6 +46,8 @@ row.names(frdat) <- frdat$tagged
 #formating
 frdat <- cbind(frdat, bolt.bin=as.numeric(frdat$BoltedatH)-1)
 
+frdat$LfCountH <- as.integer(frdat$LfCountH)
+
 #dates
 24
 head(frdat[35])
@@ -64,12 +66,52 @@ frdat$Bolt.date3 <- as.numeric(frdat$Bolt.date2-day0)
 frdat$Bolt.date <- frdat$Bolt.date3
 frdat <- frdat[,1:52]
 
+frdat$Bolt.date <- as.integer(frdat$Bolt.date)
+frdat$Harvest.date <- as.integer(frdat$Harvest.date)
+
+
 #bolt and harvest dates agree?
-frdat[frdat$Bolt.date>=frdat$Harvest.date,]
+summary(frdat[frdat$Bolt.date>frdat$Harvest.date,])
+summary(frdat[is.na(frdat$Bolt.date),])
+frdat[is.na(frdat$Harvest.date),]
+
+#bolt date and boltedatH/bolt.bin agree?
+summary(frdat[!is.na(frdat$Bolt.date),])
+summary(frdat[frdat$BoltedatH=="Yes",])
+
 
 
 #write
 write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F)
+
+####
+#get sk datas
+FrdesSK <- Frdes[Frdes$Origin=="sk" & Frdes$Trt!="edge",]
+FrdesSK <- FrdesSK[!is.na(FrdesSK$Pop),]
+
+Frm1 <- read.table("FrMeasure1.txt", header=T, sep="\t", quote='"')
+FrdatSK <- merge(FrdesSK,Frm1, all.x=TRUE)
+
+Frshoot <- read.table("FrShootMassH.txt", header=T, sep="\t", quote='"')
+FrdatSK <- merge(FrdatSK,Frshoot, all.x=TRUE)
+
+Frm2 <- read.table("FrMeasure2.txt", header=T, sep="\t", quote='"')
+FrdatSK <- merge(FrdatSK,Frm2, all.x=TRUE)
+
+Frh <- read.table("FrMeasureHarvest.txt", header=T, sep="\t", quote='"')
+FrdatSK <- merge(FrdatSK,Frh, all.x=TRUE)
+
+#load climate table
+Frclimdat2 <- read.table("FrbioclimPCAdat.txt", header=TRUE)
+FrdatSK <- merge(FrdatSK,Frclimdat2[,c(1,13,16,19,22:27)], all.x=TRUE)
+row.names(FrdatSK) <- FrdatSK$tagged
+
+setdiff(colnames(frdat), colnames(FrdatSK))
+setdiff(colnames(FrdatSK), colnames(frdat)) #some extraneous columns/transformations, nothing major.
+
+#write
+write.table(FrdatSK, file="FrTraitClimDat_SK.txt",sep="\t", quote=F)
+
 
 # #########################first round, Fall 2012################################################3
 # #mixed effects linear model on PC1 of traits(not climate)... does that make sense?
