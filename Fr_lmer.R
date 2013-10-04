@@ -33,7 +33,7 @@ modelfull<-lmer(trait  ~ Origin* Trt+PC1+PC2+bio19+bio4+bio7 +(Origin|PopID/Mom)
 modeldata <- frdat[!is.na(frdat$Shoot.mass.gH),]
 # modeldata$Mom <- as.factor(modeldata$Mom)
 modelg <- glm(Shoot.mass.gH~Trt, family=gaussian,data=modeldata)
-anova(modelg, test="LRT")
+a1 <- anova(modelg, test="LRT")
 
 modeldata <- frdat[!is.na(frdat$Bolt.date),]
 # modeldata$Mom <- as.factor(modeldata$Mom)
@@ -60,6 +60,15 @@ allmantraits<-as.matrix(cbind(frdat[c(9:10,16,18:19,27:34,8,17,24,25,35)]))#all 
 allman<-manova(allmantraits~Trt, data=frdat)
 summary.aov(allman)#only sig in crown diameter
 summary(allman)#marginal
+
+#Trt
+frGLR.Trt <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Trt"))#apply func to all gaussian traits
+frPLR.Trt <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Trt", family=poisson))#apply func to all poisson traits
+boltLR.Trt <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="Trt",family=binomial) #apply to single binomial trait
+
+CGtrait_sigaov_func_Fr(frGLR.Trt)
+CGtrait_sigaov_func_Fr(frPLR.Trt)
+boltLR.Trt
 
 #########
 #test for one trait, one df, specify non default (gaussian) family
@@ -132,7 +141,37 @@ frGLR.lat <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_
 frPLR.lat <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude", family=poisson))#apply func to all poisson traits
 boltLR.lat <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="Latitude",family=binomial) #apply to single binomial trait
 
+#which anovas have sig covariate or origin?
+snglcov <- c(frGLR.PC1, frPLR.PC1, boltLR.PC1,frGLR.PC2, frPLR.PC2, boltLR.PC2,frGLR.PC3, frPLR.PC3, boltLR.PC3,
+#              frGLR.bio4,frPLR.bio4, boltLR.bio4,frGLR.bio7, frPLR.bio7, boltLR.bio7,frGLR.bio19, frPLR.bio19, boltLR.bio19,
+             frGLR.lat, frPLR.lat, boltLR.lat, frGLR.Trt, frPLR.Trt, boltLR.Trt)
+save(snglcov, file="Fr_aovlists.RData")
+load()
 
+
+CGtrait_sigaov_func_Fr(frGLR.PC1)
+CGtrait_sigaov_func_Fr(frGLR.PC2)
+CGtrait_sigaov_func_Fr(frGLR.PC3)
+CGtrait_sigaov_func_Fr(frGLR.bio4)
+CGtrait_sigaov_func_Fr(frGLR.bio7)
+CGtrait_sigaov_func_Fr(frGLR.bio19)
+CGtrait_sigaov_func_Fr(frGLR.lat)
+
+CGtrait_sigaov_func_Fr(frPLR.PC1)
+CGtrait_sigaov_func_Fr(frPLR.PC2)
+CGtrait_sigaov_func_Fr(frPLR.PC3)
+CGtrait_sigaov_func_Fr(frPLR.bio4)
+CGtrait_sigaov_func_Fr(frPLR.bio7)
+CGtrait_sigaov_func_Fr(frPLR.bio19)
+CGtrait_sigaov_func_Fr(frPLR.lat)
+
+boltLR.PC1
+boltLR.PC2
+boltLR.PC3
+boltLR.bio4
+boltLR.bio7
+boltLR.bio19
+boltLR.lat
 
 #######################example##########################
 # ######Allo, Origin * Lat models######
