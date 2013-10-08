@@ -84,33 +84,7 @@ summary(frdat[frdat$BoltedatH=="Yes",])
 #write
 write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F)
 
-####
-#get sk datas
-FrdesSK <- Frdes[Frdes$Origin=="sk" & Frdes$Trt!="edge",]
-FrdesSK <- FrdesSK[!is.na(FrdesSK$Pop),]
 
-Frm1 <- read.table("FrMeasure1.txt", header=T, sep="\t", quote='"')
-FrdatSK <- merge(FrdesSK,Frm1, all.x=TRUE)
-
-Frshoot <- read.table("FrShootMassH.txt", header=T, sep="\t", quote='"')
-FrdatSK <- merge(FrdatSK,Frshoot, all.x=TRUE)
-
-Frm2 <- read.table("FrMeasure2.txt", header=T, sep="\t", quote='"')
-FrdatSK <- merge(FrdatSK,Frm2, all.x=TRUE)
-
-Frh <- read.table("FrMeasureHarvest.txt", header=T, sep="\t", quote='"')
-FrdatSK <- merge(FrdatSK,Frh, all.x=TRUE)
-
-#load climate table
-Frclimdat2 <- read.table("FrbioclimPCAdat.txt", header=TRUE)
-FrdatSK <- merge(FrdatSK,Frclimdat2[,c(1,13,16,19,22:27)], all.x=TRUE)
-row.names(FrdatSK) <- FrdatSK$tagged
-
-setdiff(colnames(frdat), colnames(FrdatSK))
-setdiff(colnames(FrdatSK), colnames(frdat)) #some extraneous columns/transformations, nothing major.
-
-#write
-write.table(FrdatSK, file="FrTraitClimDat_SK.txt",sep="\t", quote=F)
 
 
 # #########################first round, Fall 2012################################################3
