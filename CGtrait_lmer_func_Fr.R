@@ -16,20 +16,23 @@ CGtrait.LR_snglcov<- function(trait,df,covariate,family=gaussian){
   model1<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
   model2<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|Pop), family=family,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
   model3<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|blank), family=family,data=modeldata) # Test population effect
-  a1 <- anova(model2,model1) # mom is sig!
-  a2 <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+  momAov <- anova(model2,model1) # mom is sig!
+  popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
   
   
   modelcov <- lmer(modeldata[[trait]]  ~ Origin + (1|Pop/Mom), family=family,data=modeldata)
-  a3 <- anova(model1, modelcov)
+  covAov <- anova(model1, modelcov)
   
   modelO<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
-  a4 <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+  originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
   
-  aovs <- list(a1,a2,a3,a4)
-  names(aovs) <- c(paste(trait,"a1"), paste(trait,"a2"),paste(trait,"a3"),paste(trait, "a4"))
-  models <- list(model1,model2,model3,modelcov,modelO)
-  names(models) <- c("model1","model2","model3","modelcov","modelO")
+  modelOC <- lmer(modeldata[[trait]]  ~ modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  ocAov <- anova(model1, modelOC)
+  
+  aovs <- list(momAov, popAov, covAov,originAov,ocAov)
+  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"))
+  models <- list(model1,model2,model3,modelcov,modelO, modelOC)
+  names(models) <- c("model1","model2","model3","modelcov","modelO", "modelOC")
   
 #   print(aovs)
   return(aovs)
@@ -37,50 +40,56 @@ CGtrait.LR_snglcov<- function(trait,df,covariate,family=gaussian){
 
 #return models
 CGtrait.models_snglcov <- function(trait,df,covariate,family=gaussian){
+  modeldata<-df[!is.na(df[[trait]]),]
+  modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+  modeldata$Mom<-as.factor(modeldata$Mom)
   
   model1<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
   model2<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|Pop), family=family,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
   model3<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|blank), family=family,data=modeldata) # Test population effect
-  a1 <- anova(model2,model1) # mom is sig!
-  a2 <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+  momAov <- anova(model2,model1) # mom is sig!
+  popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
   
   
   modelcov <- lmer(modeldata[[trait]]  ~ Origin + (1|Pop/Mom), family=family,data=modeldata)
-  a3 <- anova(model1, modelcov)
+  covAov <- anova(model1, modelcov)
   
   modelO<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
-  a4 <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+  originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
   
-  aovs <- list(a1,a2,a3,a4)
-  names(aovs) <- c(paste(trait,"a1"), paste(trait,"a2"),paste(trait,"a3"),paste(trait, "a4"))
-  models <- list(model1,model2,model3,modelcov,modelO)
-  names(models) <- c("model1","model2","model3","modelcov","modelO")
+  modelOC <- lmer(modeldata[[trait]]  ~ modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  ocAov <- anova(model1, modelOC)
+  
+  aovs <- list(momAov, popAov, covAov,originAov,ocAov)
+  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"))
+  models <- list(model1,model2,model3,modelcov,modelO, modelOC)
+  names(models) <- c("model1","model2","model3","modelcov","modelO", "modelOC")
   
   return(models)
 }
 
 
 ####which anovas have sig results?####
-#one anova
-temp <- frGLR.PC1[[1]]$"MaxLfLgth1 a1"
-str(temp)
+# #one anova
+# temp <- frGLR.PC1[[1]]$"MaxLfLgth1 a1"
+# str(temp)
+# 
+# temp$"Pr(>Chisq)"[2]
+# #
+# temp <- frGLR.PC1[[1]][[1]]
+# str(temp)
+# temp$"Pr(>Chisq)"[2]
+# 
+# temp <- frGLR.PC1[[1]]
+# str(temp)
+# temp[[1]]$"Pr(>Chisq)"[2]
+# names(temp)
 
-temp$"Pr(>Chisq)"[2]
-#
-temp <- frGLR.PC1[[1]][[1]]
-str(temp)
-temp$"Pr(>Chisq)"[2]
 
-temp <- frGLR.PC1[[1]]
-str(temp)
-temp[[1]]$"Pr(>Chisq)"[2]
-names(temp)
-
-
-CGtrait_sigaov_func_Fr <- function(list, selectaov="3:4"){
+CGtrait_sigaov_func_Fr <- function(list, selectaov="3:5"){
   for(i in 1:length(list)){
     temp <- list[[i]]
-    for(j in 3:4){
+    for(j in 3:5){
       aov <- temp[[j]]
       if(aov$"Pr(>Chisq)"[2]<0.1){
         print(names(temp)[j])

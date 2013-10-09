@@ -98,6 +98,47 @@ boltLR.bio7_SK
 boltLR.bio19_SK
 boltLR.lat_SK
 
+####
+#maxlfwidth2
+modeldata <- FrdatSK[!is.na(FrdatSK$MaxLfWdth2),]
+# modeldata<-df[!is.na(df[[trait]]),]
+# modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+# modeldata$Mom<-as.factor(modeldata$Mom)
+modeldata$Origin <- factor(modeldata$Origin, levels=c("nat", "inv","sk"))
+
+p1 <- ggplot(modeldata,aes(Trt, MaxLfWdth2, fill=Origin))+
+  geom_boxplot()+xlab("Stress Treatment")+
+  ylab("lfwidth2")+ 
+  theme(legend.justification=c(1,1), legend.position=c(1,1))
+p1
+
+p2 <- ggplot(modeldata,aes(Latitude, MaxLfWdth2, color=Origin))+
+  geom_point()+xlab("latitude")+ geom_smooth(method=glm, se=FALSE)+
+  ylab("lfwidth2")+ 
+  theme(legend.justification=c(0,1), legend.position=c(0,1))
+
+multiplot(p1, p2, cols=2)
+
+#lflegnthH
+modeldata <- FrdatSK[!is.na(FrdatSK$LfLgth),]
+# modeldata<-df[!is.na(df[[trait]]),]
+# modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+# modeldata$Mom<-as.factor(modeldata$Mom)
+modeldata$Origin <- factor(modeldata$Origin, levels=c("nat", "inv","sk"))
+
+p1 <- ggplot(modeldata,aes(Trt, LfLgth, fill=Origin))+
+  geom_boxplot()+xlab("Stress Treatment")+
+  ylab("max lf length at harvest")+ 
+  theme(legend.justification=c(1,1), legend.position=c(1,1))
+p1
+
+p2 <- ggplot(modeldata,aes(Latitude, LfLgth, color=Origin))+
+  geom_point()+xlab("latitude")+ geom_smooth(method=glm, se=FALSE)+
+  ylab("max lf length at harvest")+ 
+  theme(legend.justification=c(0,1), legend.position=c(0,1))
+
+multiplot(p1, p2, cols=2)
+
 # #####format datas#####
 # #get sk datas
 # FrdesSK <- Frdes[Frdes$Origin=="sk" & Frdes$Trt!="edge",]
