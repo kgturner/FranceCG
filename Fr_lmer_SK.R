@@ -4,6 +4,9 @@
 #Oct 2013
 #see end for data formatting, and Fr_lmer.R for modeling descriptions
 
+###tests tests tests###
+
+
 #read
 FrdatSK<- read.table("FrTraitClimDat_SK.txt", header=T, sep="\t",quote='"', row.names=1)
 
