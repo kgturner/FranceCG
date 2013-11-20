@@ -101,6 +101,74 @@ CGtrait_sigaov_func_Fr <- function(list, selectaov="3:5"){
 
 CGtrait_sigaov_func_Fr(frGLR.PC1)
 
+#sngl cov with interaction
+#Origin *Trt + single covariate (such as PC1 +bio4 +bio19)##
+CGtrait.LR_snglcov_int<- function(trait,df,covariate,family=gaussian){
+  modeldata<-df[!is.na(df[[trait]]),]
+  modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+  modeldata$Mom<-as.factor(modeldata$Mom)
+  #browser()
+  
+  model1<-lmer(modeldata[[trait]]  ~ Origin *modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  model2<-lmer(modeldata[[trait]]  ~ Origin *modeldata[[covariate]]+ (1|Pop), family=family,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+  model3<-lmer(modeldata[[trait]]  ~ Origin *modeldata[[covariate]]+ (1|blank), family=family,data=modeldata) # Test population effect
+  momAov <- anova(model2,model1) # mom is sig!
+  popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+  
+  modelint<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  intAov <- anova(model1, modelint)
+  
+  modelcov <- lmer(modeldata[[trait]]  ~ Origin + (1|Pop/Mom), family=family,data=modeldata)
+  covAov <- anova(modelint, modelcov)
+  
+  modelO<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
+  originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+  
+  modelOC <- lmer(modeldata[[trait]]  ~ modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  ocAov <- anova(modelint, modelOC)
+  
+  aovs <- list(momAov, popAov, intAov, covAov,originAov,ocAov)
+  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait, "intAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"))
+  models <- list(model1,model2,model3,modelint,modelcov,modelO, modelOC)
+  names(models) <- c("model1","model2","model3","modelint","modelcov","modelO", "modelOC")
+  
+  #   print(aovs)
+  return(aovs)
+}
+
+#return models
+CGtrait.models_snglcov_int <- function(trait,df,covariate,family=gaussian){
+  modeldata<-df[!is.na(df[[trait]]),]
+  modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+  modeldata$Mom<-as.factor(modeldata$Mom)
+  
+  model1<-lmer(modeldata[[trait]]  ~ Origin *modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  model2<-lmer(modeldata[[trait]]  ~ Origin *modeldata[[covariate]]+ (1|Pop), family=family,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+  model3<-lmer(modeldata[[trait]]  ~ Origin *modeldata[[covariate]]+ (1|blank), family=family,data=modeldata) # Test population effect
+  momAov <- anova(model2,model1) # mom is sig!
+  popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+  
+  modelint<-lmer(modeldata[[trait]]  ~ Origin +modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  intAov <- anova(model1, modelint)
+  
+  modelcov <- lmer(modeldata[[trait]]  ~ Origin + (1|Pop/Mom), family=family,data=modeldata)
+  covAov <- anova(modelint, modelcov)
+  
+  modelO<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
+  originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+  
+  modelOC <- lmer(modeldata[[trait]]  ~ modeldata[[covariate]]+ (1|Pop/Mom), family=family,data=modeldata)
+  ocAov <- anova(modelint, modelOC)
+  
+  aovs <- list(momAov, popAov, intAov, covAov,originAov,ocAov)
+  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait, "intAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"))
+  models <- list(model1,model2,model3,modelint,modelcov,modelO, modelOC)
+  names(models) <- c("model1","model2","model3","modelint","modelcov","modelO", "modelOC")
+  
+  
+  return(models)
+}
+
 ################################
 # #Origin (no latitude)#
 # CGtrait.LR.O<- function(trait,df,family=gaussian){
