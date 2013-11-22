@@ -12,25 +12,81 @@ frm2.2 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"
 day1 <- row.names(frm2.1)
 day2 <- row.names(frm2.2)
 FrdatSK$m2.date <- NA
-FrdatSK[FrdatSK$tagged %in% day1,]$m2.date <- "6/12/2011"
-FrdatSK[FrdatSK$tagged %in% day2,]$m2.date <- "6/13/2011"
+FrdatSK[unique(FrdatSK$tagged %in% day1),]$m2.date <- "6/12/2011"
+FrdatSK[unique(FrdatSK$tagged %in% day2),]$m2.date <- "6/13/2011"
 
 #write
 
+#all dates as int -- m1.date (factor), m2.date (chr)
+FrdatSK$m1.date2 <- strptime(FrdatSK$m1.date, format="%m/%d/%Y")
+FrdatSK$m1.date2 <- as.Date(FrdatSK$m1.date2)
+day0 <- as.Date("2011-05-12") #planting date
+FrdatSK$m1.date3 <- as.numeric(FrdatSK$m1.date2-day0)
+str(FrdatSK)
+summary(FrdatSK$m1.date2)
+summary(FrdatSK$m1.date3)
+FrdatSK$m1.date <- FrdatSK$m1.date3
+FrdatSK <- FrdatSK[,1:55]
+
+FrdatSK$m2.date2 <- strptime(FrdatSK$m2.date, format="%m/%d/%Y")
+FrdatSK$m2.date2 <- as.Date(FrdatSK$m2.date2)
+day0 <- as.Date("2011-05-12") #planting date
+FrdatSK$m2.date3 <- as.numeric(FrdatSK$m2.date2-day0)
+str(FrdatSK)
+summary(FrdatSK$m2.date2)
+summary(FrdatSK$m2.date3)
+FrdatSK$m2.date <- FrdatSK$m2.date3
+FrdatSK <- FrdatSK[,1:55]
+
+FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
+FrdatSK$m2.date <- as.integer(FrdatSK$m2.date)
+
+#ugh NAs for SK plants, because not in original data set. POOP
+summary(FrdatSK$m1.date)
+FrdatSK[is.na(FrdatSK$m1.date),]
+
+frm1.1 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 1 day 1.txt"
+frm1.2 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 1 day 2.txt"
+frm1.3 <- read.table(file.choose(), header=F, sep=",",quote='"') #"measure 1 day 3.txt"
+
+day1 <- row.names(frm1.1)
+day2 <- row.names(frm1.2)
+day3 <- unique(frm1.3$V1)
+
+FrdatSK[unique(FrdatSK$tagged %in% day1),]$m1.date <- "12"
+FrdatSK[unique(FrdatSK$tagged %in% day2),]$m1.date <- "13"
+FrdatSK[unique(FrdatSK$tagged %in% day3),]$m1.date <- "14"
+FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
+
 #for lf length only
-lfl  <- FrdatSK[c(1:7,9,13,22, 16, 36, 55)]
+lfl  <- FrdatSK[c(1:7,9,13,22, 16, 27:36, 55)]
 head(lfl)
 lfl$tagged <- as.factor(lfl$tagged)
 
-#id.vars = keep in each row pop, row, col, trt, mom, origin, tagged
-#measure.vars = the cols to reshape/split up/ the source data
-#variable.name= timepoint / column you are creating indicating what you are splitting rows on
-#value.name= new composit column of data
-lfl.long <- melt(lfl, id.vars=c("Pop", "Row","Column", "Trt", "Mom","Origin", "tagged", "m1.date", "m2.date","Harvest.date"), 
-     measure.vars=c("MaxLfLgth1", "MaxLfLgth2", "LfLgth"), variable.name="tmpt", value.name="lfl")
+#using reshape
+lfl.long <- reshape(lfl, idvar="tagged",
+                    direction="long", varying=list(m.date=c(21,22,11), lfl=c(8,9,10)), v.names=c("m.date","lfl"))
 head(lfl.long)
+tail(lfl.long)
+summary(lfl.long$time)
 
-#why NAs here???
+#for whole table?
+FrdatSK$tagged <- as.factor(FrdatSK$tagged)
+dat <- reshape(FrdatSK, idvar="tagged", direction="long", 
+               varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26)),
+               v.names=c("m.date","lfl", "lfw","lfc"))
+#rose diameter...?
+
+####################
+# 
+# #using melt from reshape2
+# #id.vars = keep in each row pop, row, col, trt, mom, origin, tagged
+# #measure.vars = the cols to reshape/split up/ the source data
+# #variable.name= timepoint / column you are creating indicating what you are splitting rows on
+# #value.name= new composit column of data
+# lfl.long <- melt(lfl, id.vars=c("Pop", "Row","Column", "Trt", "Mom","Origin", "tagged", "m1.date", "m2.date","Harvest.date"), 
+#      measure.vars=c("MaxLfLgth1", "MaxLfLgth2", "LfLgth"), variable.name="tmpt", value.name="lfl")
+# head(lfl.long)
 
 # #rename levels of tmpt
 # levels(lfl.long$tmpt)[levels(lfl.long$tmpt)=="MaxLfLgth1"] <- "tmpt1" #one wk after planting? m1.date - change format

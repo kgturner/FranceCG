@@ -2,7 +2,7 @@
 #mixed-effects models of univariate traits
 #lots of climate variables! Including climate PCA
 #Oct 2013
-#see end for data formatting, and Fr_lmer.R for modeling descriptions
+#see FrSkdata_format.R for data formatting, and Fr_lmer.R for modeling descriptions
 
 ###tests2 tests2 tests2###
 
