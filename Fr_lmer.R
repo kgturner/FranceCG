@@ -173,6 +173,87 @@ boltLR.bio7
 boltLR.bio19
 boltLR.lat
 
+##########single covariate, interaction###############
+#so for each cov and distribution
+
+#PC1
+frGLR.PC1_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="PC1"))#apply func to all gaussian traits
+frPLR.PC1_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="PC1", family=poisson))#apply func to all poisson traits
+boltLR.PC1_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="PC1",family=binomial) #apply to single binomial trait
+
+#PC2
+frGLR.PC2_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="PC2"))#apply func to all gaussian traits
+frPLR.PC2_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="PC2", family=poisson))#apply func to all poisson traits
+boltLR.PC2_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="PC2",family=binomial) #apply to single binomial trait
+
+#PC3
+frGLR.PC3_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="PC3"))#apply func to all gaussian traits
+frPLR.PC3_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="PC3", family=poisson))#apply func to all poisson traits
+boltLR.PC3_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="PC3",family=binomial) #apply to single binomial trait
+
+#bio4
+frGLR.bio4_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="bio4"))#apply func to all gaussian traits
+frPLR.bio4_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="bio4", family=poisson))#apply func to all poisson traits
+boltLR.bio4_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="bio4",family=binomial) #apply to single binomial trait
+
+#bio19
+frGLR.bio19_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="bio19"))#apply func to all gaussian traits
+frPLR.bio19_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="bio19", family=poisson))#apply func to all poisson traits
+boltLR.bio19_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="bio19",family=binomial) #apply to single binomial trait
+
+#bio7
+frGLR.bio7_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="bio7"))#apply func to all gaussian traits
+frPLR.bio7_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="bio7", family=poisson))#apply func to all poisson traits
+boltLR.bio7_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="bio7",family=binomial) #apply to single binomial trait
+
+#Latitude
+frGLR.lat_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="Latitude"))#apply func to all gaussian traits
+frPLR.lat_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="Latitude", family=poisson))#apply func to all poisson traits
+boltLR.lat_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="Latitude",family=binomial) #apply to single binomial trait
+
+#Trt
+frGLR.trt_int <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="Trt"))#apply func to all gaussian traits
+frPLR.trt_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov_int(n,frdat, covariate="Trt", family=poisson))#apply func to all poisson traits
+boltLR.trt_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="Trt",family=binomial) #apply to single binomial trait
+
+
+#which anovas have sig covariate or origin?
+snglcov_int <- c(frGLR.PC1_int, frPLR.PC1_int, boltLR.PC1_int,frGLR.PC2_int, frPLR.PC2_int, boltLR.PC2_int,frGLR.PC3_int, frPLR.PC3_int, boltLR.PC3_int,
+            frGLR.bio4_int, frGLR.bio7_int,  frGLR.bio19_int,  boltLR.bio19_int,
+             frGLR.lat_int,  boltLR.lat_int, frGLR.trt_int, frPLR.trt_int, boltLR.trt_int)
+# frPLR.bio4_int,frPLR.bio7_int,frPLR.bio19_int,frPLR.lat_int,boltLR.bio4_int,boltLR.bio7_int,
+save(snglcov_int, file="Fr_int_aovlists.RData")
+load()
+
+
+CGtrait_sigaov_func_Fr(frGLR.PC1_int)
+CGtrait_sigaov_func_Fr(frGLR.PC2_int)
+CGtrait_sigaov_func_Fr(frGLR.PC3_int)
+CGtrait_sigaov_func_Fr(frGLR.bio4_int)
+CGtrait_sigaov_func_Fr(frGLR.bio7_int)
+CGtrait_sigaov_func_Fr(frGLR.bio19_int)
+CGtrait_sigaov_func_Fr(frGLR.lat_int)
+
+CGtrait_sigaov_func_Fr(frPLR.PC1_int)
+CGtrait_sigaov_func_Fr(frPLR.PC2_int)
+CGtrait_sigaov_func_Fr(frPLR.PC3_int)
+# CGtrait_sigaov_func_Fr(frPLR.bio4_int)
+# CGtrait_sigaov_func_Fr(frPLR.bio7_int)
+# CGtrait_sigaov_func_Fr(frPLR.bio19_int)
+# CGtrait_sigaov_func_Fr(frPLR.lat_int)
+
+boltLR.PC1_int
+boltLR.PC2_int
+boltLR.PC3_int
+# boltLR.bio4_int
+# boltLR.bio7_int
+boltLR.bio19_int
+boltLR.lat_int
+
+CGtrait_sigaov_func_Fr(frGLR.trt_int)
+CGtrait_sigaov_func_Fr(frPLR.trt_int)
+boltLR.trt_int
+
 #######################example##########################
 # ######Allo, Origin * Lat models######
 # al<-read.table("STAllosubset.txt", header=T, sep="\t", quote='"', row.names=1) #allosubset
