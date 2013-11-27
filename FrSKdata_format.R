@@ -75,7 +75,19 @@ FrdatSK$tagged <- as.factor(FrdatSK$tagged)
 dat <- reshape(FrdatSK, idvar="tagged", direction="long", 
                varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26)),
                v.names=c("m.date","lfl", "lfw","lfc"))
-#rose diameter...?
+#with rose diameter...?
+dat2 <- FrdatSK
+dat2$Rose.diam1 <- NA
+dat2$Rose.area
+Frdatsk.l <- reshape(dat2, idvar="tagged", direction="long", 
+               varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26), rd=c(56,11,19)),
+               v.names=c("m.date","lfl", "lfw","lfc","rd"))
+
+Frdatsk.l <- Frdatsk.l[,c(1:10,12:24,39,42:47)]
+#write
+write.table(Frdatsk.l, file="FrTraitClimDat_SK_long.txt",sep="\t", quote=F)
+#read
+Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
 ####################
 # 
