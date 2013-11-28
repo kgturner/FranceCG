@@ -45,30 +45,41 @@ FrdatSK$m2.date <- as.integer(FrdatSK$m2.date)
 summary(FrdatSK$m1.date)
 FrdatSK[is.na(FrdatSK$m1.date),]
 
-frm1.1 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 1 day 1.txt"
+frm1.1 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 1 day 1.txt" fix typo in file
 frm1.2 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 1 day 2.txt"
 frm1.3 <- read.table(file.choose(), header=F, sep=",",quote='"') #"measure 1 day 3.txt"
+frm1.4 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 1 oops.txt"
 
 day1 <- row.names(frm1.1)
 day2 <- row.names(frm1.2)
-day3 <- unique(frm1.3$V1)
+day3 <- as.character(unique(frm1.3$V1))
+day4 <- row.names(frm1.4)
 
 FrdatSK[unique(FrdatSK$tagged %in% day1),]$m1.date <- "12"
 FrdatSK[unique(FrdatSK$tagged %in% day2),]$m1.date <- "13"
 FrdatSK[unique(FrdatSK$tagged %in% day3),]$m1.date <- "14"
+FrdatSK[unique(FrdatSK$tagged %in% day4),]$m1.date <- "17"
+FrdatSK[is.na(FrdatSK$m1.date),]
 FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
 
-#for lf length only
-lfl  <- FrdatSK[c(1:7,9,13,22, 16, 27:36, 55)]
-head(lfl)
-lfl$tagged <- as.factor(lfl$tagged)
+#need to change m1.date for"GR002-9","11","9.0","3.2",""
+# "CA009-7","10","8.2","2.2",""
+# "UA007-5","12","7.9","2.9",""
+# "CA001-9","25","10.4","3.0",""
+#measured later, see notebook, guessing 17?
 
-#using reshape
-lfl.long <- reshape(lfl, idvar="tagged",
-                    direction="long", varying=list(m.date=c(21,22,11), lfl=c(8,9,10)), v.names=c("m.date","lfl"))
-head(lfl.long)
-tail(lfl.long)
-summary(lfl.long$time)
+
+# #for lf length only
+# lfl  <- FrdatSK[c(1:7,9,13,22, 16, 27:36, 55)]
+# head(lfl)
+# lfl$tagged <- as.factor(lfl$tagged)
+# 
+# #using reshape
+# lfl.long <- reshape(lfl, idvar="tagged",
+#                     direction="long", varying=list(m.date=c(21,22,11), lfl=c(8,9,10)), v.names=c("m.date","lfl"))
+# head(lfl.long)
+# tail(lfl.long)
+# summary(lfl.long$time)
 
 #for whole table?
 FrdatSK$tagged <- as.factor(FrdatSK$tagged)
@@ -78,12 +89,19 @@ dat <- reshape(FrdatSK, idvar="tagged", direction="long",
 #with rose diameter...?
 dat2 <- FrdatSK
 dat2$Rose.diam1 <- NA
-dat2$Rose.area
+
 Frdatsk.l <- reshape(dat2, idvar="tagged", direction="long", 
                varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26), rd=c(56,11,19)),
                v.names=c("m.date","lfl", "lfw","lfc","rd"))
 
 Frdatsk.l <- Frdatsk.l[,c(1:10,12:24,39,42:47)]
+Frdatsk.l[is.na(Frdatsk.l$m.date),]
+str(Frdatsk.l)
+Frdatsk.l$Mom <- as.factor(Frdatsk.l$Mom)
+subset(Frdatsk.l,lfc>100)
+#lfcount at harvest for BG001-1 ?= 515? Ditto EDGE-9 ?=241?
+#
+
 #write
 write.table(Frdatsk.l, file="FrTraitClimDat_SK_long.txt",sep="\t", quote=F)
 #read
