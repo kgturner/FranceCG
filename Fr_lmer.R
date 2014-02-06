@@ -66,8 +66,8 @@ frGLR.Trt <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_
 frPLR.Trt <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Trt", family=poisson))#apply func to all poisson traits
 boltLR.Trt <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="Trt",family=binomial) #apply to single binomial trait
 
-CGtrait_sigaov_func_Fr(frGLR.Trt)
-CGtrait_sigaov_func_Fr(frPLR.Trt)
+CGtrait_sigaov_func_Fr(frGLR.Trt, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frPLR.Trt, selectaov=3:6)
 boltLR.Trt
 
 #########
@@ -226,17 +226,17 @@ save(snglcov_int, file="Fr_int_aovlists.RData")
 load()
 
 
-CGtrait_sigaov_func_Fr(frGLR.PC1_int)
-CGtrait_sigaov_func_Fr(frGLR.PC2_int)
-CGtrait_sigaov_func_Fr(frGLR.PC3_int)
-CGtrait_sigaov_func_Fr(frGLR.bio4_int)
-CGtrait_sigaov_func_Fr(frGLR.bio7_int)
-CGtrait_sigaov_func_Fr(frGLR.bio19_int)
-CGtrait_sigaov_func_Fr(frGLR.lat_int)
+CGtrait_sigaov_func_Fr(frGLR.PC1_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.PC2_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.PC3_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.bio4_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.bio7_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.bio19_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.lat_int, selectaov=3:6)
 
-CGtrait_sigaov_func_Fr(frPLR.PC1_int)
-CGtrait_sigaov_func_Fr(frPLR.PC2_int)
-CGtrait_sigaov_func_Fr(frPLR.PC3_int)
+CGtrait_sigaov_func_Fr(frPLR.PC1_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frPLR.PC2_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frPLR.PC3_int, selectaov=3:6)
 # CGtrait_sigaov_func_Fr(frPLR.bio4_int)
 # CGtrait_sigaov_func_Fr(frPLR.bio7_int)
 # CGtrait_sigaov_func_Fr(frPLR.bio19_int)
@@ -250,8 +250,8 @@ boltLR.PC3_int
 boltLR.bio19_int
 boltLR.lat_int
 
-CGtrait_sigaov_func_Fr(frGLR.trt_int)
-CGtrait_sigaov_func_Fr(frPLR.trt_int)
+CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=3:6)
 boltLR.trt_int
 
 #######################example##########################

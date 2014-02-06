@@ -74,7 +74,7 @@ snglcov_SK <- c(frGLR.PC1_SK, frPLR.PC1_SK, boltLR.PC1_SK,frGLR.PC2_SK, frPLR.PC
              frGLR.lat_SK, frPLR.lat_SK, boltLR.lat_SK, frGLR.Trt_SK, frPLR.Trt_SK, boltLR.Trt_SK)
 #frPLR.bio4_SK, frPLR.bio7_SK,frPLR.bio19_SK,
 save(snglcov_SK, file="Fr_aovlists_SK.RData")
-load()
+load(file="Fr_aovlists_SK.RData")
 
 
 CGtrait_sigaov_func_Fr(frGLR.PC1_SK)
@@ -91,13 +91,13 @@ CGtrait_sigaov_func_Fr(frPLR.PC3_SK)
 # CGtrait_sigaov_func_Fr(frPLR.bio4_SK)
 # CGtrait_sigaov_func_Fr(frPLR.bio7_SK)
 # CGtrait_sigaov_func_Fr(frPLR.bio19_SK)
-CGtrait_sigaov_func_Fr(frPLR.lat_SK)
+# CGtrait_sigaov_func_Fr(frPLR.lat_SK)
 
 boltLR.PC1_SK
 boltLR.PC2_SK
 boltLR.PC3_SK
-boltLR.bio4_SK
-boltLR.bio7_SK
+# boltLR.bio4_SK
+# boltLR.bio7_SK
 boltLR.bio19_SK
 boltLR.lat_SK
 
@@ -231,26 +231,26 @@ snglcov_SKint <- c(frGLR.PC1_SKint, frPLR.PC1_SKint, boltLR.PC1_SKint,frGLR.PC2_
                   boltLR.lat_SKint, frGLR.Trt_SKint, frPLR.Trt_SKint, boltLR.Trt_SKint)
 #frPLR.bio4_SK, frPLR.bio7_SK,frPLR.bio19_SK,frGLR.lat_SK,frPLR.lat_SK,boltLR.bio4_SK,boltLR.bio7_SK,
 save(snglcov_SKint, file="Fr_aovlists_SKint.RData")
-load()
+snglcov_SKint <- load(file="Fr_aovlists_SKint.RData")
 
 
-CGtrait_sigaov_func_Fr(frGLR.PC1_SKint)
-CGtrait_sigaov_func_Fr(frGLR.PC2_SKint)
-CGtrait_sigaov_func_Fr(frGLR.PC3_SKint)
-CGtrait_sigaov_func_Fr(frGLR.bio4_SKint)
-CGtrait_sigaov_func_Fr(frGLR.bio7_SKint)
-CGtrait_sigaov_func_Fr(frGLR.bio19_SKint)
+CGtrait_sigaov_func_Fr(frGLR.PC1_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.PC2_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.PC3_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.bio4_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.bio7_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.bio19_SKint, selectaov=3:6)
 # CGtrait_sigaov_func_Fr(frGLR.lat_SKint)
-CGtrait_sigaov_func_Fr(frGLR.Trt_SKint)
+CGtrait_sigaov_func_Fr(frGLR.Trt_SKint, selectaov=3:6)
 
-CGtrait_sigaov_func_Fr(frPLR.PC1_SKint)
-CGtrait_sigaov_func_Fr(frPLR.PC2_SKint)
-CGtrait_sigaov_func_Fr(frPLR.PC3_SKint)
+CGtrait_sigaov_func_Fr(frPLR.PC1_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frPLR.PC2_SKint, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frPLR.PC3_SKint, selectaov=3:6)
 # CGtrait_sigaov_func_Fr(frPLR.bio4_SKint)
 # CGtrait_sigaov_func_Fr(frPLR.bio7_SKint)
 # CGtrait_sigaov_func_Fr(frPLR.bio19_SKint)
 # CGtrait_sigaov_func_Fr(frPLR.lat_SKint)
-CGtrait_sigaov_func_Fr(frPLR.Trt_SKint)
+CGtrait_sigaov_func_Fr(frPLR.Trt_SKint, selectaov=3:6)
 
 boltLR.PC1_SKint
 boltLR.PC2_SKint
