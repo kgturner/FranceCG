@@ -136,6 +136,7 @@ CGtrait.LR_snglcov_int<- function(trait,df,covariate,family=gaussian){
   return(aovs)
 }
 
+
 #return models
 CGtrait.models_snglcov_int <- function(trait,df,covariate,family=gaussian){
   modeldata<-df[!is.na(df[[trait]]),]
