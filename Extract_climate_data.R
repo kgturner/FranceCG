@@ -72,8 +72,38 @@ write.table(Frclim, file="Frbioclimdata.txt")
 #load table
 Frclim <- read.table("Frbioclimdata.txt", header=TRUE)
 
+##################################
+#Problem with CA008 - should be in tile 12, data coming from tile 11?
 
-##################
+#load files for tile 12
+tile12alt <- raster("~/grad work/Centaurea diffusa/WorldClim_2013/alt_12.tif")
+hasValues(tile12alt)
+#[1] TRUE
+inMemory(tile12alt)
+#[1] FALSE
+
+#extracting cell values by coordinates
+CA008<-SpatialPoints(as.matrix(t(c(-118.64571,49.01208))))
+CA008
+# SpatialPoints:
+#   coords.x1 coords.x2
+# [1,]      -100        49
+# Coordinate Reference System (CRS) arguments: NA 
+extract(tile12alt, CA008)
+#      1308 
+
+#load files for tile 11
+tile11alt <- raster("~/grad work/Centaurea diffusa/WorldClim_2013/alt_11.tif")
+hasValues(tile11alt)
+#[1] TRUE
+inMemory(tile11alt)
+#[1] FALSE
+extract(tile11alt, CA008)
+#[1] NA
+
+#ummmmmmmmmmmmmmmm
+
+##################Squishr##################
 #need to merge columns so that all bio1 columns are merged, etc. 
 #Should have total of 20 columns (19 bioclim variables + altitude)
 Frclim.1 <- Frclim
