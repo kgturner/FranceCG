@@ -5,6 +5,7 @@
 
 #read
 FrdatSK<- read.table("FrTraitClimDat_SK.txt", header=T, sep="\t",quote='"', row.names=1)
+Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
 library(lme4)
 library(lsmeans)
@@ -12,9 +13,10 @@ library(ggplot2)
 library(plyr)
 
 str(FrdatSK)
+FrdatSK$Mom <- as.factor(FrdatSK$Mom)
 
 #PLOT ALL THE THINGS!
-qplot(data=FrdatSK, y=LfCount1, x=Trt, color=Origin)
+ggplot(data=FrdatSK, aes(y=Bolt.date, x=Trt, color=Origin))+geom_boxplot()
 list <- names(FrdatSK[c(8:26,36:55)])
 # plot.ts(FrdatSK[,c(8:26,36:55)]) #break up in to 10s?
 
@@ -32,4 +34,18 @@ dfplot <- function(data.frame){
 }
 dfplot(FrdatSK)
 
+dfplot2 <- function(data.frame){
+  df <- data.frame
+  ln <- length(names(data.frame))
+  for(i in 1:ln){
+    mname <- substitute(df[,i])
+    if(is.factor(df[,i])){
+      plot(df[,i],main=names(df)[i])}
+    else{plot(df$Origin, df[,i],main=names(df)[i])}
+  }
+}
 
+dfplot2(Frdatsk.l)
+dfplot2(FrdatSK)
+
+par(ask=F)
