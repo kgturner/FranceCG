@@ -48,22 +48,24 @@ for(i in Frpop$Pop){
 #no column should be entirely NAs
 poplist <- mget(levels(Frpop$Pop), envir=globalenv())
 
+# tiffvector <- NULL
 tiffvector <- unlist(list)
 
-foreach(p=poplist, .combine='cbind') %:%
-  foreach(t=tiffvector, .combine='rbind') %do%{
+foreach(p=poplist, .combine='rbind') %:%
+  foreach(t=tiffvector, .combine='cbind') %do%{
     is.na(extract(t,p))
   }
 
 #make climate data table
-climate <- foreach(t=tiffvector, .combine='cbind') %:%    
-  foreach(p=poplist, .combine='rbind') %do%{
+climate <- foreach(p=poplist, .combine='rbind') %:%    
+  foreach(t=tiffvector, .combine='cbind') %do%{
     myValue<-extract(t, p)
   } #may take a while
 
 #tidy table
-Frclim <- as.data.frame(climate)
-row.names(Frclim) <- Frpop$Pop
+popnames <- sort(as.character(Frpop$Pop))
+Frclim <- as.data.frame(climate, row.names=popnames)
+
 colnames(Frclim) <- filenames
 
 #write table
@@ -73,35 +75,69 @@ write.table(Frclim, file="Frbioclimdata.txt")
 Frclim <- read.table("Frbioclimdata.txt", header=TRUE)
 
 ##################################
-#Problem with CA008 - should be in tile 12, data coming from tile 11?
+# #Problem with CA008 - should be in tile 12, data coming from tile 11?
+# 
+# #load files for tile 12
+# tile12alt <- raster("~/grad work/Centaurea diffusa/WorldClim_2013/alt_12.tif")
+# hasValues(tile12alt)
+# #[1] TRUE
+# inMemory(tile12alt)
+# #[1] FALSE
+# 
+# #extracting cell values by coordinates
+# CA008<-SpatialPoints(as.matrix(t(c(-118.64571,49.01208))))
+# CA008
+# # SpatialPoints:
+# #   coords.x1 coords.x2
+# # [1,]      -100        49
+# # Coordinate Reference System (CRS) arguments: NA 
+# extract(tile12alt, CA008)
+# #      1308 
+# 
+# #load files for tile 11
+# tile11alt <- raster("~/grad work/Centaurea diffusa/WorldClim_2013/alt_11.tif")
+# hasValues(tile11alt)
+# #[1] TRUE
+# inMemory(tile11alt)
+# #[1] FALSE
+# extract(tile11alt, CA008)
+# #[1] NA
+# 
+# #ummmmmmmmmmmmmmmm
+# 
+# #problem here with either combining commands or possibly order of nesting of loops
+# 
+# #check that spatial points load correctly from geoTIFFs
+# #no column should be entirely NAs
+# poplist <- mget(levels(Frpop$Pop), envir=globalenv())
+# subpoplist <- head(poplist)
+# 
+# # tiffvector <- NULL
+# tiffvector <- unlist(list)
+# subtiffvector <- head(tiffvector)
+# 
+# foreach(p=subpoplist, .combine='rbind') %:%
+#   foreach(t=subtiffvector, .combine='cbind') %do%{
+#     is.na(extract(t,p))
+#   }
+# 
+# #make climate data table
+# subclimate <- foreach(p=subpoplist, .combine='rbind') %:%    
+#   foreach(t=subtiffvector, .combine='cbind') %do%{
+#     myValue<-extract(t, p)
+#   } #may take a while
+# subclimate
+# 
+# #tidy table
+# subname <- #unlist(subpoplist)
+# 
+# subpop <- sort(as.character(head(Frpop$Pop)))
+# 
+# 
+# subclim <- as.data.frame(subclimate, row.names=subpop)
+# # row.names(subclim) <- levels(subpop$Pop)
+# colnames(subclim) <- filenames
 
-#load files for tile 12
-tile12alt <- raster("~/grad work/Centaurea diffusa/WorldClim_2013/alt_12.tif")
-hasValues(tile12alt)
-#[1] TRUE
-inMemory(tile12alt)
-#[1] FALSE
-
-#extracting cell values by coordinates
-CA008<-SpatialPoints(as.matrix(t(c(-118.64571,49.01208))))
-CA008
-# SpatialPoints:
-#   coords.x1 coords.x2
-# [1,]      -100        49
-# Coordinate Reference System (CRS) arguments: NA 
-extract(tile12alt, CA008)
-#      1308 
-
-#load files for tile 11
-tile11alt <- raster("~/grad work/Centaurea diffusa/WorldClim_2013/alt_11.tif")
-hasValues(tile11alt)
-#[1] TRUE
-inMemory(tile11alt)
-#[1] FALSE
-extract(tile11alt, CA008)
-#[1] NA
-
-#ummmmmmmmmmmmmmmm
 
 ##################Squishr##################
 #need to merge columns so that all bio1 columns are merged, etc. 
