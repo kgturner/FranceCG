@@ -40,7 +40,9 @@ h$tagged <- row.names(h)
 
 frdat <- merge(d, d2, all=TRUE)
 frdat <- merge(frdat, h, all=TRUE)
-frdat <- merge(frdat,Frclimdat2[,c(1,13,16,19,22:27)], all.x=TRUE)
+frdat.2 <- frdat[,c(1:42,52)]
+frdat.3 <- merge(frdat.2,Frclimdat2[,c(1,2,5,16,18,21:27)], all.x=TRUE) #pick out top loadings bio11, bio9, bio6, bio4, alt, long, lat
+frdat <- frdat.3
 row.names(frdat) <- frdat$tagged
 
 #formating
@@ -51,6 +53,13 @@ frdat$LfCountH <- as.integer(frdat$LfCountH)
 #dates
 24
 head(frdat[35])
+
+frdat$m1.date2 <- strptime(frdat$m1.date, format="%m/%d/%Y")
+frdat$m1.date2 <- as.Date(frdat$m1.date2)
+day0 <- as.Date("2011-05-12")
+frdat$m1.date3 <- as.numeric(frdat$m1.date2-day0)
+frdat$m1.date <- frdat$m1.date3
+frdat <- frdat[,1:52]
 
 frdat$Harvest.date2 <- strptime(frdat$Harvest.date, format="%A, %B %d, %Y")
 frdat$Harvest.date2 <- as.Date(frdat$Harvest.date2)

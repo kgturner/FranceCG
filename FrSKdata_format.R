@@ -18,15 +18,15 @@ FrdatSK[unique(FrdatSK$tagged %in% day2),]$m2.date <- "6/13/2011"
 #write
 
 #all dates as int -- m1.date (factor), m2.date (chr)
-FrdatSK$m1.date2 <- strptime(FrdatSK$m1.date, format="%m/%d/%Y")
-FrdatSK$m1.date2 <- as.Date(FrdatSK$m1.date2)
+# FrdatSK$m1.date2 <- strptime(FrdatSK$m1.date, format="%m/%d/%Y")
+# FrdatSK$m1.date2 <- as.Date(FrdatSK$m1.date2)
 day0 <- as.Date("2011-05-12") #planting date
-FrdatSK$m1.date3 <- as.numeric(FrdatSK$m1.date2-day0)
+# FrdatSK$m1.date3 <- as.numeric(FrdatSK$m1.date2-day0)
 str(FrdatSK)
-summary(FrdatSK$m1.date2)
-summary(FrdatSK$m1.date3)
-FrdatSK$m1.date <- FrdatSK$m1.date3
-FrdatSK <- FrdatSK[,1:55]
+# summary(FrdatSK$m1.date2)
+# summary(FrdatSK$m1.date3)
+# FrdatSK$m1.date <- FrdatSK$m1.date3
+# FrdatSK <- FrdatSK[,1:57]
 
 FrdatSK$m2.date2 <- strptime(FrdatSK$m2.date, format="%m/%d/%Y")
 FrdatSK$m2.date2 <- as.Date(FrdatSK$m2.date2)
@@ -36,7 +36,7 @@ str(FrdatSK)
 summary(FrdatSK$m2.date2)
 summary(FrdatSK$m2.date3)
 FrdatSK$m2.date <- FrdatSK$m2.date3
-FrdatSK <- FrdatSK[,1:55]
+FrdatSK <- FrdatSK[,1:57]
 
 FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
 FrdatSK$m2.date <- as.integer(FrdatSK$m2.date)
@@ -62,11 +62,13 @@ FrdatSK[unique(FrdatSK$tagged %in% day4),]$m1.date <- "17"
 FrdatSK[is.na(FrdatSK$m1.date),]
 FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
 
-#need to change m1.date for"GR002-9","11","9.0","3.2",""
+#need to change m1.date for
+# "GR002-9","11","9.0","3.2",""
 # "CA009-7","10","8.2","2.2",""
 # "UA007-5","12","7.9","2.9",""
 # "CA001-9","25","10.4","3.0",""
 #measured later, see notebook, guessing 17?
+FrdatSK[FrdatSK$tagged %in% c("GR002-9","CA009-7","UA007-5","CA001-9"),]
 
 
 # #for lf length only
@@ -83,21 +85,24 @@ FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
 
 #for whole table?
 FrdatSK$tagged <- as.factor(FrdatSK$tagged)
-dat <- reshape(FrdatSK, idvar="tagged", direction="long", 
-               varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26)),
-               v.names=c("m.date","lfl", "lfw","lfc"))
+# dat <- reshape(FrdatSK, idvar="tagged", direction="long", 
+#                varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26)),
+#                v.names=c("m.date","lfl", "lfw","lfc"))
 #with rose diameter...?
 dat2 <- FrdatSK
 dat2$Rose.diam1 <- NA
 
 Frdatsk.l <- reshape(dat2, idvar="tagged", direction="long", 
-               varying=list(m.date=c(36,55,16), lfl=c(9,13,22), lfw=c(10,14,23), lfc=c(8,12,26), rd=c(56,11,19)),
+               varying=list(m.date=c(11,57,17), lfl=c(9,14,23), lfw=c(10,15,24), lfc=c(8,13,27), rd=c(58,12,20)),
                v.names=c("m.date","lfl", "lfw","lfc","rd"))
-
-Frdatsk.l <- Frdatsk.l[,c(1:10,12:24,39,42:47)]
+str(Frdatsk.l)
+Frdatsk.l <- Frdatsk.l[,c(1:10,12:25,41,44:49)]
 Frdatsk.l[is.na(Frdatsk.l$m.date),]
 str(Frdatsk.l)
 Frdatsk.l$Mom <- as.factor(Frdatsk.l$Mom)
+dat <- merge(Frdatsk.l, FrdatSK[,c(1:7,17)], all.x=TRUE) #keep harvest date
+
+#outliers?
 subset(Frdatsk.l,lfc>100)
 #lfcount at harvest for BG001-1 ?= 515? Ditto EDGE-9 ?=241?
 #
@@ -205,8 +210,8 @@ FrdatSK <- merge(FrdatSK,Frh, all.x=TRUE)
 
 #load climate table
 Frclimdat2 <- read.table("FrbioclimPCAdat.txt", header=TRUE)
-FrdatSK <- merge(FrdatSK,Frclimdat2[,c(1,13,16,19,22:27)], all.x=TRUE)
-row.names(FrdatSK) <- FrdatSK$tagged
+FrdatSK <- merge(FrdatSK,Frclimdat2[,c(1,2,5,16,18,21:27)], all.x=TRUE) #pick out top loadings bio11, bio9, bio6, bio4, alt, long, lat
+row.names(FrdatSK) <- FrdatSK$Tagged
 
 setdiff(colnames(frdat), colnames(FrdatSK))
 setdiff(colnames(FrdatSK), colnames(frdat)) #some extraneous columns/transformations, nothing major.
@@ -221,20 +226,25 @@ FrdatSKonly$Harvest.date2 <- as.Date(FrdatSKonly$Harvest.date2)
 day0 <- as.Date("2011-05-12") #planting date
 FrdatSKonly$Harvest.date3 <- as.numeric(FrdatSKonly$Harvest.date2-day0)
 FrdatSKonly$Harvest.date <- FrdatSKonly$Harvest.date3
-FrdatSKonly <- FrdatSKonly[,1:47]
+FrdatSKonly <- FrdatSKonly[,1:49]
 
 FrdatSKonly$Bolt.date2 <- strptime(FrdatSKonly$Bolt.date, format="%A, %B %d, %Y")
 FrdatSKonly$Bolt.date2 <- as.Date(FrdatSKonly$Bolt.date2)
 day0 <- as.Date("2011-05-12")
 FrdatSKonly$Bolt.date3 <- as.numeric(FrdatSKonly$Bolt.date2-day0)
 FrdatSKonly$Bolt.date <- FrdatSKonly$Bolt.date3
-FrdatSKonly <- FrdatSKonly[,1:47]
+FrdatSKonly <- FrdatSKonly[,1:49]
 
-
+FrdatSK$m1.date2 <- strptime(FrdatSK$m1.date, format="%m/%d/%Y")
+FrdatSK$m1.date2 <- as.Date(FrdatSK$m1.date2)
+day0 <- as.Date("2011-05-12")
+FrdatSK$m1.date3 <- as.numeric(FrdatSK$m1.date2-day0)
+FrdatSK$m1.date <- FrdatSK$m1.date3
+FrdatSK <- FrdatSK[,1:49]
 # 
 FrdatSKonly$Bolt.date <- as.integer(FrdatSKonly$Bolt.date)
 FrdatSKonly$Harvest.date <- as.integer(FrdatSKonly$Harvest.date)
-# FrdatSKonly$m1.date <- as.integer(FrdatSKonly$m1.date)
+FrdatSKonly$m1.date <- as.integer(FrdatSKonly$m1.date)
 # 
 # #write
 write.table(FrdatSKonly, file="FrTraitClimDat_SKonly.txt",sep="\t", quote=F)
@@ -242,14 +252,9 @@ write.table(FrdatSKonly, file="FrTraitClimDat_SKonly.txt",sep="\t", quote=F)
 FrdatSKonly<- read.table("FrTraitClimDat_SKonly.txt", header=T, sep="\t",quote='"', row.names=1)
 
 #combine with DK data
-FrdatSK <- merge(frdat, FrdatSKonly[,c(1:7,12:15, 17:21, 23:26, 31:37, 39:47)], all=TRUE)
+FrdatSK <- merge(frdat, FrdatSKonly[,c(1:7,12:15, 17:21, 23:26, 31:37, 39:49)], all=TRUE)
 
-FrdatSK$m1.date2 <- strptime(FrdatSK$m1.date, format="%m/%d/%Y")
-FrdatSK$m1.date2 <- as.Date(FrdatSK$m1.date2)
-day0 <- as.Date("2011-05-12")
-FrdatSK$m1.date3 <- as.numeric(FrdatSK$m1.date2-day0)
-FrdatSK$m1.date <- FrdatSK$m1.date3
-FrdatSK <- FrdatSK[,1:52]
+
 
 # #Transform datas!
 # #log transform continuous

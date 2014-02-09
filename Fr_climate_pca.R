@@ -49,7 +49,7 @@ sort(abs(loadings))
 #profound or mundane? bio7, bio19, bio4 also top three loadings for kay's ragweed.
 #hahaha or bug in code!
 
-Frclimdat2 <- cbind(Frclimdat2, Frclimdat$bio4, Frclimdat$bio19, Frclimdat$bio7)
+# Frclimdat2 <- cbind(Frclimdat2, Frclimdat$bio4, Frclimdat$bio19, Frclimdat$bio7)
 
 
 #write table
