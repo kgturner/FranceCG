@@ -20,7 +20,7 @@ ggplot(data=FrdatSK, aes(y=Bolt.date, x=Trt, color=Origin))+geom_boxplot()
 list <- names(FrdatSK[c(8:26,36:55)])
 # plot.ts(FrdatSK[,c(8:26,36:55)]) #break up in to 10s?
 
-par(ask=TRUE)
+
 
 dfplot <- function(data.frame){
     df <- data.frame
@@ -45,7 +45,9 @@ dfplot2 <- function(data.frame){
   }
 }
 
-dfplot2(Frdatsk.l)
+par(ask=TRUE)
+
 dfplot2(FrdatSK)
+dfplot2(Frdatsk.l)
 
 par(ask=F)
