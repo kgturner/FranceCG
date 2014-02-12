@@ -175,7 +175,7 @@ CGtrait.models_snglcov_int <- function(trait,df,covariate,family=gaussian){
 
 #sngl cov with interaction
 #Origin *Trt + single covariate (such as PC1 +bio4 +bio19)##
-CGtrait.LR_snglcov_int_time<- function(trait,df,covariate,family=gaussian){
+CGtrait.LR_snglcov_int_mdate<- function(trait,df,covariate,family=gaussian){
   modeldata<-df[!is.na(df[[trait]]),]
   modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
   modeldata$Mom<-as.factor(modeldata$Mom)
@@ -199,20 +199,20 @@ CGtrait.LR_snglcov_int_time<- function(trait,df,covariate,family=gaussian){
   modelOC <- lmer(modeldata[[trait]]  ~ modeldata[[covariate]]+ m.date+(1|Pop/Mom), family=family,data=modeldata)
   ocAov <- anova(modelint, modelOC)
   
-  modeltime<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
-  timeAov <- anova(modeltime,modelO) #test for significance of origin - origin only marginally sig....!
+  modelmdate<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
+  mdateAov <- anova(modelmdate,modelO) #test for significance of origin - origin only marginally sig....!
   
-  aovs <- list(momAov, popAov, intAov, covAov,originAov,ocAov, timeAov)
-  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait, "intAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"), paste(trait, "timeAov"))
-  models <- list(model1,model2,model3,modelint,modelcov,modelO, modelOC, modeltime)
-  names(models) <- c("model1","model2","model3","modelint","modelcov","modelO", "modelOC","modeltime")
+  aovs <- list(momAov, popAov, intAov, covAov,originAov,ocAov, mdateAov)
+  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait, "intAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"), paste(trait, "mdateAov"))
+  models <- list(model1,model2,model3,modelint,modelcov,modelO, modelOC, modelmdate)
+  names(models) <- c("model1","model2","model3","modelint","modelcov","modelO", "modelOC","modelmdate")
   
   #   print(aovs)
   return(aovs)
 }
 
 #return models
-CGtrait.models_snglcov_int_time <- function(trait,df,covariate,family=gaussian){
+CGtrait.models_snglcov_int_mdate <- function(trait,df,covariate,family=gaussian){
   modeldata<-df[!is.na(df[[trait]]),]
   modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
   modeldata$Mom<-as.factor(modeldata$Mom)
@@ -235,13 +235,13 @@ CGtrait.models_snglcov_int_time <- function(trait,df,covariate,family=gaussian){
   modelOC <- lmer(modeldata[[trait]]  ~ modeldata[[covariate]]+ m.date+(1|Pop/Mom), family=family,data=modeldata)
   ocAov <- anova(modelint, modelOC)
   
-  modeltime<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
-  timeAov <- anova(modeltime,modelO) #test for significance of origin - origin only marginally sig....!
+  modelmdate<-lmer(modeldata[[trait]] ~ (1|Pop/Mom), family=family,data=modeldata)
+  mdateAov <- anova(modelmdate,modelO) #test for significance of origin - origin only marginally sig....!
   
-  aovs <- list(momAov, popAov, intAov, covAov,originAov,ocAov, timeAov)
-  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait, "intAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"), paste(trait, "timeAov"))
-  models <- list(model1,model2,model3,modelint,modelcov,modelO, modelOC, modeltime)
-  names(models) <- c("model1","model2","model3","modelint","modelcov","modelO", "modelOC","modeltime")
+  aovs <- list(momAov, popAov, intAov, covAov,originAov,ocAov, mdateAov)
+  names(aovs) <- c(paste(trait,"momAov"), paste(trait,"popAov"),paste(trait, "intAov"),paste(trait,"covAov"),paste(trait, "originAov"), paste(trait, "ocAov"), paste(trait, "mdateAov"))
+  models <- list(model1,model2,model3,modelint,modelcov,modelO, modelOC, modelmdate)
+  names(models) <- c("model1","model2","model3","modelint","modelcov","modelO", "modelOC","modelmdate")
   
   
   return(models)
