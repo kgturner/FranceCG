@@ -88,7 +88,9 @@ frdat[is.na(frdat$Harvest.date),]
 summary(frdat[!is.na(frdat$Bolt.date),])
 summary(frdat[frdat$BoltedatH=="Yes",])
 
-
+#remove pops <2, CA008, GR003, UA004
+frdat <- frdat[!(frdat$Pop %in% c("CA008", "GR003","UA004")),]
+frdat <- droplevels(frdat)
 
 #write
 write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F)

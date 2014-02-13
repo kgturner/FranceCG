@@ -227,32 +227,36 @@ save(snglcov_int, file="FrDKonlyAovlists.RData")
 # load()
 
 
-CGtrait_sigaov_func_Fr(frGLR.PC1_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frGLR.PC2_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frGLR.PC3_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frGLR.bio11_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frGLR.bio9_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frGLR.bio6_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frGLR.lat_int, selectaov=3:6)
-
-CGtrait_sigaov_func_Fr(frPLR.PC1_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frPLR.PC2_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frPLR.PC3_int, selectaov=3:6)
-# CGtrait_sigaov_func_Fr(frPLR.bio11_int)
-# CGtrait_sigaov_func_Fr(frPLR.bio9_int)
-# CGtrait_sigaov_func_Fr(frPLR.bio6_int)
-# CGtrait_sigaov_func_Fr(frPLR.lat_int)
-
+CGtrait_sigaov_func_Fr(frGLR.PC1_int, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.PC1_int, selectaov=1:6)
 boltLR.PC1_int
+
+CGtrait_sigaov_func_Fr(frGLR.PC2_int, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.PC2_int, selectaov=1:6)
 boltLR.PC2_int
+
+CGtrait_sigaov_func_Fr(frGLR.PC3_int, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.PC3_int, selectaov=1:6)
 boltLR.PC3_int
+
+CGtrait_sigaov_func_Fr(frGLR.bio11_int, selectaov=1:6)
+# CGtrait_sigaov_func_Fr(frPLR.bio11_int)
 boltLR.bio11_int
+
+CGtrait_sigaov_func_Fr(frGLR.bio9_int, selectaov=1:6)
+# CGtrait_sigaov_func_Fr(frPLR.bio9_int)
 boltLR.bio9_int
+
+CGtrait_sigaov_func_Fr(frGLR.bio6_int, selectaov=1:6)
+# CGtrait_sigaov_func_Fr(frPLR.bio6_int)
 boltLR.bio6_int
+
+CGtrait_sigaov_func_Fr(frGLR.lat_int, selectaov=1:6)
+# CGtrait_sigaov_func_Fr(frPLR.lat_int)
 boltLR.lat_int
 
-CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=3:6)
-CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=3:6)
+CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=1:6)
 boltLR.trt_int
 
 #######################example##########################

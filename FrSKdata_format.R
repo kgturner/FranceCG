@@ -111,6 +111,10 @@ subset(Frdatsk.l,lfc>100)
 Frdatsk.l$bolt.bin <- as.numeric(Frdatsk.l$BoltedatH)-1
 head(Frdatsk.l[Frdatsk.l$Origin=="sk",])
 
+#remove pops <2, CA008, GR003, UA004
+Frdatsk.l <- Frdatsk.l[!(Frdatsk.l$Pop %in% c("CA008", "GR003","UA004")),]
+Frdatsk.l <- droplevels(Frdatsk.l)
+
 #write
 write.table(Frdatsk.l, file="FrTraitClimDat_SK_long.txt",sep="\t", quote=F)
 #read
@@ -287,6 +291,10 @@ head(FrdatSK[FrdatSK$Origin=="sk",])
 ##checking outliers
 ggplot(data=FrdatSK, aes(y=LfCountH, x=Trt, fill=Origin))+geom_boxplot()
 subset(FrdatSK, subset=LfCountH>150)
+
+#remove pops <2, CA008, GR003, UA004
+FrdatSK <- FrdatSK[!(FrdatSK$Pop %in% c("CA008", "GR003","UA004")),]
+FrdatSK <- droplevels(FrdatSK)
 
 #write
 write.table(FrdatSK, file="FrTraitClimDat_SK.txt",sep="\t", quote=F)
