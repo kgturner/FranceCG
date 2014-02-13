@@ -156,20 +156,20 @@ modelint<-lmer(lfc  ~ Origin +PC2 + m.date+(1|Pop), family=poisson,data=modeldat
 intAov <- anova(model2, modelint)
 intAov
 
-# modelcov <- lmer(lfc  ~ Origin + m.date+(1|Pop), family=poisson,data=modeldata)
-# covAov <- anova(modelint, modelcov)
-# covAov
-# 
-# modelO<-lmer(lfc ~ m.date+(1|Pop), family=poisson,data=modeldata)
-# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
-# originAov
-# 
-# modelOC <- lmer(lfc  ~ PC2 + m.date+(1|Pop), family=poisson,data=modeldata)
-# ocAov <- anova(modelint, modelOC)
-# ocAov
+modelcov <- lmer(lfc  ~ Origin + m.date+(1|Pop), family=poisson,data=modeldata)
+covAov <- anova(modelint, modelcov)
+covAov
 
-modelmdate<-lmer(lfc ~ Origin * PC2+(1|Pop), family=poisson,data=modeldata)
-mdateAov <- anova(modelmdate,model2) #test for significance of origin - origin only marginally sig....!
+modelO<-lmer(lfc ~ m.date+(1|Pop), family=poisson,data=modeldata)
+originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+originAov
+
+modelOC <- lmer(lfc  ~ PC2 + m.date+(1|Pop), family=poisson,data=modeldata)
+ocAov <- anova(modelint, modelOC)
+ocAov
+
+modelmdate<-lmer(lfc ~ (1|Pop), family=poisson,data=modeldata)
+mdateAov <- anova(modelmdate,modelO) #test for significance of origin - origin only marginally sig....!
 mdateAov
 
 summary(model2)
@@ -522,7 +522,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(17.95,1)
+1-pchisq(17.638,1)
 # qchisq(17.95,1,lower=FALSE)#chisq value
 
 modelint<-lmer(lfw  ~ Origin +PC1 + m.date+(1|Pop), family=gaussian,data=modeldata)
@@ -627,7 +627,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(12.2,1)
+1-pchisq(11.867,1)
 # qchisq(558.65,1,lower=FALSE)#chisq value
 
 modelint<-lmer(lfw  ~ Origin +PC3 + m.date+(1|Pop), family=gaussian,data=modeldata)
@@ -783,7 +783,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(15.783,1)
+1-pchisq(15.375,1)
 # qchisq(558.65,1,lower=FALSE)#chisq value
 
 modelint<-lmer(lfw  ~ Origin +bio6 + m.date+(1|Pop), family=gaussian,data=modeldata)

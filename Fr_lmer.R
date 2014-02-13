@@ -219,12 +219,12 @@ frPLR.trt_int <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_sn
 boltLR.trt_int <- CGtrait.LR_snglcov_int(trait="bolt.bin",df=frdat,covariate="Trt",family=binomial) #apply to single binomial trait
 
 
-#which anovas have sig covariate or origin?
-snglcov_int <- c(frGLR.PC1_int,frGLR.PC2_int,frGLR.PC3_int,frGLR.bio11_int,frGLR.bio9_int,frGLR.bio6_int,frGLR.lat_int,
-                 frPLR.PC1_int,frPLR.PC2_int,frPLR.PC3_int,boltLR.PC1_int,boltLR.PC2_int,boltLR.PC3_int,
-                 boltLR.bio11_int,boltLR.bio9_int,boltLR.bio6_int,boltLR.lat_int,frGLR.trt_int,frPLR.trt_int,boltLR.trt_int)
-save(snglcov_int, file="FrDKonlyAovlists.RData")
-# load()
+# #which anovas have sig covariate or origin?
+# snglcov_int <- c(frGLR.PC1_int,frGLR.PC2_int,frGLR.PC3_int,frGLR.bio11_int,frGLR.bio9_int,frGLR.bio6_int,frGLR.lat_int,
+#                  frPLR.PC1_int,frPLR.PC2_int,frPLR.PC3_int,boltLR.PC1_int,boltLR.PC2_int,boltLR.PC3_int,
+#                  boltLR.bio11_int,boltLR.bio9_int,boltLR.bio6_int,boltLR.lat_int,frGLR.trt_int,frPLR.trt_int,boltLR.trt_int)
+# save(snglcov_int, file="FrDKonlyAovlists.RData")
+# snglcov_int <- load(file="FrDKonlyAovlists.RData")
 
 
 CGtrait_sigaov_func_Fr(frGLR.PC1_int, selectaov=1:6)
