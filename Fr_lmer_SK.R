@@ -238,7 +238,7 @@ CGtrait_sigaov_func_Fr(frGLR.PC1_SKint, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frPLR.PC1_SKint, selectaov=1:6)
 boltLR.PC1_SKint
 
-CGtrait_sigaov_func_Fr(frGLR.PC2_SKint, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frGLR.PC2_SKint, selectaov=1:6) #warnings
 CGtrait_sigaov_func_Fr(frPLR.PC2_SKint, selectaov=1:6)
 boltLR.PC2_SKint
 
@@ -247,19 +247,19 @@ CGtrait_sigaov_func_Fr(frPLR.PC3_SKint, selectaov=1:6)
 boltLR.PC3_SKint
 
 CGtrait_sigaov_func_Fr(frGLR.bio11_SKint, selectaov=1:6)
-CGtrait_sigaov_func_Fr(frPLR.bio11_SKint, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.bio11_SKint, selectaov=1:6) #warnings
 boltLR.bio11_SKint
 
 CGtrait_sigaov_func_Fr(frGLR.bio9_SKint, selectaov=1:6)
-CGtrait_sigaov_func_Fr(frPLR.bio9_SKint, selectaov=1:6)
+# CGtrait_sigaov_func_Fr(frPLR.bio9_SKint, selectaov=1:6) #errors
 boltLR.bio9_SKint
 
 CGtrait_sigaov_func_Fr(frGLR.bio6_SKint, selectaov=1:6)
-CGtrait_sigaov_func_Fr(frPLR.bio6_SKint, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.bio6_SKint, selectaov=1:6) #warnings
 boltLR.bio6_SKint
 
 CGtrait_sigaov_func_Fr(frGLR.lat_SKint, selectaov=1:6)
-CGtrait_sigaov_func_Fr(frPLR.lat_SKint, selectaov=1:6)
+CGtrait_sigaov_func_Fr(frPLR.lat_SKint, selectaov=1:6) #warnings
 boltLR.lat_SKint
 
 CGtrait_sigaov_func_Fr(frGLR.Trt_SKint, selectaov=1:6)

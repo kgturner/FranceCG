@@ -240,19 +240,19 @@ CGtrait_sigaov_func_Fr(frPLR.PC3_int, selectaov=1:6)
 boltLR.PC3_int
 
 CGtrait_sigaov_func_Fr(frGLR.bio11_int, selectaov=1:6)
-# CGtrait_sigaov_func_Fr(frPLR.bio11_int)
+CGtrait_sigaov_func_Fr(frPLR.bio11_int, selectaov=1:6) #warnings
 boltLR.bio11_int
 
 CGtrait_sigaov_func_Fr(frGLR.bio9_int, selectaov=1:6)
-# CGtrait_sigaov_func_Fr(frPLR.bio9_int)
+CGtrait_sigaov_func_Fr(frPLR.bio9_int, selectaov=1:6) #errors
 boltLR.bio9_int
 
 CGtrait_sigaov_func_Fr(frGLR.bio6_int, selectaov=1:6)
-# CGtrait_sigaov_func_Fr(frPLR.bio6_int)
+CGtrait_sigaov_func_Fr(frPLR.bio6_int, selectaov=1:6) #warnings
 boltLR.bio6_int
 
 CGtrait_sigaov_func_Fr(frGLR.lat_int, selectaov=1:6)
-# CGtrait_sigaov_func_Fr(frPLR.lat_int)
+CGtrait_sigaov_func_Fr(frPLR.lat_int, selectaov=1:6) #warnings
 boltLR.lat_int
 
 CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=1:6)
