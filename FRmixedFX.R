@@ -1,4 +1,5 @@
-#mixed effects models, REML, using lme4
+#France DK only formatting
+#initial round of modeling at end
 
 
 #france DK data
@@ -93,7 +94,72 @@ frdat <- frdat[!(frdat$Pop %in% c("CA008", "GR003","UA004")),]
 frdat <- droplevels(frdat)
 
 #write
-write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F)
+write.table(frdat, file="FrTraitClimDat.txt",sep="\t", quote=F) #DK only wide format
+
+############DK only long format##########
+#for repeated measures
+
+#need m2.date
+
+frm2 <- read.table("FrMeasure2.txt", header=T, sep="\t",quote='"', row.names=1)
+frm2.1 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 2 day 1.txt"
+frm2.2 <- read.table(file.choose(), header=F, sep=",",quote='"', row.names=1) #"measure 2 day 2.txt"
+day1 <- row.names(frm2.1)
+day2 <- row.names(frm2.2)
+frdat$m2.date <- NA
+frdat[unique(frdat$tagged %in% day1),]$m2.date <- "6/12/2011"
+frdat[unique(frdat$tagged %in% day2),]$m2.date <- "6/13/2011"
+
+
+frdat$m2.date2 <- strptime(frdat$m2.date, format="%m/%d/%Y")
+frdat$m2.date2 <- as.Date(frdat$m2.date2)
+day0 <- as.Date("2011-05-12") #planting date
+frdat$m2.date3 <- as.numeric(frdat$m2.date2-day0)
+str(frdat)
+summary(frdat$m2.date2)
+summary(frdat$m2.date3)
+frdat$m2.date <- frdat$m2.date3
+frdat <- frdat[,1:55]
+
+frdat$m2.date <- as.integer(frdat$m2.date)
+
+# #need to change m1.date for
+# # "GR002-9","11","9.0","3.2",""
+# # "CA009-7","10","8.2","2.2",""
+# # "UA007-5","12","7.9","2.9",""
+# # "CA001-9","25","10.4","3.0",""
+# #measured later, see notebook, guessing 17?
+frdat[frdat$tagged %in% c("GR002-9","CA009-7","UA007-5","CA001-9"),]
+# 
+# 
+# #for whole table?
+frdat$tagged <- as.factor(frdat$tagged)
+
+dat2 <- frdat
+dat2$Rose.diam1 <- NA
+
+frdat.l <- reshape(dat2, idvar="tagged", direction="long", 
+                     varying=list(m.date=c(11,55,25), lfl=c(9,18,31), lfw=c(10,19,32), lfc=c(8,17,35), rd=c(56,16,28)),
+                     v.names=c("m.date","lfl", "lfw","lfc","rd"))
+str(frdat.l)
+frdat.l <- frdat.l[,c(1:8,16:22,30:47)]
+frdat.l[is.na(frdat.l$m.date),]
+str(frdat.l)
+frdat.l$Mom <- as.factor(frdat.l$Mom)
+head(frdat.l[is.na(frdat.l$rd),]) #all time 1 will be NAs, plus a handful more
+dat <- merge(frdat.l, frdat[,c(1:7,25)], all.x=TRUE) #keep harvest date
+frdat.l <- dat
+
+# #outliers?
+# subset(frdat.l,lfc>100)
+# #lfcount at harvest for BG001-1 ?= 515? Ditto EDGE-9 ?=241?
+# #
+
+#write
+write.table(frdat.l, file="FrTraitClimDat_DKonly_long.txt",sep="\t", quote=F)
+#read
+frdat.l<- read.table("FrTraitClimDat_DKonly_long.txt", header=T, sep="\t",quote='"', row.names=1)
+
 
 
 
