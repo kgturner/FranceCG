@@ -65,7 +65,8 @@ CGtrait.models_snglcov_int_time(trait="lfc", df=frdat.l, covariate="PC1", family
 modeldata<-frdat.l[!is.na(frdat.l$lfc),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
-modeldata$Mom<-as.factor(modeldata$Mom)
+modeldata$Mom<-as.factor(modeldata$Mom)#
+
 
 # #pc1
 # # model1<-lmer(lfc  ~ Origin + PC1 + m.date+(1|Pop/Mom), family=poisson,data=modeldata)
@@ -102,6 +103,7 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 # summary(modelO)
 # 
 # #means and CI #needs work
+
 # CI.LS.poisson.mdate(modelcov)
 # # ls <- as.data.frame(lsmeans(modelcov, ~ Origin +m.date, conf=95))    
 # ls2 <- as.data.frame(lsmeans(modelcov, ~ Origin, conf=95))  
@@ -262,6 +264,7 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 # ls2 <- as.data.frame(lsmeans(modelcov, ~ Origin, conf=95))  
 # modelmtime <- lmer(lfc  ~ Origin + time +(1|Pop), family=poisson,data=modeldata)
 # ls3 <- as.data.frame(lsmeans(modelmtime, ~ Origin +time, conf=95)) 
+
 # 
 # interaction.plot(response = modeldata$lfc, x.factor = modeldata$bio11, trace.factor = modeldata$Origin)
 # plot(modeldata$bio11, modeldata$Origin)
@@ -909,6 +912,7 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 #       xlab="trt", 
 #       ylab="Population mean lf width", main="") #+geom_smooth(method=glm, se=TRUE)
 # # dev.off()
+
 
 ###################demo#############
 # #try glm
