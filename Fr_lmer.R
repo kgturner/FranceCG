@@ -259,6 +259,82 @@ CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=1:6)
 boltLR.trt_int
 
+##########DK single traits##########################
+###MaxLfWdth2##############
+CGtrait.LR_snglcov_int(trait="MaxLfWdth2", df=frdat, covariate="PC1", family=gaussian)
+CGtrait.models_snglcov_int(trait="MaxLfWdth2", df=frdat, covariate="PC1", family=gaussian)
+
+modeldata<-frdat[!is.na(frdat$MaxLfWdth2),]
+
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+# 
+#pc1
+model1<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(6.1514,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxLfWdth2  ~ Origin +PC1 +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxLfWdth2  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxLfWdth2 ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxLfWdth2  ~ PC1 +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+#try glm
+modelg <- glm(MaxLfWdth2 ~ Origin*PC1, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxLfWdth2 ~ Origin+PC1, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxLfWdth2 ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxLfWdth2 ~ PC1, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+qchisq(0.5399,1,lower=FALSE)#chisq value
+
+
+modelg3
+summary(modelg3)
+
+lsmeans(modelg3, ~ Origin, conf=95)
+
+interaction.plot(response = modeldata$MaxLfWdth2, x.factor = modeldata$PC1, trace.factor = modeldata$Origin)
+plot(modeldata$PC1, modeldata$Origin)
+qplot(data=modeldata, PC1, MaxLfWdth2, color=Origin, geom = "jitter")
+
+moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMaxLfWdth2=mean(MaxLfWdth2, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popMaxLfWdth2, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean MaxLfWdth2", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
+# checking the normality of residuals e_i:
+# MaxLfWdth2 vs LfWdth2.log
+plot(resid(modelg3) ~ fitted(modelg3),main="residual plot")
+abline(h=0)
+qqnorm(resid(modelg3), main="Q-Q plot for residuals")
+qqline(resid(modelg3))
+
+
 #######################example##########################
 # ######Allo, Origin * Lat models######
 # al<-read.table("STAllosubset.txt", header=T, sep="\t", quote='"', row.names=1) #allosubset
@@ -296,3 +372,23 @@ boltLR.trt_int
 # anova(modelOraw,modelI) #test for significance of origin - origin not sig
 # 
 # lsmeans(modelI, ~ Origin, conf=95)
+###################demo#############
+# #try glm
+# modelg <- glm(sla.log ~ Origin*Latitude, family=gaussian,data=modeldata)
+# modelg1 <- glm(sla.log ~ Origin+Latitude, family=gaussian,data=modeldata)
+# anova(modelg1, modelg, test="LRT") 
+# qchisq(0.0964,1,lower=FALSE)#chisq value
+# 
+# modelg3<- glm(sla.log ~ Origin, family=gaussian,data=modeldata)
+# anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+# # modelg2<- glm(sla.log ~ Latitude, family=gaussian,data=modeldata)
+# # anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+
+# # checking the normality of residuals e_i:
+# plot(resid(modelg3) ~ fitted(modelg3),main="residual plot")
+# abline(h=0)
+# qqnorm(resid(modelg3), main="Q-Q plot for residuals")
+# qqline(resid(modelg3))

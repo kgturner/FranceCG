@@ -72,80 +72,92 @@
 # # 
 # # #bootMer
 # 
-# ##binomial lsmeans##
-# CI.LS.binomial <- function(model, conf=95){
-#   library(lsmeans)
-#   ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
-#   #effect size, binomial
-#   int<-ls[1,2]#inv mean
-#   B<-ls[2,2]#Originnat estimate from model summary
-#   pI<-exp(int)/(exp(int)+1)
-#   pN<-exp(B)/(exp(B)+1)
-#   #inv upper from coeftbl confidence int.
-#   uI<-exp(ls[1,6])/(exp(ls[1,6])+1)
-#   #inv lower from coeftbl conf int
-#   lI<-exp(ls[1,5])/(exp(ls[1,5])+1)
-#   #nat upper from coeftbl conf int
-#   uN<-exp(ls[2,6])/(exp(ls[2,6])+1)
-#   #nat lower from coeftbl conf int
-#   lN<-exp(ls[2,5])/(exp(ls[2,5])+1)
-#   
+##binomial lsmeans##
+CI.LS.binomial <- function(model, conf=95){
+  library(lsmeans)
+  ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
+  #effect size, binomial
+  int<-ls[1,2]#inv mean
+  B<-ls[2,2]#Originnat estimate from model summary
+  pI<-exp(int)/(exp(int)+1)
+  pN<-exp(B)/(exp(B)+1)
+  #inv upper from coeftbl confidence int.
+  uI<-exp(ls[1,6])/(exp(ls[1,6])+1)
+  #inv lower from coeftbl conf int
+  lI<-exp(ls[1,5])/(exp(ls[1,5])+1)
+  #nat upper from coeftbl conf int
+  uN<-exp(ls[2,6])/(exp(ls[2,6])+1)
+  #nat lower from coeftbl conf int
+  lN<-exp(ls[2,5])/(exp(ls[2,5])+1)
+  
 #   print(paste("Native mean",pN))
 #   print(paste("Native CI", lN, "-",uN))
 #   print(paste("Invasive mean",pI))
 #   print(paste("Invasive CI", lI, "-", uI))
-# }
+  
+  df <- data.frame(Origin=c("Invasive","Native"), mean=c(pI,pN), 
+                   uCL=c(uI,uN),lCL=c(lI,lN) )
+  return(df)
+}
 
 
-# ####Poisson#####
-# # CI.poisson <- function(model){
-# #   coeftbl <- as.data.frame(coef(summary(model)))
-# # #   coeftbl
-# #   ## 95% confidence intervals
-# #   CItbl <- with(coeftbl,+ Estimate + outer(`Std. Error`, c(lower=-1, upper=1)) * sqrt(qchisq(0.95, 1)))
-# #   #effect size, poisson
-# #   int<-coeftbl[1,1]#inv mean
-# #   B<-coeftbl[2,1]#Originnat estimate from model summary
-# #   pI<-exp(int)
-# #   pN<-exp(int+B)
-# #   #inv upper from coeftbl confidence int.
-# #   uI<-exp(CItbl[1,2])
-# #   #inv lower from coeftbl conf int
-# #   lI<-exp(CItbl[1,1])
-# #   #nat upper from coeftbl conf int
-# #   uN<-exp(int+CItbl[2,2])
-# #   #nat lower from coeftbl conf int
-# #   lN<-exp(int+CItbl[2,1])
-# # 
+# # ####Poisson#####
+# CI.poisson <- function(model){
+#   coeftbl <- as.data.frame(coef(summary(model)))
+# #   coeftbl
+#   ## 95% confidence intervals
+#   CItbl <- with(coeftbl,+ Estimate + outer(`Std. Error`, c(lower=-1, upper=1)) * sqrt(qchisq(0.95, 1)))
+#   #effect size, poisson
+#   int<-coeftbl[1,1]#inv mean
+#   B<-coeftbl[2,1]#Originnat estimate from model summary
+#   pI<-exp(int)
+#   pN<-exp(int+B)
+#   #inv upper from coeftbl confidence int.
+#   uI<-exp(CItbl[1,2])
+#   #inv lower from coeftbl conf int
+#   lI<-exp(CItbl[1,1])
+#   #nat upper from coeftbl conf int
+#   uN<-exp(int+CItbl[2,2])
+#   #nat lower from coeftbl conf int
+#   lN<-exp(int+CItbl[2,1])
+# 
 # #   print(paste("Native mean",pN))
 # #   print(paste("Native CI", lN, "-",uN))
 # #   print(paste("Invasive mean",pI))
 # #   print(paste("Invasive CI", lI, "-", uI))
-# # }
-# 
-# # library(lsmeans)
-# CI.LS.poisson <- function(model, conf=95){
-#   library(lsmeans)
-#   ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
-#   #effect size, poisson
-#   int<-ls[1,2]#inv mean
-#   B<-ls[2,2]#Originnat estimate from model summary
-#   pI<-exp(int)
-#   pN<-exp(B)
-#   #inv upper from coeftbl confidence int.
-#   uI<-exp(ls[1,6])
-#   #inv lower from coeftbl conf int
-#   lI<-exp(ls[1,5])
-#   #nat upper from coeftbl conf int
-#   uN<-exp(ls[2,6])
-#   #nat lower from coeftbl conf int
-#   lN<-exp(ls[2,5])
 #   
+#   df <- data.frame(Origin=c("Invasive","Native"), mean=c(pI,pN), 
+#                    uCL=c(uI,uN),lCL=c(lI,lN) )
+#   return(df)
+# }
+# 
+# library(lsmeans)
+CI.LS.poisson <- function(model, conf=95){
+  library(lsmeans)
+  ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
+  #effect size, poisson
+  int<-ls[1,2]#inv mean
+  B<-ls[2,2]#Originnat estimate from model summary
+  pI<-exp(int)
+  pN<-exp(B)
+  #inv upper from coeftbl confidence int.
+  uI<-exp(ls[1,6])
+  #inv lower from coeftbl conf int
+  lI<-exp(ls[1,5])
+  #nat upper from coeftbl conf int
+  uN<-exp(ls[2,6])
+  #nat lower from coeftbl conf int
+  lN<-exp(ls[2,5])
+  
 #   print(paste("Native mean",pN))
 #   print(paste("Native CI", lN, "-",uN))
 #   print(paste("Invasive mean",pI))
 #   print(paste("Invasive CI", lI, "-", uI))
-# }
+  
+  df <- data.frame(Origin=c("Invasive","Native"), mean=c(pI,pN), 
+                   uCL=c(uI,uN),lCL=c(lI,lN) )
+  return(df)
+}
 # 
 # ############Gaussian.log###########
 # # coeftbl <- as.data.frame(coef(summary(modelI)))
@@ -153,28 +165,32 @@
 # # coeftbl$upper <- coeftbl$Estimate + 1.96*(coeftbl$"Std. Error") 
 # # coeftbl$lower <- coeftbl$Estimate - 1.96*(coeftbl$"Std. Error") 
 # 
-# CI.LS.gaussian.log<- function(model, conf=95){
-#   library(lsmeans)
-#   ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
-#   #effect size, poisson
-#   int<-ls[1,2]#inv mean
-#   B<-ls[2,2]#Originnat estimate from model summary
-#   pI<-exp(int)
-#   pN<-exp(B)
-#   #inv upper from coeftbl confidence int.
-#   uI<-exp(ls[1,6])
-#   #inv lower from coeftbl conf int
-#   lI<-exp(ls[1,5])
-#   #nat upper from coeftbl conf int
-#   uN<-exp(ls[2,6])
-#   #nat lower from coeftbl conf int
-#   lN<-exp(ls[2,5])
-#   
+CI.LS.gaussian.log<- function(model, conf=95){
+  library(lsmeans)
+  ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
+  #effect size, poisson
+  int<-ls[1,2]#inv mean
+  B<-ls[2,2]#Originnat estimate from model summary
+  pI<-exp(int)
+  pN<-exp(B)
+  #inv upper from coeftbl confidence int.
+  uI<-exp(ls[1,6])
+  #inv lower from coeftbl conf int
+  lI<-exp(ls[1,5])
+  #nat upper from coeftbl conf int
+  uN<-exp(ls[2,6])
+  #nat lower from coeftbl conf int
+  lN<-exp(ls[2,5])
+  
 #   print(paste("Native mean",pN))
 #   print(paste("Native CI", lN, "-",uN))
 #   print(paste("Invasive mean",pI))
 #   print(paste("Invasive CI", lI, "-", uI))
-# }
+  
+  df <- data.frame(Origin=c("Invasive","Native"), mean=c(pI,pN), 
+                   uCL=c(uI,uN),lCL=c(lI,lN) )
+  return(df)
+}
 
 
 #############Include mdate########

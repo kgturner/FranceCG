@@ -949,3 +949,9 @@ qplot(data=moddata,Trt, poplfw, color = Origin,
 # # modelg2<- glm(sla.log ~ Latitude, family=gaussian,data=modeldata)
 # # anova(modelg2,modelg1)
 # qchisq(0.5399,1,lower=FALSE)#chisq value
+
+# # checking the normality of residuals e_i:
+# plot(resid(modelg3) ~ fitted(modelg3),main="residual plot")
+# abline(h=0)
+# qqnorm(resid(modelg3), main="Q-Q plot for residuals")
+# qqline(resid(modelg3))
