@@ -104,75 +104,7 @@ modelfull<-lmer(trait  ~ Origin* Trt+PC1+PC2+bio11+bio9+bio6 +(Origin|PopID/Mom)
 # qqnorm(resid(mass.lmer), main="Q-Q plot for residuals")
 # qqline(resid(mass.lmer))
 # 
-# #so for each cov and distribution
-# 
-# #PC1
-# frGLR.PC1 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1"))#apply func to all gaussian traits
-# frPLR.PC1 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1", family=poisson))#apply func to all poisson traits
-# boltLR.PC1 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC1",family=binomial) #apply to single binomial trait
-# 
-# #PC2
-# frGLR.PC2 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC2"))#apply func to all gaussian traits
-# frPLR.PC2 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC2", family=poisson))#apply func to all poisson traits
-# boltLR.PC2 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC2",family=binomial) #apply to single binomial trait
-# 
-# #PC3
-# frGLR.PC3 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC3"))#apply func to all gaussian traits
-# frPLR.PC3 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC3", family=poisson))#apply func to all poisson traits
-# boltLR.PC3 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC3",family=binomial) #apply to single binomial trait
-# 
-# #bio4
-# frGLR.bio4 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio4"))#apply func to all gaussian traits
-# frPLR.bio4 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio4", family=poisson))#apply func to all poisson traits
-# boltLR.bio4 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio4",family=binomial) #apply to single binomial trait
-# 
-# #bio19
-# frGLR.bio19 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio19"))#apply func to all gaussian traits
-# frPLR.bio19 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio19", family=poisson))#apply func to all poisson traits
-# boltLR.bio19 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio19",family=binomial) #apply to single binomial trait
-# 
-# #bio7
-# frGLR.bio7 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio7"))#apply func to all gaussian traits
-# frPLR.bio7 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio7", family=poisson))#apply func to all poisson traits
-# boltLR.bio7 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio7",family=binomial) #apply to single binomial trait
-# 
-# #Latitude
-# frGLR.lat <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude"))#apply func to all gaussian traits
-# frPLR.lat <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude", family=poisson))#apply func to all poisson traits
-# boltLR.lat <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="Latitude",family=binomial) #apply to single binomial trait
-# 
-# #which anovas have sig covariate or origin?
-# snglcov <- c(frGLR.PC1, frPLR.PC1, boltLR.PC1,frGLR.PC2, frPLR.PC2, boltLR.PC2,frGLR.PC3, frPLR.PC3, boltLR.PC3,
-# #              frGLR.bio4,frPLR.bio4, boltLR.bio4,frGLR.bio7, frPLR.bio7, boltLR.bio7,frGLR.bio19, frPLR.bio19, boltLR.bio19,
-#              frGLR.lat, frPLR.lat, boltLR.lat, frGLR.Trt, frPLR.Trt, boltLR.Trt)
-# save(snglcov, file="Fr_aovlists.RData")
-# load()
-# 
-# 
-# CGtrait_sigaov_func_Fr(frGLR.PC1)
-# CGtrait_sigaov_func_Fr(frGLR.PC2)
-# CGtrait_sigaov_func_Fr(frGLR.PC3)
-# CGtrait_sigaov_func_Fr(frGLR.bio4)
-# CGtrait_sigaov_func_Fr(frGLR.bio7)
-# CGtrait_sigaov_func_Fr(frGLR.bio19)
-# CGtrait_sigaov_func_Fr(frGLR.lat)
-# 
-# CGtrait_sigaov_func_Fr(frPLR.PC1)
-# CGtrait_sigaov_func_Fr(frPLR.PC2)
-# CGtrait_sigaov_func_Fr(frPLR.PC3)
-# CGtrait_sigaov_func_Fr(frPLR.bio4)
-# CGtrait_sigaov_func_Fr(frPLR.bio7)
-# CGtrait_sigaov_func_Fr(frPLR.bio19)
-# CGtrait_sigaov_func_Fr(frPLR.lat)
-# 
-# boltLR.PC1
-# boltLR.PC2
-# boltLR.PC3
-# boltLR.bio4
-# boltLR.bio7
-# boltLR.bio19
-# boltLR.lat
-# 
+
 ##########single covariate, interaction###############
 #so for each cov and distribution
 
@@ -260,52 +192,56 @@ CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=1:6)
 boltLR.trt_int
 
 ##########DK single traits##########################
-###MaxLfWdth2##############
-CGtrait.LR_snglcov_int(trait="MaxLfWdth2", df=frdat, covariate="PC1", family=gaussian)
-CGtrait.models_snglcov_int(trait="MaxLfWdth2", df=frdat, covariate="PC1", family=gaussian)
+#focus on single timept measures, poisson model fails: 
+#MaxBoltHtH(all), Bolt.date (bio11), poisson measures for bio9 (just bolt.date and harvest.date...)
+#use transform for Rose area, crown, shoot mass
 
-modeldata<-frdat[!is.na(frdat$MaxLfWdth2),]
+###MaxBoltHtH##############
+# CGtrait.LR_snglcov_int(trait="MaxBoltHtH", df=frdat, covariate="PC1", family=gaussian)
+# CGtrait.models_snglcov_int(trait="MaxBoltHtH", df=frdat, covariate="PC1", family=gaussian)
+
+modeldata<-frdat[!is.na(frdat$MaxBoltHtH),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 # 
 #pc1
-model1<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+model1<-lmer(MaxBoltHtH  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(6.1514,1)
+1-pchisq(1.1744,1)
 # qchisq(558.65,1,lower=FALSE)#chisq value
 # 
-# modelint<-lmer(MaxLfWdth2  ~ Origin +PC1 +(1|Pop), family=gaussian,data=modeldata)
+# modelint<-lmer(MaxBoltHtH  ~ Origin +PC1 +(1|Pop), family=gaussian,data=modeldata)
 # intAov <- anova(model2, modelint)
 # intAov
 # 
-# modelcov <- lmer(MaxLfWdth2  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
 # covAov <- anova(modelint, modelcov)
 # covAov
 # 
-# modelO<-lmer(MaxLfWdth2 ~ (1|Pop), family=gaussian,data=modeldata)
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
 # originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
 # originAov
 # 
-# modelOC <- lmer(MaxLfWdth2  ~ PC1 +(1|Pop), family=gaussian,data=modeldata)
+# modelOC <- lmer(MaxBoltHtH  ~ PC1 +(1|Pop), family=gaussian,data=modeldata)
 # ocAov <- anova(modelint, modelOC)
 # ocAov
 #try glm
-modelg <- glm(MaxLfWdth2 ~ Origin*PC1, family=gaussian,data=modeldata)
-modelg1 <- glm(MaxLfWdth2 ~ Origin+PC1, family=gaussian,data=modeldata)
+modelg <- glm(MaxBoltHtH ~ Origin*PC1, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+PC1, family=gaussian,data=modeldata)
 anova(modelg1, modelg, test="LRT") 
 qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
 
-modelg3<- glm(MaxLfWdth2 ~ Origin, family=gaussian,data=modeldata)
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
 anova(modelg3,modelg1, test="LRT")
 qchisq(0.9672,1,lower=FALSE)#chisq value
 anova(modelg3, test="LRT")
-# modelg2<- glm(MaxLfWdth2 ~ PC1, family=gaussian,data=modeldata)
+# modelg2<- glm(MaxBoltHtH ~ PC1, family=gaussian,data=modeldata)
 # anova(modelg2,modelg1)
 qchisq(0.5399,1,lower=FALSE)#chisq value
 
@@ -315,25 +251,724 @@ summary(modelg3)
 
 lsmeans(modelg3, ~ Origin, conf=95)
 
-interaction.plot(response = modeldata$MaxLfWdth2, x.factor = modeldata$PC1, trace.factor = modeldata$Origin)
-plot(modeldata$PC1, modeldata$Origin)
-qplot(data=modeldata, PC1, MaxLfWdth2, color=Origin, geom = "jitter")
+# interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$PC1, trace.factor = modeldata$Origin)
+# plot(modeldata$PC1, modeldata$Origin)
+qplot(data=modeldata, PC1, MaxBoltHtH, color=Origin, geom = "jitter")
 
-moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMaxLfWdth2=mean(MaxLfWdth2, na.rm=TRUE))
+moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
 
 #png("MF_    .png", height = 600, width = 600, pointsize = 16)
-qplot(data=moddata,PC1, popMaxLfWdth2, color = Origin, 
+qplot(data=moddata,PC1, popMaxBoltHtH, color = Origin, 
       xlab="PC1", 
-      ylab="Population mean MaxLfWdth2", main="") +geom_smooth(method=glm, se=TRUE)
+      ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
 
-# checking the normality of residuals e_i:
-# MaxLfWdth2 vs LfWdth2.log
-plot(resid(modelg3) ~ fitted(modelg3),main="residual plot")
-abline(h=0)
-qqnorm(resid(modelg3), main="Q-Q plot for residuals")
-qqline(resid(modelg3))
+#pc2
+model1<-lmer(MaxBoltHtH  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * PC2 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(3.7459,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +PC2 +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ PC2 +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
 
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*PC2, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+PC2, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ PC2, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# modelg
+# summary(modelg)
+# 
+# lsmeans(modelg1, ~ Origin, conf=95)
+# 
+# interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$PC2, trace.factor = modeldata$Origin)
+# plot(modeldata$PC2, modeldata$Origin)
+qplot(data=modeldata, PC2, MaxBoltHtH, color=Origin, geom = "jitter")
+
+moddata <- ddply(modeldata, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popMaxBoltHtH, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+# 
+
+#pc3
+model1<-lmer(MaxBoltHtH  ~ Origin * PC3 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * PC3 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * PC3 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(2.1361,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +PC3 +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ PC3 +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*PC3, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+PC3, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ PC3, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+# # lsmeans(modelg1, ~ Origin, conf=95)
+# # 
+# # interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$PC3, trace.factor = modeldata$Origin)
+# # plot(modeldata$PC3, modeldata$Origin)
+# qplot(data=modeldata, PC3, MaxBoltHtH, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, PC3), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,PC3, popMaxBoltHtH, color = Origin, 
+#       xlab="PC3", 
+#       ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+
+#bio11
+model1<-lmer(MaxBoltHtH  ~ Origin * bio11 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * bio11 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * bio11 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(2.1361,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +bio11 +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ bio11 +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*bio11, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+bio11, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ bio11, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+# # lsmeans(modelg1, ~ Origin, conf=95)
+# # 
+# # interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$bio11, trace.factor = modeldata$Origin)
+# # plot(modeldata$bio11, modeldata$Origin)
+# qplot(data=modeldata, bio11, MaxBoltHtH, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, bio11), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,bio11, popMaxBoltHtH, color = Origin, 
+#       xlab="bio11", 
+#       ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+
+#bio9
+model1<-lmer(MaxBoltHtH  ~ Origin * bio9 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * bio9 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * bio9 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(2.1361,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +bio9 +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ bio9 +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*bio9, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+bio9, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ bio9, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+# # lsmeans(modelg1, ~ Origin, conf=95)
+# # 
+# # interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$bio9, trace.factor = modeldata$Origin)
+# # plot(modeldata$bio9, modeldata$Origin)
+# qplot(data=modeldata, bio9, MaxBoltHtH, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, bio9), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,bio9, popMaxBoltHtH, color = Origin, 
+#       xlab="bio9", 
+#       ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+#bio6
+model1<-lmer(MaxBoltHtH  ~ Origin * bio6 +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * bio6 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * bio6 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(2.1361,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +bio6 +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ bio6 +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*bio6, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+bio6, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ bio6, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+# # lsmeans(modelg1, ~ Origin, conf=95)
+# # 
+# # interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$bio6, trace.factor = modeldata$Origin)
+# # plot(modeldata$bio6, modeldata$Origin)
+# qplot(data=modeldata, bio6, MaxBoltHtH, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, bio6), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,bio6, popMaxBoltHtH, color = Origin, 
+#       xlab="bio6", 
+#       ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+#lat
+model1<-lmer(MaxBoltHtH  ~ Origin * Latitude +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * Latitude +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * Latitude +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(2.1361,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +Latitude +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ Latitude +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*Latitude, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+Latitude, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ Latitude, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+# # lsmeans(modelg1, ~ Origin, conf=95)
+# # 
+# # interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$Latitude, trace.factor = modeldata$Origin)
+# # plot(modeldata$Latitude, modeldata$Origin)
+# qplot(data=modeldata, Latitude, MaxBoltHtH, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, Latitude), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,Latitude, popMaxBoltHtH, color = Origin, 
+#       xlab="Latitude", 
+#       ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+
+#trt
+model1<-lmer(MaxBoltHtH  ~ Origin * Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(MaxBoltHtH  ~ Origin * Trt +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(MaxBoltHtH  ~ Origin * Trt +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(3.2615,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(MaxBoltHtH  ~ Origin +Trt +(1|Pop), family=gaussian,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(MaxBoltHtH  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(MaxBoltHtH ~ (1|Pop), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(MaxBoltHtH  ~ Trt +(1|Pop), family=gaussian,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(MaxBoltHtH ~ Origin*Trt, family=gaussian,data=modeldata)
+modelg1 <- glm(MaxBoltHtH ~ Origin+Trt, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(MaxBoltHtH ~ Origin, family=gaussian,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+anova(modelg3, test="LRT")
+# modelg2<- glm(MaxBoltHtH ~ Trt, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+# # lsmeans(modelg1, ~ Origin, conf=95)
+# # 
+# # interaction.plot(response = modeldata$MaxBoltHtH, x.factor = modeldata$Trt, trace.factor = modeldata$Origin)
+# # plot(modeldata$Trt, modeldata$Origin)
+# qplot(data=modeldata, Trt, MaxBoltHtH, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, Trt), summarize, popCount=length(Pop), popMaxBoltHtH=mean(MaxBoltHtH, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,Trt, popMaxBoltHtH, color = Origin, 
+#       xlab="Trt", 
+#       ylab="Population mean MaxBoltHtH", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+
+###Bolt.date####################
+modeldata<-frdat[!is.na(frdat$Bolt.date),]
+
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+
+#bio11
+model1<-lmer(Bolt.date  ~ Origin * bio11 +(1|Pop/Mom), family=poisson,data=modeldata)
+#false convergence
+model2<-lmer(Bolt.date  ~ Origin * bio11 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Bolt.date  ~ Origin * bio11 +(1|blank), family=poisson,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(4.4168,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(Bolt.date  ~ Origin +bio11 +(1|Pop/Mom), family=poisson,data=modeldata)
+# intAov <- anova(model2, modelint)
+# intAov
+# 
+# modelcov <- lmer(Bolt.date  ~ Origin +(1|Pop/Mom), family=poisson,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(Bolt.date ~ (1|Pop/Mom), family=poisson,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(Bolt.date  ~ bio11 +(1|Pop/Mom), family=poisson,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(Bolt.date ~ Origin*bio11, family=poisson,data=modeldata)
+modelg1 <- glm(Bolt.date ~ Origin+bio11, family=poisson,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(Bolt.date ~ Origin, family=poisson,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+modelg2<- glm(Bolt.date ~ bio11, family=poisson,data=modeldata)
+anova(modelg2,modelg1, test="LRT")
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+CI.LS.poisson(modelg1)
+# # 
+# # interaction.plot(response = modeldata$Bolt.date, x.factor = modeldata$bio11, trace.factor = modeldata$Origin)
+# # plot(modeldata$bio11, modeldata$Origin)
+# qplot(data=modeldata, bio11, Bolt.date, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, bio11), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,bio11, popBolt.date, color = Origin, 
+#       xlab="bio11", 
+#       ylab="Population mean Bolt.date", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+
+#bio9
+# model1<-lmer(Bolt.date  ~ Origin * bio9 +(1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(Bolt.date  ~ Origin * bio9 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Bolt.date  ~ Origin * bio9 +(1|blank), family=poisson,data=modeldata) # Test population effect
+#false convergence
+# momAov <- anova(model2,model1) # mom is sig!
+# momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(4.9494,1)
+# qchisq(558.65,1,lower=FALSE)#chisq value
+# 
+# modelint<-lmer(Bolt.date  ~ Origin +bio9 +(1|Pop/Mom), family=poisson,data=modeldata)
+# intAov <- anova(model1, modelint)
+# intAov
+# 
+# modelcov <- lmer(Bolt.date  ~ Origin +(1|Pop/Mom), family=poisson,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(Bolt.date ~ (1|Pop/Mom), family=poisson,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(Bolt.date  ~ bio9 +(1|Pop/Mom), family=poisson,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
+
+#try glm
+modelg <- glm(Bolt.date ~ Origin*bio9, family=poisson,data=modeldata)
+modelg1 <- glm(Bolt.date ~ Origin+bio9, family=poisson,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelg3<- glm(Bolt.date ~ Origin, family=poisson,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+modelg2<- glm(Bolt.date ~ bio9, family=poisson,data=modeldata)
+anova(modelg2,modelg1, test="LRT")
+# qchisq(5.0702,1,lower=FALSE)#chisq value
+# 
+# 
+# # modelg
+# # summary(modelg)
+# # 
+CI.LS.poisson(modelg1)
+# # 
+# # interaction.plot(response = modeldata$Bolt.date, x.factor = modeldata$bio9, trace.factor = modeldata$Origin)
+# # plot(modeldata$bio9, modeldata$Origin)
+# qplot(data=modeldata, bio9, Bolt.date, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, bio9), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,bio9, popBolt.date, color = Origin, 
+#       xlab="bio9", 
+#       ylab="Population mean Bolt.date", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+
+
+
+
+
+
+
+
+
+
+
+#######univariate versions of tmpt data below here######
+# ###MaxLfWdth2##############
+# CGtrait.LR_snglcov_int(trait="MaxLfWdth2", df=frdat, covariate="PC1", family=gaussian)
+# CGtrait.models_snglcov_int(trait="MaxLfWdth2", df=frdat, covariate="PC1", family=gaussian)
+# 
+# modeldata<-frdat[!is.na(frdat$MaxLfWdth2),]
+# 
+# modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+# modeldata$Mom<-as.factor(modeldata$Mom)
+# # 
+# #pc1
+# model1<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
+# model2<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+# model3<-lmer(MaxLfWdth2  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+# momAov <- anova(model2,model1) # mom is sig!
+# momAov
+# popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+# popAov
+# 1-pchisq(6.1514,1)
+# # qchisq(558.65,1,lower=FALSE)#chisq value
+# # 
+# # modelint<-lmer(MaxLfWdth2  ~ Origin +PC1 +(1|Pop), family=gaussian,data=modeldata)
+# # intAov <- anova(model2, modelint)
+# # intAov
+# # 
+# # modelcov <- lmer(MaxLfWdth2  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# # covAov <- anova(modelint, modelcov)
+# # covAov
+# # 
+# # modelO<-lmer(MaxLfWdth2 ~ (1|Pop), family=gaussian,data=modeldata)
+# # originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# # originAov
+# # 
+# # modelOC <- lmer(MaxLfWdth2  ~ PC1 +(1|Pop), family=gaussian,data=modeldata)
+# # ocAov <- anova(modelint, modelOC)
+# # ocAov
+# #try glm
+# modelg <- glm(MaxLfWdth2 ~ Origin*PC1, family=gaussian,data=modeldata)
+# modelg1 <- glm(MaxLfWdth2 ~ Origin+PC1, family=gaussian,data=modeldata)
+# anova(modelg1, modelg, test="LRT") 
+# qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+# 
+# modelg3<- glm(MaxLfWdth2 ~ Origin, family=gaussian,data=modeldata)
+# anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+# # modelg2<- glm(MaxLfWdth2 ~ PC1, family=gaussian,data=modeldata)
+# # anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# modelg3
+# summary(modelg3)
+# 
+# lsmeans(modelg3, ~ Origin, conf=95)
+# 
+# interaction.plot(response = modeldata$MaxLfWdth2, x.factor = modeldata$PC1, trace.factor = modeldata$Origin)
+# plot(modeldata$PC1, modeldata$Origin)
+# qplot(data=modeldata, PC1, MaxLfWdth2, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMaxLfWdth2=mean(MaxLfWdth2, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,PC1, popMaxLfWdth2, color = Origin, 
+#       xlab="PC1", 
+#       ylab="Population mean MaxLfWdth2", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# 
+# # checking the normality of residuals e_i:
+# # MaxLfWdth2 vs LfWdth2.log
+# plot(resid(modelg3) ~ fitted(modelg3),main="residual plot")
+# abline(h=0)
+# qqnorm(resid(modelg3), main="Q-Q plot for residuals")
+# qqline(resid(modelg3))
+# 
+# modelg3log<- glm(LfWdth2.log ~ Origin, family=gaussian,data=modeldata)
+# qqnorm(resid(modelg3log), main="Q-Q plot for residuals")
+# qqline(resid(modelg3log))
+# #log is worse, DO NOT TRANSFORM
+# 
+# #pc2
+# model1<-lmer(MaxLfWdth2  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
+# model2<-lmer(MaxLfWdth2  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+# model3<-lmer(MaxLfWdth2  ~ Origin * PC2 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+# momAov <- anova(model2,model1) # mom is sig!
+# momAov
+# popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+# popAov
+# 1-pchisq(3.7459,1)
+# # qchisq(558.65,1,lower=FALSE)#chisq value
+# # 
+# # modelint<-lmer(MaxLfWdth2  ~ Origin +PC2 +(1|Pop), family=gaussian,data=modeldata)
+# # intAov <- anova(model2, modelint)
+# # intAov
+# # 
+# # modelcov <- lmer(MaxLfWdth2  ~ Origin +(1|Pop), family=gaussian,data=modeldata)
+# # covAov <- anova(modelint, modelcov)
+# # covAov
+# # 
+# # modelO<-lmer(MaxLfWdth2 ~ (1|Pop), family=gaussian,data=modeldata)
+# # originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# # originAov
+# # 
+# # modelOC <- lmer(MaxLfWdth2  ~ PC2 +(1|Pop), family=gaussian,data=modeldata)
+# # ocAov <- anova(modelint, modelOC)
+# # ocAov
+# 
+# #try glm
+# modelg <- glm(MaxLfWdth2 ~ Origin*PC2, family=gaussian,data=modeldata)
+# modelg1 <- glm(MaxLfWdth2 ~ Origin+PC2, family=gaussian,data=modeldata)
+# anova(modelg1, modelg, test="LRT") 
+# qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+# 
+# modelg3<- glm(MaxLfWdth2 ~ Origin, family=gaussian,data=modeldata)
+# anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+# modelg2<- glm(MaxLfWdth2 ~ PC2, family=gaussian,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
+# 
+# 
+# modelg
+# summary(modelg)
+# 
+# lsmeans(modelg1, ~ Origin, conf=95)
+# 
+# interaction.plot(response = modeldata$MaxLfWdth2, x.factor = modeldata$PC2, trace.factor = modeldata$Origin)
+# plot(modeldata$PC2, modeldata$Origin)
+# qplot(data=modeldata, PC2, MaxLfWdth2, color=Origin, geom = "jitter")
+# 
+# moddata <- ddply(modeldata, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popMaxLfWdth2=mean(MaxLfWdth2, na.rm=TRUE))
+# 
+# #png("MF_    .png", height = 600, width = 600, pointsize = 16)
+# qplot(data=moddata,PC2, popMaxLfWdth2, color = Origin, 
+#       xlab="PC2", 
+#       ylab="Population mean MaxLfWdth2", main="") +geom_smooth(method=glm, se=TRUE)
+# # dev.off()
+# # 
+# # checking the normality of residuals e_i:
+# # MaxLfWdth2 vs LfWdth2.log
+# # plot(resid(modelg3) ~ fitted(modelg3),main="residual plot")
+# # abline(h=0)
+# qqnorm(resid(modelg), main="Q-Q plot for residuals")
+# qqline(resid(modelg))
+# 
+# modelglog<- glm(LfWdth2.log ~ Origin*PC2, family=gaussian,data=modeldata)
+# qqnorm(resid(modelg3log), main="Q-Q plot for residuals")
+# qqline(resid(modelg3log))
+# #log is worse, DO NOT TRANSFORM
 
 #######################example##########################
 # ######Allo, Origin * Lat models######
@@ -392,3 +1027,73 @@ qqline(resid(modelg3))
 # abline(h=0)
 # qqnorm(resid(modelg3), main="Q-Q plot for residuals")
 # qqline(resid(modelg3))
+##################early stuff##############
+# #so for each cov and distribution
+# 
+# #PC1
+# frGLR.PC1 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1"))#apply func to all gaussian traits
+# frPLR.PC1 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC1", family=poisson))#apply func to all poisson traits
+# boltLR.PC1 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC1",family=binomial) #apply to single binomial trait
+# 
+# #PC2
+# frGLR.PC2 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC2"))#apply func to all gaussian traits
+# frPLR.PC2 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC2", family=poisson))#apply func to all poisson traits
+# boltLR.PC2 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC2",family=binomial) #apply to single binomial trait
+# 
+# #PC3
+# frGLR.PC3 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC3"))#apply func to all gaussian traits
+# frPLR.PC3 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="PC3", family=poisson))#apply func to all poisson traits
+# boltLR.PC3 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="PC3",family=binomial) #apply to single binomial trait
+# 
+# #bio4
+# frGLR.bio4 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio4"))#apply func to all gaussian traits
+# frPLR.bio4 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio4", family=poisson))#apply func to all poisson traits
+# boltLR.bio4 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio4",family=binomial) #apply to single binomial trait
+# 
+# #bio19
+# frGLR.bio19 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio19"))#apply func to all gaussian traits
+# frPLR.bio19 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio19", family=poisson))#apply func to all poisson traits
+# boltLR.bio19 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio19",family=binomial) #apply to single binomial trait
+# 
+# #bio7
+# frGLR.bio7 <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio7"))#apply func to all gaussian traits
+# frPLR.bio7 <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="bio7", family=poisson))#apply func to all poisson traits
+# boltLR.bio7 <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="bio7",family=binomial) #apply to single binomial trait
+# 
+# #Latitude
+# frGLR.lat <- lapply(names(frdat)[c(9:10,16,18:19,27:34)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude"))#apply func to all gaussian traits
+# frPLR.lat <- lapply(names(frdat)[c(8,17,24,25,35)],function(n) CGtrait.LR_snglcov(n,frdat, covariate="Latitude", family=poisson))#apply func to all poisson traits
+# boltLR.lat <- CGtrait.LR_snglcov(trait="bolt.bin",df=frdat,covariate="Latitude",family=binomial) #apply to single binomial trait
+# 
+# #which anovas have sig covariate or origin?
+# snglcov <- c(frGLR.PC1, frPLR.PC1, boltLR.PC1,frGLR.PC2, frPLR.PC2, boltLR.PC2,frGLR.PC3, frPLR.PC3, boltLR.PC3,
+# #              frGLR.bio4,frPLR.bio4, boltLR.bio4,frGLR.bio7, frPLR.bio7, boltLR.bio7,frGLR.bio19, frPLR.bio19, boltLR.bio19,
+#              frGLR.lat, frPLR.lat, boltLR.lat, frGLR.Trt, frPLR.Trt, boltLR.Trt)
+# save(snglcov, file="Fr_aovlists.RData")
+# load()
+# 
+# 
+# CGtrait_sigaov_func_Fr(frGLR.PC1)
+# CGtrait_sigaov_func_Fr(frGLR.PC2)
+# CGtrait_sigaov_func_Fr(frGLR.PC3)
+# CGtrait_sigaov_func_Fr(frGLR.bio4)
+# CGtrait_sigaov_func_Fr(frGLR.bio7)
+# CGtrait_sigaov_func_Fr(frGLR.bio19)
+# CGtrait_sigaov_func_Fr(frGLR.lat)
+# 
+# CGtrait_sigaov_func_Fr(frPLR.PC1)
+# CGtrait_sigaov_func_Fr(frPLR.PC2)
+# CGtrait_sigaov_func_Fr(frPLR.PC3)
+# CGtrait_sigaov_func_Fr(frPLR.bio4)
+# CGtrait_sigaov_func_Fr(frPLR.bio7)
+# CGtrait_sigaov_func_Fr(frPLR.bio19)
+# CGtrait_sigaov_func_Fr(frPLR.lat)
+# 
+# boltLR.PC1
+# boltLR.PC2
+# boltLR.PC3
+# boltLR.bio4
+# boltLR.bio7
+# boltLR.bio19
+# boltLR.lat
+# 

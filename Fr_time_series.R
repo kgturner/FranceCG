@@ -484,16 +484,16 @@ qplot(data=moddata,Trt, poplfc, color = Origin,
       ylab="Population mean lf count", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
 
-# ##################################
-# ####lfw#######
-# CGtrait.LR_snglcov_int_time(trait="lfw", df=frdat.l, covariate="PC1", family=gaussian)
-# CGtrait.models_snglcov_int_time(trait="lfw", df=frdat.l, covariate="PC1", family=gaussian)
-# 
-# modeldata<-frdat.l[!is.na(frdat.l$lfw),]
-# 
-# modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
-# modeldata$Mom<-as.factor(modeldata$Mom)
-# 
+##################################
+####lfw#######
+CGtrait.LR_snglcov_int_time(trait="lfw", df=frdat.l, covariate="PC1", family=gaussian)
+CGtrait.models_snglcov_int_time(trait="lfw", df=frdat.l, covariate="PC1", family=gaussian)
+
+modeldata<-frdat.l[!is.na(frdat.l$lfw),]
+
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+
 # #pc1
 # model1<-lmer(lfw  ~ Origin * PC1 + m.date+(1|Pop/Mom), family=gaussian,data=modeldata)
 # model2<-lmer(lfw  ~ Origin * PC1 + m.date+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -527,6 +527,8 @@ qplot(data=moddata,Trt, poplfc, color = Origin,
 # 
 # modelO
 # summary(modelO)
+
+
 # 
 # # #means and CI #needs work
 # # CI.LS.gaussian.mdate(modelcov)
