@@ -1,0 +1,395 @@
+Row	Column	tagged	Trt	Image	lfArea	lfMass
+2	B	US019-7	control	montSLA-1-5.jpg	43.941	0.335
+2	C	SAND-4	control	montSLA-1-4.jpg	30.564	0.192
+2	D	HU001-5	control	montSLA-1-4.jpg	7.023	0.032
+2	E	RU001-5	control	montSLA-1-4.jpg	7.98	0.034
+2	F	US017-9	control	montSLA-1-5.jpg	20.084	0.138
+2	G	TR001-8	control	montSLA-1-6.jpg	7.349	0.062
+2	I	EDGE-1	control	montSLA-1-6.jpg	16.515	0.036
+2	J	RO001-9	control	montSLA-1-6-1.jpg	34.234	0.261
+2	K	GR001-3	control	montSLA-1-6-1.jpg	22.497	0.197
+2	M	TR003-7	control	montSLA-1-6-3.jpg	22.64	0.169
+2	N	US002-7	control	montSLA-1-6-3.jpg	1.07	0.006
+2	O	RU008-4	control	montSLA-1-6-3.jpg	22.552	0.165
+2	P	RO003-6	control	montSLA-1-6-4.jpg	10.71	0.080
+2	S	RU008-7	control	montSLA-1-6-4.jpg	16.877	0.114
+2	T	SAND-9	control	montSLA-1-6-5.jpg	14.823	0.160
+3	B	RO002-1	control	montSLA-1-7.jpg	12.97	0.083
+3	C	HU001-4	control	montSLA-1-7.jpg	21.534	0.180
+3	D	SERG-2	control	montSLA-1-7-1.jpg	15.878	0.140
+3	G	US019-4	control	montSLA-1-7-1.jpg	18.906	0.101
+3	H	RO002-8	control	montSLA-1-7-2.jpg	15.113	0.097
+3	I	UA003-2	control	montSLA-1-7-2.jpg	23.71	0.187
+3	J	CA001-4	control	montSLA-1-6-10.jpg	11.415	0.101
+3	K	RO003-9	control	montSLA-1-6-10.jpg	5.023	0.042
+3	L	US002-3	control	montSLA-1-6-9.jpg	21.606	0.138
+3	M	RU001-7	control	montSLA-1-6-9.jpg	2.383	0.017
+3	N	EDGE-83	control	montSLA-1-6-9.jpg	6.033	0.039
+3	O	US002-8	control	montSLA-1-6-8.jpg	6.525	0.110
+3	P	US018-2	control	montSLA-1-6-8.jpg	15.705	0.158
+3	Q	GR002-7	control	montSLA-1-6-7.jpg	28.145	0.068
+3	R	US023-3	control	montSLA-1-6-7.jpg	9.723	0.246
+3	S	RO001-5	control	montSLA-1-6-6.jpg	33.576	0.120
+3	T	CORY2-8	control	montSLA-1-6-6.jpg	12.312	0.088
+3	U	BG001-5	control	montSLA-1-6-5.jpg	8.533	0.064
+4	B	US001-9	drought	montSLA-1-7.jpg	4.431	0.028
+4	C	CA010-3	drought	montSLA-1-7-3.jpg	50.142	0.397
+4	D	BG001-7	drought	montSLA-1-7-3.jpg	10.749	0.080
+4	E	CA008-3	drought	montSLA-1-7-4.jpg	35.801	0.290
+4	F	US026-6	drought	montSLA-1-7-4.jpg	22.735	0.191
+4	G	UA008-5	drought	montSLA-1-8-1.jpg	2.486	0.013
+4	H	UA004-2	control	montSLA-1-8.jpg	7.034	0.211
+4	I	GR003-1	control	montSLA-1-8.jpg	27.686	0.053
+4	J	US017-8	control	montSLA-1-8-1.jpg	8.868	0.057
+4	K	US020-3	control	montSLA-1-8-1.jpg	14.273	0.126
+4	L	BG001-8	control	montSLA-1-8-2.jpg	9.291	0.086
+4	M	BG001-6	control	montSLA-1-8-2.jpg	8.454	0.157
+4	N	RO005-7	control	montSLA-1-8-3.jpg	13.932	0.091
+4	O	RO002-3	control	montSLA-1-8-3.jpg	6.724	0.060
+4	P	US026-9	control	montSLA-1-8-4.jpg	26.245	0.220
+4	Q	BG001-3	control	montSLA-1-8-4.jpg	5.939	0.042
+4	R	EDGE-46	control	montSLA-1-8-4.jpg	10.968	0.076
+4	S	CA010-6	control	montSLA-1-8-5.jpg	37.509	0.271
+4	T	US013-7	control	montSLA-1-8-5.jpg	21.448	0.171
+5	B	US012-5	drought	montSLA-1-10-2.jpg	2.992	0.019
+5	C	EDGE-55	drought	montSLA-1-11-1.jpg	5.836	0.043
+5	D	GR001-8	drought	montSLA-1-11.jpg	18.853	0.160
+5	E	UA008-6	drought	montSLA-1-11.jpg	9.757	0.082
+5	F	CORY1-6	drought	montSLA-1-11-2.jpg	27.423	0.234
+5	G	UA003-1	drought	montSLA-1-11-1.jpg	29.038	0.238
+5	J	UA003-5	drought	montSLA-1-11-1.jpg	26.54	0.227
+5	K	US001-2	drought	montSLA-1-8-9.jpg	25.9653	0.331
+5	L	US023-9	drought	montSLA-1-8-10.jpg	15.505	0.146
+5	M	TR001-7	drought	montSLA-1-8-9.jpg	15.878	0.146
+5	N	UA003-7	drought	montSLA-1-8-8.jpg	41.574	0.285
+5	O	EDGE-2	drought	montSLA-1-8-8.jpg	8.49	0.062
+5	P	TR004-4	drought	montSLA-1-8-7.jpg	11.199	0.077
+5	Q	US023-7	drought	montSLA-1-8-7.jpg	16.706	0.141
+5	R	CA008-4	drought	montSLA-1-8-6.jpg	27.949	0.260
+5	S	US017-4	drought	montSLA-1-8-6.jpg	11.421	0.082
+6	B	CA010-8	control	montSLA-1-10-2.jpg	24.983	0.199
+6	C	US001-4	control	montSLA-1-11.jpg	25.977	0.201
+6	E	CA001-9	control	montSLA-1-10-1.jpg	23.654	0.207
+6	H	UA007-7	control	montSLA-1-10-2.jpg	26.738	0.213
+6	I	RU008-8	control	montSLA-1-10-1.jpg	30.273	0.246
+6	J	US017-7	control	montSLA-1-10-1.jpg	25.786	0.234
+6	K	CA009-6	control	montSLA-1-10.jpg	18.101	0.229
+6	M	TR004-5	control	montSLA-1-10.jpg	10.132	0.073
+6	O	TR003-2	control	montSLA-1-10.jpg	4.254	0.033
+6	R	UA007-5	control	montSLA-1-11-2.jpg	16.296	0.140
+6	S	US018-7	control	montSLA-1-11-2.jpg	17.893	0.142
+6	T	CA010-4	control	montSLA-1-11-3.jpg	28.707	0.234
+6	U	TR003-5	control	montSLA-1-11-3.jpg	25.178	0.198
+8	B	US001-5	control	montSLA-1-13-16.jpg	14.301	0.107
+8	C	CA001-2	control	montSLA-1-13-16.jpg	22.172	0.143
+8	D	US003-6	control	montSLA-1-12-15.jpg	24.193	0.182
+8	F	US015-6	control	montSLA-1-12-15.jpg	20.698	0.169
+8	G	TR001-3	control	montSLA-1-12-4.jpg	15.406	0.139
+8	H	US001-3	control	montSLA-1-12-4.jpg	36.684	0.342
+8	I	CA009-1	control	montSLA-1-12-4.jpg	15.276	0.112
+8	J	US020-2	control	montSLA-1-12-3.jpg	17.347	0.154
+8	K	UA006-3	control	montSLA-1-12-3.jpg	19.059	0.164
+8	M	US002-2	control	montSLA-1-12-3.jpg	24.695	0.244
+8	N	US019-5	control	montSLA-1-12-1.jpg	16.025	0.113
+8	O	UA006-6	control	montSLA-1-12-1.jpg	14.123	0.095
+8	P	UA003-3	control	montSLA-1-12-1.jpg	29.859	0.262
+8	Q	CA008-7	control	montSLA-1-12.jpg	35.59	0.280
+8	R	US003-8	control	montSLA-1-12.jpg	20.83	0.157
+8	S	US019-6	control	montSLA-1-12.jpg	29.497	0.240
+8	U	UA008-1	control	montSLA-1-11-3.jpg	20.814	0.165
+9	C	US023-2	control	montSLA-1-13-14.jpg	11.511	0.103
+9	E	HU001-9	control	montSLA-1-13-14.jpg	1.316	0.012
+9	F	CA010-1	control	montSLA-1-13-14.jpg	19.965	0.168
+9	G	US014-3	control	montSLA-1-13-13.jpg	6.634	0.054
+9	H	EDGE-6	control	montSLA-1-13-13.jpg	19.645	0.182
+9	I	CA009-4	control	montSLA-1-13-13.jpg	14.771	0.137
+9	J	UA003-9	control	montSLA-1-13-11.jpg	24.269	0.199
+9	K	US013-5	control	montSLA-1-13-11.jpg	13.268	0.111
+9	L	EDGE-70	control	montSLA-1-13-11.jpg	12.341	0.120
+9	M	CA010-5	control	montSLA-1-13-10.jpg	12.562	0.091
+9	N	US026-8	control	montSLA-1-13-10.jpg	28.22	0.290
+9	O	US001-1	control	montSLA-1-13-10.jpg	11.139	0.124
+9	P	RU008-5	control	montSLA-1-13-9.jpg	21.782	0.175
+9	Q	GR001-1	control	montSLA-1-13-8.jpg	0.086	
+9	R	HU001-6	control	montSLA-1-13-8.jpg	27.705	0.243
+9	S	UA007-9	control	montSLA-1-13-6.jpg	14.563	0.120
+9	U	RU001-1	control	montSLA-1-13-6.jpg	15.473	0.096
+10	B	US022-7	control	montSLA-1-13-1.jpg	5.853	0.055
+10	C	US022-4	control	montSLA-1-13-1.jpg	16.357	0.153
+10	D	US014-8	control	montSLA-1-13-2.jpg	13.324	0.102
+10	E	US022-8	control	montSLA-1-13-2.jpg	10.933	0.085
+10	F	US012-1	control	montSLA-1-13-2.jpg	11.718	0.078
+10	G	CA010-2	control	montSLA-1-13-3.jpg	22.163	0.178
+10	I	TR001-9	control	montSLA-1-13-3.jpg	33.363	0.314
+10	J	US017-6	control	montSLA-1-13-3.jpg	15.465	0.101
+10	K	RO003-5	control	montSLA-1-13-4.jpg	11.921	0.107
+10	N	US023-1	control	montSLA-1-13-4.jpg	11.604	0.106
+10	O	US002-6	control	montSLA-1-13-4.jpg	19.464	0.036
+10	R	TR003-3	control	montSLA-1-13-5.jpg	13.979	0.103
+10	S	HU001-1	control	montSLA-1-13-5.jpg	6.971	0.056
+10	T	TR003-6	control	montSLA-1-13-5.jpg	24.971	0.210
+10	U	SAND-6	control	montSLA-1-13-6.jpg	36.128	0.323
+12	B	RO003-2	drought	montSLA-1-13.jpg	6.587	0.046
+12	D	RU001-4	drought	montSLA-1-13.jpg	19.43	0.135
+12	E	US014-5	drought	montSLA-1-13.jpg	14.983	0.120
+12	G	HU001-7	drought	montSLA-1-13-1.jpg	19.995	0.153
+12	H	RU008-2	drought			0.196
+12	I	US017-1	drought			0.200
+12	J	CA001-7	drought			0.174
+12	K	CA009-9	drought			0.163
+12	L	CA001-8	drought			0.058
+12	M	GR002-2	drought			0.004
+12	N	CA010-9	drought			0.163
+12	O	CA010-7	drought			0.144
+12	P	UA008-3	drought			0.115
+12	R	HU001-3	drought			0.065
+12	S	US003-1	drought			0.099
+12	U	SERG-7	drought			0.112
+13	B	US019-2	control			0.053
+13	F	US013-8	control			0.008
+13	G	EDGE-85	edge			0.120
+13	J	US017-5	control			0.224
+13	K	US020-1	control			0.059
+13	L	RU008-6	control			0.187
+13	M	TR001-4	control			0.138
+13	N	US026-3	control			0.190
+13	O	US022-1	control			0.123
+13	P	RO005-2	control			0.163
+13	Q	EDGE-86	edge			0.096
+13	S	EDGE-91	edge			0.102
+13	T	SERG-6	control			0.174
+13	U	BG001-1	control			0.098
+14	B	RO001-8	control			0.140
+14	C	US015-7	control			0.070
+14	D	CA008-8	control			0.273
+14	E	GR001-9	control			0.154
+14	F	US014-4	control			0.109
+14	G	RO003-1	control			0.085
+14	I	US017-3	control			0.218
+14	J	US001-6	control			0.240
+14	K	EDGE-92	EDGE			0.025
+14	M	TR004-7	control			0.193
+14	N	SAND-1	control			0.238
+14	O	RU008-3	control			0.037
+14	P	TR004-3	control			0.185
+14	R	HU001-2	control			0.143
+14	S	EDGE-89	edge			0.118
+14	T	SAND-3	control			0.130
+14	U	US015-4	control			0.122
+15	B	RU008-1	drought			0.144
+15	C	GR001-7	drought			0.149
+15	D	US018-5	drought			0.118
+15	E	SAND-8	drought			0.176
+15	F	US001-7	drought			0.216
+15	H	US018-4	drought			0.226
+15	I	US020-8	drought			0.112
+15	J	US023-5	drought			0.102
+15	K	RO002-7	drought			0.036
+15	L	US013-4	drought			0.154
+15	M	SERG-9	drought			0.131
+15	N	BG001-2	drought			0.048
+15	O	GR002-9	drought			0.117
+15	P	US019-9	drought			0.109
+15	R	US022-5	drought			0.186
+15	S	TR003-8	drought			0.267
+15	T	UA008-7	drought			0.130
+15	U	US013-3	drought			0.041
+16	B	SERG-3	drought			0.078
+16	C	RO001-1	drought			0.205
+16	D	SAND-2	drought			0.165
+16	F	US022-6	drought			0.127
+16	G	US018-3	drought			0.067
+16	H	UA003-6	drought			0.132
+16	I	RU001-2	drought			0.052
+16	J	TR001-5	drought			0.143
+16	K	US020-7	drought			0.131
+16	L	RO001-4	drought			0.135
+16	N	UA006-4	drought			0.097
+16	P	RU008-9	drought			0.107
+16	R	US003-4	drought			0.189
+16	S	CA009-7	drought			0.165
+16	T	US015-5	drought			0.087
+16	U	GR001-4	drought			0.181
+17	C	US015-9	control			0.022
+17	F	RO001-6	control			0.186
+17	G	RO001-7	control			0.232
+17	H	RO001-3	control			0.123
+17	I	US018-9	control			0.319
+17	J	US003-5	control			0.122
+17	K	US014-6	control			0.063
+17	M	SERG-4	control			0.108
+17	N	EDGE-87	edge			0.085
+17	O	US022-2	control			0.180
+17	P	CA009-5	control			0.334
+17	Q	US013-9	control			0.125
+17	R	RO005-5	control			0.143
+17	T	US019-8	control			0.400
+17	U	GR002-8	control			0.087
+18	B	UA006-9	control			0.225
+18	C	EDGE-88	edge			0.060
+18	E	BG001-4	control			0.141
+18	G	GR003-7	control			0.082
+18	H	TR001-6	control			0.161
+18	I	RO005-1	control			0.189
+18	J	US023-4	control			0.182
+18	L	RU001-9	control			0.027
+18	M	CORY2-6	control			0.022
+18	N	GR001-2	control			0.057
+18	O	US022-3	control			0.188
+18	P	US023-8	control			0.164
+18	Q	US012-8	control			0.266
+18	R	EDGE-34	control			0.168
+18	S	SERG-8	control			0.159
+18	T	GR002-4	control			0.204
+18	U	EDGE-9	control			0.081
+19	B	CORY2-9	drought			0.078
+19	C	US014-1	drought			0.049
+19	E	US022-9	drought			0.069
+19	F	SAND-5	drought			0.177
+19	G	US017-2	drought			0.163
+19	H	RO002-6	drought			0.180
+19	I	TR001-2	drought			0.160
+19	J	US020-6	drought			0.136
+19	K	US014-7	drought			0.110
+19	L	TR004-2	drought			0.069
+19	N	US002-1	drought			0.231
+19	O	UA003-4	drought			0.041
+19	P	CA009-3	drought			0.150
+19	Q	UA006-8	drought			0.188
+19	R	US026-2	drought			0.162
+19	S	RO001-2	drought			0.132
+19	U	UA007-6	drought			0.172
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
