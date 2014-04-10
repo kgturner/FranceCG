@@ -1,4 +1,4 @@
-#Fr_death
+#Fr_death and SLA and mass and bolting
 #format for mixed lmer
 #March 2014
  
@@ -72,6 +72,38 @@ setdiff(FrdatSK$tagged, frdeath$tagged)
 setdiff(frdeath$tagged, FrdatSK$tagged)
 subset(frdeath, tagged%in%setdiff(frdeath$tagged, FrdatSK$tagged)&Trt==c("control", "drought")&Ending=="H")
 
+###add sla, bolt.bin, mass
+frend <- subset(frdeath, tagged!=""&Trt!="edge"&Trt!="")
+frend <- droplevels(frend)
 
+subset(frend, tagged%in%setdiff(frend$tagged, FrdatSK$tagged))
+
+frdes <- read.table("Frdes.txt", header=T, sep="\t",quote='"', row.names=1)
+frend <- merge(frdes[,1:6],frend, all.y=TRUE)
+summary(frend)
+
+frmass <- read.table("FrShootMassH.txt", header=T, sep="\t",quote='"', row.names=1)
+head(frmass)
+frend <- merge(frend, frmass, by.x="tagged",by.y="row.names", all.x=TRUE)
+
+frSLA <- read.table("FrSLA.txt", header=T, sep="\t",quote='"')
+frend <- merge(frend, frSLA, all.x=TRUE)
+head(frend)
+
+summary(frend)
+frend[frend$BoltedatH=="no",]$BoltedatH <- "No"
+frend[frend$BoltedatH=="",]$BoltedatH <- NA
+frend$bolt.bin <- as.numeric(frend$BoltedatH)-1
+
+frend$SLA <- frend$lfArea/frend$lfMass
+frend$sla.log <- log(frend$SLA)
+
+frend$Mass.log <- log(frend$Shoot.mass.gH)
+
+frend <- subset(frend, !is.na(Origin))
+
+
+#write
+write.table(frend, file="FrEnd.txt",sep="\t", quote=F)
 #read
-FrdatSK<- read.table("FrTraitClimDat_SK.txt", header=T, sep="\t",quote='"', row.names=1)
+frend<- read.table("FrEnd.txt", header=T, sep="\t",quote='"', row.names=1)
