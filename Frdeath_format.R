@@ -102,6 +102,14 @@ frend$Mass.log <- log(frend$Shoot.mass.gH)
 
 frend <- subset(frend, !is.na(Origin))
 
+frend <- droplevels(frend)
+frend$end.bin <- as.numeric(frend$Ending)-1
+
+#add bioclim data
+#load climate table
+Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE)
+frend <- merge(frend,Frclimdat[,c(1,2,5,16,18,21:27)], all.x=TRUE, ) #pick out top loadings bio11, bio9, bio6, bio4, alt, long, lat
+
 
 #write
 write.table(frend, file="FrEnd.txt",sep="\t", quote=F)
