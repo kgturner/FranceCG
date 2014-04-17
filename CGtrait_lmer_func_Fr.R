@@ -86,12 +86,12 @@ library(lme4)
 # names(temp)
 
 
-CGtrait_sigaov_func_Fr <- function(list, selectaov=3:5){
+CGtrait_sigaov_func_Fr <- function(list, selectaov=3:5, cutoff=0.1){
   for(i in 1:length(list)){
     temp <- list[[i]]
     for(j in selectaov){
       aov <- temp[[j]]
-      if(aov$"Pr(>Chisq)"[2]<0.1){
+      if(aov$"Pr(>Chisq)"[2]<cuttoff){
         print(names(temp)[j])
       }
       

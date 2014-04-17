@@ -114,7 +114,8 @@ CGtrait_sigaov_func_Fr(frBLR.Trt_SKend, selectaov=1:6)
 
 
 ##########DK+SK single traits##########################
-#to do: bio9 for every poisson trait; trt for gaussian traits
+#check sig level for mom: Death.date, yellow
+Death.date <- CGtrait.LR_snglcov_int(Death.date,frend,covariate,family=gaussian)
 
 ###Bolt.date####################
 modeldata<-frend[!is.na(frend$Bolt.date),]
