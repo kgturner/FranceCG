@@ -5,6 +5,11 @@
 #read
 frdat<- read.table("FrTraitClimDat.txt", header=T, sep="\t",quote='"', row.names=1)
 
+#OR
+FrdatSK<- read.table("FrTraitClimDat_SK.txt", header=T, sep="\t",quote='"', row.names=1)
+#for DK only include:
+subset(FrdatSK, Origin%in%c("inv", "nat"))
+
 #Control and drought, REML, using lme4
 #mixed effect models 
 library(lme4)
@@ -190,6 +195,42 @@ boltLR.lat_int
 CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=1:6)
 boltLR.trt_int
+
+##########
+##Crown.log and RoseAh.log only
+#PC1
+frGLR.PC1_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC1"))
+
+#PC2
+frGLR.PC2_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC2"))#apply func to all gaussian traits
+
+#PC3
+frGLR.PC3_cr <-  lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC3"))#apply func to all gaussian traits
+
+#bio11
+frGLR.bio11_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio11"))#apply func to all gaussian traits
+
+#bio9
+frGLR.bio9_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio9"))#apply func to all gaussian traits
+
+#bio6
+frGLR.bio6_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio6"))#apply func to all gaussian traits
+
+#Latitude
+frGLR.lat_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="Latitude"))#apply func to all gaussian traits
+
+#Trt
+frGLR.trt_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="Trt"))#apply func to all gaussian traits
+
+CGtrait_sigaov_func_Fr(frGLR.PC1_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.PC2_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.PC3_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.bio11_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.bio9_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.bio6_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.lat_cr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.trt_cr, selectaov=1:6, cutoff=0.05)
+
 
 ##########DK single traits##########################
 #focus on single timept measures, poisson model fails: 

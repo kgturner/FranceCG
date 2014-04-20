@@ -79,7 +79,7 @@ library(plyr)
 # multiplot(p1, p2, cols=2)
 # 
 # ####bio19####
-# #LfCount1.sq
+# #######LfCount1.sq
 # modeldata <- FrdatSK[!is.na(FrdatSK$LfCount1.sq),]
 # modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 # modeldata$Mom<-as.factor(modeldata$Mom)
@@ -182,6 +182,40 @@ CGtrait_sigaov_func_Fr(frGLR.Trt_SKint, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frPLR.Trt_SKint, selectaov=1:6)
 boltLR.Trt_SKint
 
+################
+#Crown.log and RoseAh.log only
+#PC1
+frGLR.PC1_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="PC1"))#apply func to all gaussian traits
+
+#PC2
+frGLR.PC2_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="PC2"))#apply func to all gaussian traits
+
+#PC3
+frGLR.PC3_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="PC3"))#apply func to all gaussian traits
+
+#bio11
+frGLR.bio11_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="bio11"))#apply func to all gaussian traits
+
+#bio9
+frGLR.bio9_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="bio9"))#apply func to all gaussian traits
+
+#bio6
+frGLR.bio6_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="bio6"))#apply func to all gaussian traits
+
+#Latitude
+frGLR.lat_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="Latitude"))#apply func to all gaussian traits
+
+#Treatment
+frGLR.Trt_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="Trt"))#apply func to all gaussian traits
+
+CGtrait_sigaov_func_Fr(frGLR.PC1_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.PC2_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.PC3_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.bio11_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.bio9_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.bio6_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.lat_SKcr, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frGLR.Trt_SKcr, selectaov=1:6, cutoff=0.05)
 
 ##########DK+SK single traits##########################
 #focus on single timept measures, poisson model fails: 
@@ -911,15 +945,6 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
 #check pop sig only for bio9, lat, PC1, PC2, PC3
-#lat
-model1<-lmer(RoseAh.log  ~ Origin * Latitude +(1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(RoseAh.log  ~ Origin * Latitude +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(RoseAh.log  ~ Origin * Latitude +(1|blank), family=gaussian,data=modeldata) # Test population effect
-momAov <- anova(model2,model1) # mom is sig!
-momAov
-popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
-popAov
-1-pchisq(64.593,1)
 
 #bio9
 model1<-lmer(RoseAh.log  ~ Origin * bio9 +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1124,6 +1149,33 @@ ocAov
 #       xlab="bio11", 
 #       ylab="Population mean RoseAh.log", main="") +geom_smooth(method=glm, se=TRUE)
 # # dev.off()
+
+#lat
+model1<-lmer(RoseAh.log  ~ Origin * Latitude +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * Latitude +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * Latitude +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(64.593,1)
+
+modelint<-lmer(RoseAh.log  ~ Origin +Latitude +(1|Pop/Mom), family=gaussian,data=modeldata)
+intAov <- anova(model1, modelint)
+intAov
+
+modelcov <- lmer(RoseAh.log  ~ Origin +(1|Pop/Mom), family=gaussian,data=modeldata)
+covAov <- anova(modelint, modelcov)
+covAov
+
+modelO<-lmer(RoseAh.log ~ (1|Pop/Mom), family=gaussian,data=modeldata)
+originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+originAov
+
+modelOC <- lmer(RoseAh.log  ~ Latitude +(1|Pop/Mom), family=gaussian,data=modeldata)
+ocAov <- anova(modelint, modelOC)
+ocAov
+
 
 #trt
 model1<-lmer(RoseAh.log  ~ Origin * Trt +(1|Pop/Mom), family=gaussian,data=modeldata)

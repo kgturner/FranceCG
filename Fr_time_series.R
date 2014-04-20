@@ -9,6 +9,11 @@ library(plyr)
 #read
 frdat.l<- read.table("FrTraitClimDat_DKonly_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
+#OR
+Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
+#for DK only include:
+subset(Frdatsk.l, Origin%in%c("inv", "nat"))
+
 ###########sngl cov with interaction########################
 #so for each cov and distribution
 CGtrait.LR_snglcov_int_mdate()
@@ -49,28 +54,42 @@ frPLR.trt_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate
 # all the lfc had non-convergences, have to do by hand; remove harvest measure? time series needed at all?
 
 CGtrait_sigaov_func_Fr(frGLR.PC1_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.PC2_time, selectaov=1:7)
+CGtrait_sigaov_func_Fr(frGLR.PC2_time, selectaov=1:7,cutoff=0.05)
 CGtrait_sigaov_func_Fr(frGLR.PC3_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.bio11_time, selectaov=1:7)
+CGtrait_sigaov_func_Fr(frGLR.bio11_time, selectaov=1:7,cutoff=0.05)
 CGtrait_sigaov_func_Fr(frGLR.bio9_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.bio6_time, selectaov=1:7)
+CGtrait_sigaov_func_Fr(frGLR.bio6_time, selectaov=1:7,cutoff=0.05)
 CGtrait_sigaov_func_Fr(frGLR.lat_time, selectaov=1:7)
 CGtrait_sigaov_func_Fr(frGLR.trt_time, selectaov=1:7)
 
 ##########DK single traits##########################
 ###lfc##############
-CGtrait.LR_snglcov_int_time(trait="lfc", df=frdat.l, covariate="PC1", family=poisson)
-CGtrait.models_snglcov_int_time(trait="lfc", df=frdat.l, covariate="PC1", family=poisson)
+CGtrait.LR_snglcov_int_mdate(trait="lfc", df=subset(Frdatsk.l, Origin%in%c("inv", "nat")), covariate="PC1", family=poisson)
+CGtrait.models_snglcov_int_mdate(trait="lfc", df=frdat.l, covariate="PC1", family=poisson)
 
-modeldata<-frdat.l[!is.na(frdat.l$lfc),]
+# modeldata<-frdat.l[!is.na(subset(Frdatsk.l, Origin%in%c("inv", "nat")).l$lfc),]
+# 
+# modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+# modeldata$Mom<-as.factor(modeldata$Mom)#
+# modeldata <- modeldata[modeldata$lfc<200,]
+# # modeldata <- modeldata[modeldata$time==3,] #only 95/226 individuals have leaf counts for harvest
 
+modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")))
+modeldata<-modeldata[!is.na(modeldata$lfc),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
-modeldata$Mom<-as.factor(modeldata$Mom)#
+modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- modeldata[modeldata$lfc<200,]
-# modeldata <- modeldata[modeldata$time==3,] #only 95/226 individuals have leaf counts for harvest
+modeldata <- modeldata[modeldata$m.date<80,]
+
+ggplot(modeldata,aes(m.date, lfc, color=Origin))+
+  geom_point()+xlab("date")+ geom_smooth(method=glm, se=FALSE)+
+  ylab("lf count")+ 
+  theme(legend.justification=c(0,1), legend.position=c(0,1))
 
 #pc1
-# model1<-lmer(lfc  ~ Origin + PC1 + m.date+(1|Pop/Mom), family=poisson,data=modeldata)
+# #false convergence 
+# modeldata$PC1.1 <- modeldata$PC1/100
+# model1<-lmer(lfc  ~ Origin + PC1.1 + m.date+(1|Pop/Mom), family=poisson,data=modeldata)
 model2<-lmer(lfc  ~ Origin * PC1 + m.date+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
 model3<-lmer(lfc  ~ Origin * PC1 + m.date+(1|blank), family=poisson,data=modeldata) # Test population effect
 # momAov <- anova(model2,model1) # mom is sig!

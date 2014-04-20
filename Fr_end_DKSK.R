@@ -108,9 +108,9 @@ CGtrait_sigaov_func_Fr(frGLR.Lat.1_SKend, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frPLR.Latitude_SKend, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frBLR.Latitude_SKend, selectaov=1:6)
 
-# CGtrait_sigaov_func_Fr(frGLR.Trt_SKend, selectaov=1:6)
-CGtrait_sigaov_func_Fr(frPLR.Trt_SKend, selectaov=1:6)
-CGtrait_sigaov_func_Fr(frBLR.Trt_SKend, selectaov=1:6)
+# CGtrait_sigaov_func_Fr(frGLR.Trt_SKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.Trt_SKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.Trt_SKend, selectaov=1:6, cutoff=0.05)
 
 
 ##########DK+SK single traits##########################
