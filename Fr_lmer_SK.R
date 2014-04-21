@@ -1603,87 +1603,146 @@ popAov
 
 ######################early stuff below here##################3
 
-# ##########does Trt matter? ###########################
-# FrdatSK$Trt <- droplevels(FrdatSK$Trt)
+##################
+#models with Trt included
+
+#####
+##RoseAh.log
+frGLR.rose_SKtrt<- lapply(names(FrdatSK)[c(29,31:33,35:37)],function(n) CGtrait.LR_snglcov_trt("RoseAh.log",FrdatSK, covariate=n, family=gaussian))
+CGtrait_sigaov_func_Fr(frGLR.rose_SKtrt, selectaov=1:7, cutoff=0.05)
+frGLR.rose_SKtrt
+names(FrdatSK)[c(29,31:33,35:37)]
 # 
-# #Trt
-# frGLR.Trt_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="Trt"))
-# #apply func to all gaussian traits. cols 38:51, 53:54 are transformed variables
-# frPLR.Trt_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="Trt", family=poisson))#apply func to all poisson traits
-# boltLR.Trt_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="Trt",family=binomial) #apply to single binomial trait
+modeldata<-FrdatSK[!is.na(FrdatSK$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
 # 
-# CGtrait_sigaov_func_Fr(frGLR.Trt_SK)
-# CGtrait_sigaov_func_Fr(frPLR.Trt_SK)
-# boltLR.Trt_SK
+#PC1
+model1<-lmer(RoseAh.log  ~ Origin * PC1 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * PC1 +Trt +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * PC1 +Trt +(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(4.8901,1)
+modelint<-lmer(RoseAh.log  ~ Origin +PC1 +Trt +(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+modelT <- lmer(RoseAh.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata)
+trtAov <- anova(model2, modelT)
+trtAov
+
+#PC2
+model1<-lmer(RoseAh.log  ~ Origin * PC2 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * PC2 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * PC2 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(27.237,1)
+modelint<-lmer(RoseAh.log  ~ Origin +PC2 +Trt +(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+modelT <- lmer(RoseAh.log  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata)
+trtAov <- anova(model2, modelT)
+trtAov
 # 
-# ###########################################
-# #so for each cov and distribution
+#PC3
+model1<-lmer(RoseAh.log  ~ Origin * PC3 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * PC3 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * PC3 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(41.522,1)
+
+modelint<-lmer(RoseAh.log  ~ Origin +PC3 +Trt +(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+modelT <- lmer(RoseAh.log  ~ Origin * PC3 +(1|Pop), family=gaussian,data=modeldata)
+trtAov <- anova(model2, modelT)
+trtAov
+
+#bio11
+model1<-lmer(RoseAh.log  ~ Origin * bio11 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * bio11 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * bio11 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(9.2195,1)
+
+modelint<-lmer(RoseAh.log  ~ Origin +bio11 +Trt +(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+modelT <- lmer(RoseAh.log  ~ Origin * bio11 +(1|Pop), family=gaussian,data=modeldata)
+trtAov <- anova(model2, modelT)
+trtAov
 # 
-# #PC1
-# frGLR.PC1_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="PC1"))#apply func to all gaussian traits
-# frPLR.PC1_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="PC1", family=poisson))#apply func to all poisson traits
-# boltLR.PC1_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="PC1",family=binomial) #apply to single binomial trait
+#bio6
+model1<-lmer(RoseAh.log  ~ Origin * bio6 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * bio6 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * bio6 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(12.354,1)
+
+modelint<-lmer(RoseAh.log  ~ Origin +bio6 +Trt +(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+modelT <- lmer(RoseAh.log  ~ Origin * bio6 +(1|Pop), family=gaussian,data=modeldata)
+trtAov <- anova(model2, modelT)
+trtAov
+
+#bio9
+model1<-lmer(RoseAh.log  ~ Origin * bio9 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * bio9 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * bio9 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+1-pchisq(5.7915,1)
+
+modelint<-lmer(RoseAh.log  ~ Origin +bio9 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+intAov <- anova(model1, modelint)
+intAov
+
+modelT <- lmer(RoseAh.log  ~ Origin * bio9 +(1|Pop/Mom), family=gaussian,data=modeldata)
+trtAov <- anova(model1, modelT)
+trtAov
+
+#lat
+model1<-lmer(RoseAh.log  ~ Origin * Latitude +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(RoseAh.log  ~ Origin * Latitude +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log  ~ Origin * Latitude +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+momAov
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+popAov
+# 1-pchisq(64.593,1)
 # 
-# #PC2
-# frGLR.PC2_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="PC2"))#apply func to all gaussian traits
-# frPLR.PC2_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="PC2", family=poisson))#apply func to all poisson traits
-# boltLR.PC2_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="PC2",family=binomial) #apply to single binomial trait
-# 
-# #PC3
-# frGLR.PC3_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="PC3"))#apply func to all gaussian traits
-# frPLR.PC3_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="PC3", family=poisson))#apply func to all poisson traits
-# boltLR.PC3_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="PC3",family=binomial) #apply to single binomial trait
-# 
-# #bio11
-# frGLR.bio11_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="bio11"))#apply func to all gaussian traits
-# frPLR.bio11_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="bio11", family=poisson))#apply func to all poisson traits
-# boltLR.bio11_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="bio11",family=binomial) #apply to single binomial trait
-# 
-# #bio9
-# frGLR.bio9_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="bio9"))#apply func to all gaussian traits
-# frPLR.bio9_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="bio9", family=poisson))#apply func to all poisson traits
-# boltLR.bio9_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="bio9",family=binomial) #apply to single binomial trait
-# 
-# #bio6
-# frGLR.bio6_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="bio6"))#apply func to all gaussian traits
-# frPLR.bio6_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="bio6", family=poisson))#apply func to all poisson traits
-# boltLR.bio6_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="bio6",family=binomial) #apply to single binomial trait
-# 
-# #Latitude
-# frGLR.lat_SK <- lapply(names(FrdatSK)[c(9:10,12,14:15,19:26,40:53, 55:56)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="Latitude"))#apply func to all gaussian traits
-# frPLR.lat_SK <- lapply(names(FrdatSK)[c(8,13,16:17,27)],function(n) CGtrait.LR_snglcov(n,FrdatSK, covariate="Latitude", family=poisson))#apply func to all poisson traits
-# boltLR.lat_SK <- CGtrait.LR_snglcov(trait="bolt.bin",df=FrdatSK,covariate="Latitude",family=binomial) #apply to single binomial trait
-# 
-# #which anovas have sig covariate or origin?
-# snglcov_SK <- c(frGLR.PC1_SK, frPLR.PC1_SK, boltLR.PC1_SK,frGLR.PC2_SK, frPLR.PC2_SK, boltLR.PC2_SK,frGLR.PC3_SK, frPLR.PC3_SK, boltLR.PC3_SK,
-#             frGLR.bio4_SK, boltLR.bio4_SK,frGLR.bio7_SK,  boltLR.bio7_SK,frGLR.bio19_SK,  boltLR.bio19_SK,
-#              frGLR.lat_SK, frPLR.lat_SK, boltLR.lat_SK, frGLR.Trt_SK, frPLR.Trt_SK, boltLR.Trt_SK)
-# #frPLR.bio4_SK, frPLR.bio7_SK,frPLR.bio19_SK,
-# save(snglcov_SK, file="Fr_aovlists_SK.RData")
-# load(file="Fr_aovlists_SK.RData")
-# 
-# 
-# CGtrait_sigaov_func_Fr(frGLR.PC1_SK)
-# CGtrait_sigaov_func_Fr(frGLR.PC2_SK)
-# CGtrait_sigaov_func_Fr(frGLR.PC3_SK)
-# CGtrait_sigaov_func_Fr(frGLR.bio4_SK)
-# CGtrait_sigaov_func_Fr(frGLR.bio7_SK)
-# CGtrait_sigaov_func_Fr(frGLR.bio19_SK)
-# CGtrait_sigaov_func_Fr(frGLR.lat_SK)
-# 
-# CGtrait_sigaov_func_Fr(frPLR.PC1_SK)
-# CGtrait_sigaov_func_Fr(frPLR.PC2_SK)
-# CGtrait_sigaov_func_Fr(frPLR.PC3_SK)
-# # CGtrait_sigaov_func_Fr(frPLR.bio4_SK)
-# # CGtrait_sigaov_func_Fr(frPLR.bio7_SK)
-# # CGtrait_sigaov_func_Fr(frPLR.bio19_SK)
-# # CGtrait_sigaov_func_Fr(frPLR.lat_SK)
-# 
-# boltLR.PC1_SK
-# boltLR.PC2_SK
-# boltLR.PC3_SK
-# # boltLR.bio4_SK
-# # boltLR.bio7_SK
-# boltLR.bio19_SK
-# boltLR.lat_SK
-# 
+#try glm
+modelg <- glm(RoseAh.log ~ Origin*Latitude+Trt, family=gaussian,data=modeldata)
+modelg1 <- glm(RoseAh.log ~ Origin+Latitude+Trt, family=gaussian,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+# qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+
+modelgT<- glm(RoseAh.log ~ Origin*Latitude, family=gaussian,data=modeldata)
+anova(modelgT,modelg, test="LRT")
+qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+# # modelg2<- glm(RoseAh.log ~ bio6, family=gaussian,data=modeldata)
+# # anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
