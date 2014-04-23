@@ -110,6 +110,12 @@ frend$end.bin <- as.numeric(frend$Ending)-1
 Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE)
 frend <- merge(frend,Frclimdat[,c(1,2,5,16,18,21:27)], all.x=TRUE, ) #pick out top loadings bio11, bio9, bio6, bio4, alt, long, lat
 
+#remove small pops
+frend[frend$Pop%in%c("CA008","UA004","GR003"),] #leave GR003 in? since there were 6, but most died, relevant to end.bin... 
+#take out to be same as wide and long data
+
+frend <- subset(frend, Pop %notin% c("CA008","UA004","GR003"))
+
 
 #write
 write.table(frend, file="FrEnd.txt",sep="\t", quote=F)

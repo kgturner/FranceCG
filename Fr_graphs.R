@@ -16,8 +16,11 @@ str(FrdatSK)
 FrdatSK$Mom <- as.factor(FrdatSK$Mom)
 
 #PLOT ALL THE THINGS!
-ggplot(data=FrdatSK, aes(y=Bolt.date, x=Trt, color=Origin))+geom_boxplot()
-list <- names(FrdatSK[c(8:26,36:55)])
+ggplot(data=Frdatsk.l[Frdatsk.l$lfc<200,], aes(y=lfc, x=Trt, color=Origin))+geom_boxplot()
+ggplot(data=Frdatsk.l[Frdatsk.l$lfc<200,], aes(y=lfc, x=Origin))+geom_boxplot()
+
+
+# list <- names(FrdatSK[c(8:26,36:55)])
 # plot.ts(FrdatSK[,c(8:26,36:55)]) #break up in to 10s?
 
 
@@ -47,7 +50,12 @@ dfplot2 <- function(data.frame){
 
 par(ask=TRUE)
 
-dfplot2(FrdatSK)
-dfplot2(Frdatsk.l)
+dfplot2(FrdatSK[,c(1:7,49,52)])
+dfplot2(Frdatsk.l[,c(1:7,28,30,31)])
+dfplot2(frend[,c(1:7,8,10,15,21,24)])
+
 
 par(ask=F)
+
+#DK only
+subset(FrdatSK, Origin%in%c("inv", "nat"))
