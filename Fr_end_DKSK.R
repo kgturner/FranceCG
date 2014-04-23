@@ -1790,8 +1790,11 @@ ocAov
 ##################
 #models with Trt included
 frPLR.harvest_SKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Harvest.date",frend, covariate=n, family=poisson))
-frPLR.wilt_SKtrt<- lapply(names(frend)[c(27,29:31, 33:35)],function(n) CGtrait.LR_snglcov_trt("Wilt",frend, covariate=n, family=poisson))
+frPLR.wilt_SKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Wilt",frend, covariate=n, family=poisson))
 
+names(frend)[c(37:43)]
+CGtrait_sigaov_func_Fr(frPLR.harvest_SKtrt, selectaov=1:7, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.wilt_SKtrt, selectaov=1:7, cutoff=0.05)
 ######
 ##Harvest.date
 modeldata<-frend[!is.na(frend$Harvest.date),]
@@ -1949,7 +1952,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(4.6425,1)
+1-pchisq(4.9683,1)
 modelint<-lmer(Wilt  ~ Origin +PC1 +Trt +(1|Pop), family=poisson,data=modeldata)
 intAov <- anova(model2, modelint)
 intAov
@@ -1974,7 +1977,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(2.0494,1)
+1-pchisq(2.1582,1)
 # #try glm
 modelg <- glm(Wilt ~ Origin*PC2+Trt, family=poisson,data=modeldata)
 modelg1 <- glm(Wilt ~ Origin+PC2+Trt, family=poisson,data=modeldata)
@@ -1993,7 +1996,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(2.5794,1)
+1-pchisq(2.5025,1)
 # 
 # #try glm
 modelg <- glm(Wilt ~ Origin*PC3+Trt, family=poisson,data=modeldata)
@@ -2015,7 +2018,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(4.8175,1)
+1-pchisq(4.942,1)
 
 modelint<-lmer(Wilt  ~ Origin +bio11.1 +Trt +(1|Pop), family=poisson,data=modeldata)
 intAov <- anova(model2, modelint)
@@ -2035,7 +2038,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(5.3457,1)
+1-pchisq(5.4861,1)
 
 modelint<-lmer(Wilt  ~ Origin +bio6.1 +Trt +(1|Pop), family=poisson,data=modeldata)
 intAov <- anova(model2, modelint)
