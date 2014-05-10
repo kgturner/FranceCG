@@ -24,7 +24,19 @@ summary(Frclim.pca)
 # Cumulative Proportion  0.2854 0.5428 0.7442 0.8529 0.91247 0.95211 0.97914
 
 #visualize components
-plot(Frclim.pca)
+plot(Frclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
+# screeplot(Frclim.pca, type="lines")
+#see bottom for figure
+
+# variances of the principal components:
+apply(Frclim.pca$x, 2, var)
+# PC1          PC2          PC3          PC4          PC5          PC6          PC7          PC8          PC9 
+# 6.279154e+00 5.663064e+00 4.431218e+00 2.390612e+00 1.310309e+00 8.721422e-01 5.944830e-01 1.988468e-01 1.169503e-01 
+# PC10         PC11         PC12         PC13         PC14         PC15         PC16         PC17         PC18 
+# 5.837038e-02 4.636666e-02 1.700358e-02 1.093465e-02 4.941391e-03 2.515499e-03 1.583054e-03 7.478564e-04 4.882819e-04 
+# PC19         PC20         PC21         PC22 
+# 2.066600e-04 4.057127e-05 2.179807e-05 6.733788e-32 
+
 biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data")
 biplot(Frclim.pca, var.axes=TRUE, main="PCA analysis of climate data", cex=c(1,2), col=c(Frclimdat$Origin,"red"))
 # biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data", choices=1:2, scale=1)
@@ -191,8 +203,13 @@ plot
 dev.off()
 
 
+##component variances supp. fig####
+# pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=13.38)
+png("FrClimatePCA_var.png",width=800, height = 600, pointsize = 16)
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-
+plot(Frclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
+dev.off()
 
 ################
 #remove PC1....?
