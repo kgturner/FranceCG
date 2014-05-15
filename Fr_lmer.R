@@ -915,8 +915,9 @@ CI.LS.poisson(modelg1)
 #skip uneccessary models, such as those in repeated measures or non-optimal transformations
 #focus on:bolt.bin, Mass.log, Harvest.date, Crown.log
 
-###Crown.log
-modeldata<-frdat[!is.na(frdat$Crown.log),]
+###Crown.log####
+modeldata <- subset(FrdatSK, Origin%in%c("inv", "nat"))
+modeldata<-modeldata[!is.na(modeldata$Crown.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -932,6 +933,18 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(1.2991,1)
 
+qplot(data=modeldata,PC1, Crown.log, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(FrdatSK, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popCrown.log=mean(Crown.log, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popCrown.log, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean Crown.log", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
+
 #PC2
 model1<-lmer(Crown.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
 model2<-lmer(Crown.log  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -941,6 +954,17 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(18.094,1)
+
+qplot(data=modeldata,PC2, Crown.log, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(FrdatSK, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popCrown.log=mean(Crown.log, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popCrown.log, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean Crown.log", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
 
 #PC3
 model1<-lmer(Crown.log  ~ Origin * PC3 +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1317,20 +1341,21 @@ popAov
 1-pchisq(30.13,1)
 
 ##RoseAh.log##############
-modeldata<-frdat[!is.na(frdat$RoseAh.log),]
+modeldata <- subset(FrdatSK, Origin%in%c("inv", "nat"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
-#bio9
-model1<-lmer(RoseAh.log  ~ Origin * bio9 +(1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(RoseAh.log  ~ Origin * bio9 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(RoseAh.log  ~ Origin * bio9 +(1|blank), family=gaussian,data=modeldata) # Test population effect
-momAov <- anova(model2,model1) # mom is sig!
-momAov
-popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
-popAov
-1-pchisq(7.5152,1)
+# #bio9
+# model1<-lmer(RoseAh.log  ~ Origin * bio9 +(1|Pop/Mom), family=gaussian,data=modeldata)
+# model2<-lmer(RoseAh.log  ~ Origin * bio9 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+# model3<-lmer(RoseAh.log  ~ Origin * bio9 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+# momAov <- anova(model2,model1) # mom is sig!
+# momAov
+# popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+# popAov
+# 1-pchisq(7.5152,1)
 
 #PC1
 model1<-lmer(RoseAh.log  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1341,6 +1366,17 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(6.6783,1)
+
+qplot(data=modeldata,PC1, RoseAh.log, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(FrdatSK, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popRoseAh.log=mean(RoseAh.log, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popRoseAh.log, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean RoseAh.log", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
 # 
 #PC2
 model1<-lmer(RoseAh.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1351,6 +1387,17 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(26.895,1)
+
+qplot(data=modeldata,PC2, RoseAh.log, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(FrdatSK, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popRoseAh.log=mean(RoseAh.log, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popRoseAh.log, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean RoseAh.log", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
 
 # 
 #full models

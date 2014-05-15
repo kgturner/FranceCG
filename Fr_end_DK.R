@@ -234,6 +234,18 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(1.1616,1)
+
+qplot(data=modeldata,PC1, Bolt.date, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popBolt.date, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean Bolt.date", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 # 
 #pc2
 model1<-lmer(Bolt.date  ~ Origin * PC2 +(1|Pop/Mom), family=poisson,data=modeldata)
@@ -244,6 +256,17 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(2.7078,1)
+
+qplot(data=modeldata,PC2, Bolt.date, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popBolt.date, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean Bolt.date", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
 
 #pc3
 model1<-lmer(Bolt.date  ~ Origin * PC3 +(1|Pop/Mom), family=poisson,data=modeldata)
@@ -558,6 +581,17 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(1.2919,1)
 
+qplot(data=modeldata,PC1, Mass.log, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMass.log=mean(Mass.log, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popMass.log, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean Mass.log", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 #PC2
 model1<-lmer(Mass.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
 model2<-lmer(Mass.log  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -567,6 +601,18 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(20.107,1)
+
+qplot(data=modeldata,PC2, Mass.log, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popMass.log=mean(Mass.log, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popMass.log, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean Mass.log", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 
 #PC3
 model1<-lmer(Mass.log  ~ Origin * PC3 +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -646,6 +692,17 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(232.07,1)
 
+qplot(data=modeldata,PC1, Harvest.date, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popHarvest.date=mean(Harvest.date, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popHarvest.date, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean Harvest.date", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 #PC2
 model1<-lmer(Harvest.date  ~ Origin * PC2 +(1|Pop/Mom), family=poisson,data=modeldata)
 model2<-lmer(Harvest.date  ~ Origin * PC2 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -655,6 +712,18 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 # 1-pchisq(232.07,1)
+
+qplot(data=modeldata,PC2, Harvest.date, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popHarvest.date=mean(Harvest.date, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popHarvest.date, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean Harvest.date", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 # 
 #PC3
 model1<-lmer(Harvest.date  ~ Origin * PC3 +(1|Pop/Mom), family=poisson,data=modeldata)
@@ -790,6 +859,17 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(2.3804,1)
 
+qplot(data=modeldata,PC1, bolt.bin, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popbolt.bin=mean(bolt.bin, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popbolt.bin, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean bolt.bin", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 #PC2
 model1<-lmer(bolt.bin  ~ Origin * PC2 +(1|Pop/Mom), family=binomial,data=modeldata)
 model2<-lmer(bolt.bin  ~ Origin * PC2 +(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -799,6 +879,18 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(4.54,1)
+
+qplot(data=modeldata,PC2, bolt.bin, color = Origin)+geom_point(position="jitter")
+
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popbolt.bin=mean(bolt.bin, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC2, popbolt.bin, color = Origin, 
+      xlab="PC2", 
+      ylab="Population mean bolt.bin", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 
 #PC3
 model1<-lmer(bolt.bin  ~ Origin * PC3 +(1|Pop/Mom), family=binomial,data=modeldata)

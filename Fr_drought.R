@@ -59,13 +59,13 @@ modeldata <- droplevels(modeldata)
 frGLR.long_DKdr <- lapply(names(modeldata)[c(28,29,31)],function(n) CGtrait.LR_snglcov_int_mdate(n,modeldata, covariate="CtrlPopMass.log"))#apply func to all gaussian traits
 frPLR.long_DKdr <- CGtrait.LR_snglcov_int_mdate("lfc",modeldata, covariate="CtrlPopMass.log", family=poisson)#apply func to all poisson traits
 
-CGtrait_sigaov_func_Fr(frGLR.frend_DKdr, selectaov=1:4, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.frend_DKdr, selectaov=1:4, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.frend_DKdr, selectaov=1:4, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.frend_DKdr, selectaov=1:4, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.frend_DKdr, selectaov=1:4, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.frend_DKdr, selectaov=1:4, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.wide_DKdr, selectaov=1:4, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.wide_DKdr, selectaov=1:4, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.long_DKdr, selectaov=1:4, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.long_DKdr, selectaov=1:4, cutoff=0.05)
 frPLR.long_DKdr
 ######
 ###Harvest.date
@@ -75,14 +75,14 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
-model1<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ Latitude +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ Latitude +(1|blank), family=poisson,data=modeldata) # Test population effect
+model1<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 +(1|blank), family=poisson,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
 anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 1-pchisq(2.4076,1)
 
-modelint <- lmer(Harvest.date ~ Origin + CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=poisson,data=modeldata)
+modelint <- lmer(Harvest.date ~ Origin + CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=poisson,data=modeldata)
 anova(modelint, model1)
 
 modelcov <- lmer(Harvest.date ~ Origin + CtrlPopMass.log + (1|Pop/Mom), family=poisson,data=modeldata)
@@ -94,8 +94,8 @@ anova(modelctrl, modelcov)
 modelO<- lmer(Harvest.date ~ CtrlPopMass.log + (1|Pop/Mom), family=poisson,data=modeldata)
 anova(modelO, modelcov)
 
-# modelg <- glm(Harvest ~ Origin*CtrlPopShoot*Latitude, family=poisson,data=modeldata)
-# modelg1 <- glm(Harvest ~ Origin*CtrlPopShoot+Latitude, family=poisson,data=modeldata)
+# modelg <- glm(Harvest ~ Origin*CtrlPopShoot*PC1, family=poisson,data=modeldata)
+# modelg1 <- glm(Harvest ~ Origin*CtrlPopShoot+PC1, family=poisson,data=modeldata)
 # anova(modelg1, modelg, test="LRT") 
 # qchisq(0.8596,1,lower=FALSE)#chisq value
 # 
@@ -114,7 +114,7 @@ anova(modelO, modelcov)
 # anova(modelg5, modelg2, test="LRT")
 
 qplot(data=modeldata,CtrlPopMass.log, Harvest.date, color = Origin)+geom_point(position="jitter")
-moddata <- ddply(modeldata, .(Pop, Origin, Latitude, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popHarvest=mean(Harvest.date))
+moddata <- ddply(modeldata, .(Pop, Origin, PC1, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popHarvest=mean(Harvest.date))
 
 # png("STdr_deathtradeoff_color.png",width=800, height = 600, pointsize = 16)
 qplot(data=moddata,CtrlPopMass.log, popHarvest, color = Origin, 
@@ -199,6 +199,8 @@ anova(modelg3, test="LRT")
 
 CI.LS.poisson(modelg3, conf=95)
 
+
+
 ###Bolt.date####################
 modeldata<-frend[!is.na(frend$Bolt.date),]
 modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
@@ -206,34 +208,34 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
-model1<-lmer(Bolt.date ~ Origin * CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(Bolt.date ~ Origin * CtrlPopMass.log+ Latitude +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Bolt.date ~ Origin * CtrlPopMass.log+ Latitude +(1|blank), family=poisson,data=modeldata) # Test population effect
+model1<-lmer(Bolt.date ~ Origin * CtrlPopMass.log+PC1+  (1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(Bolt.date ~ Origin * CtrlPopMass.log+PC1+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Bolt.date ~ Origin * CtrlPopMass.log+PC1+(1|blank), family=poisson,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
 anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
-1-pchisq(2.4076,1)
+1-pchisq(3e-04,1)
 
-modelg <- glm(Bolt.date ~ Origin*CtrlPopMass.log*Latitude, family=poisson,data=modeldata)
-modelg1 <- glm(Bolt.date ~ Origin*CtrlPopMass.log+Latitude, family=poisson,data=modeldata)
+modelg <- glm(Bolt.date ~ Origin*CtrlPopMass.log*PC1, family=poisson,data=modeldata)
+modelg1 <- glm(Bolt.date ~ Origin*CtrlPopMass.log+PC1, family=poisson,data=modeldata)
 anova(modelg1, modelg, test="LRT") 
-qchisq(0.8596,1,lower=FALSE)#chisq value
+# qchisq(0.8596,1,lower=FALSE)#chisq value
 
 modelg3<- glm(Bolt.date ~ Origin*CtrlPopMass.log, family=poisson,data=modeldata)
 anova(modelg3,modelg1, test="LRT")
-qchisq(0.05969,1,lower=FALSE)#chisq value
-dispersiontest(modelg3)
+# qchisq(0.05969,1,lower=FALSE)#chisq value
+# dispersiontest(modelg3)
 modelg2<- glm(Bolt.date ~Origin +CtrlPopMass.log, family=poisson,data=modeldata)
 anova(modelg2,modelg3, test="LRT")
-qchisq(0.03689,1,lower=FALSE)#chisq value
+# qchisq(0.03689,1,lower=FALSE)#chisq value
 
 modelg4 <- glm(Bolt.date ~Origin, family=poisson, data=modeldata)
 anova(modelg4, modelg2, test="LRT")
-qchisq(1.488e-05,1,lower=FALSE)#chisq value
+# qchisq(1.488e-05,1,lower=FALSE)#chisq value
 modelg5 <- glm(Bolt.date~CtrlPopMass.log, family=poisson, data=modeldata)
 anova(modelg5, modelg2, test="LRT")
 
 qplot(data=modeldata,CtrlPopMass.log, Bolt.date, color = Origin)+geom_point(position="jitter")
-moddata <- ddply(modeldata, .(Pop, Origin, Latitude, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popBolt=mean(Bolt.date))
+moddata <- ddply(modeldata, .(Pop, Origin, PC1, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popBolt=mean(Bolt.date))
 
 # png("STdr_deathtradeoff_color.png",width=800, height = 600, pointsize = 16)
 qplot(data=moddata,CtrlPopMass.log, popBolt, color = Origin, 

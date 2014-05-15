@@ -84,6 +84,19 @@ BIO12 = Annual Precipitation
 BIO14 = Precipitation of Driest Month
 BIO17 = Precipitation of Driest Quarter
 
+#find top loadings (for PC3)
+loadings3 <- Frclim.pca$rotation[,3]
+sort(abs(loadings3), decreasing=TRUE)
+# Longitude        alt       bio1      bio10       bio2       bio3       bio8       bio6      bio11      bio15       bio7      bio16      bio13      bio19 
+# 0.33942690 0.33029422 0.32357096 0.32067456 0.30915891 0.27005795 0.26266292 0.24659173 0.22972959 0.22345157 0.18660130 0.17422014 0.16445824 0.14553332 
+# Latitude      bio12      bio17      bio14       bio5      bio18       bio4       bio9 
+# 0.12498506 0.12450323 0.08738670 0.08602603 0.06216595 0.04099850 0.03425357 0.02952072 
+
+Longitude and altitude (continentiality?)
+BIO1 = Annual Mean Temperature
+BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))
+BIO10 = Mean Temperature of Warmest Quarter
+
 #proportional contributions of each bioclim to each PC
 #If you want this as a relative contribution then sum up the loadings per column and 
 #express each loading as a proportion of the column (loading) sum, taking care to use 
