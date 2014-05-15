@@ -933,6 +933,9 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(1.2991,1)
 
+modelint <- lmer(Crown.log ~ Origin +  PC1+ (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, model1)
+
 qplot(data=modeldata,PC1, Crown.log, color = Origin)+geom_point(position="jitter")
 
 #sk included in plot 
@@ -943,6 +946,13 @@ qplot(data=moddata,PC1, popCrown.log, color = Origin,
       xlab="PC1", 
       ylab="Population mean Crown.log", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
+
+# modelg <- glm(Crown.log ~ Origin*PC1, family=poisson,data=modeldata)
+# modelg1 <- glm(Wilt ~ Origin*CtrlPopShoot+Latitude, family=poisson,data=modeldata)
+# anova(modelg1, modelg, test="LRT") 
+# qchisq(0.8596,1,lower=FALSE)#chisq value
+
+CI.LS.gaussian.log(modelint)
 
 
 #PC2

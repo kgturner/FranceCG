@@ -4,10 +4,11 @@
 
 #REML, using lme4
 #mixed effect models 
+library(plyr)
 library(lme4)
 library(lsmeans)
 library(ggplot2)
-library(plyr)
+
 
 #with SK
 #for long data formating, see FrSKdata_format.R
@@ -141,14 +142,14 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
-model1<-lmer(Wilt ~ Origin * CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(Wilt ~ Origin * CtrlPopMass.log+ Latitude +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Wilt ~ Origin * CtrlPopMass.log+ Latitude +(1|blank), family=poisson,data=modeldata) # Test population effect
+model1<-lmer(Wilt ~ Origin * CtrlPopMass.log+ PC1+ (1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(Wilt ~ Origin * CtrlPopMass.log+ PC1+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Wilt ~ Origin * CtrlPopMass.log+ PC1+(1|blank), family=poisson,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
 anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 1-pchisq(2.4076,1)
 
-# modelint <- lmer(Wilt ~ Origin + CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=poisson,data=modeldata)
+# modelint <- lmer(Wilt ~ Origin + CtrlPopMass.log+ PC1+ (1|Pop/Mom), family=poisson,data=modeldata)
 # anova(modelint, model1)
 # 
 # modelcov <- lmer(Wilt ~ Origin + CtrlPopMass.log + (1|Pop/Mom), family=poisson,data=modeldata)
@@ -183,15 +184,19 @@ qplot(data=modeldata,CtrlPopMass.log, Wilt, color = Origin)+geom_point(position=
 moddata <- ddply(modeldata, .(Pop, Origin, Latitude, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popWilt=mean(Wilt))
 
 # png("STdr_deathtradeoff_color.png",width=800, height = 600, pointsize = 16)
-qplot(data=moddata,CtrlPopMass.log, popHarvest, color = Origin, 
+qplot(data=moddata,CtrlPopMass.log, popWilt, color = Origin, 
       xlab="Population mean log shoot mass in control treatment", 
-      ylab="Population mean days to Harvest in drought treatment", main="Performance in drought vs. control treatments") +geom_smooth(method=glm, se=TRUE)
+      ylab="Population mean days to Wilt in drought treatment", main="Performance in drought vs. control treatments") +geom_smooth(method=glm, se=TRUE)
 # qplot(data=moddata,CtrlPopShoot, popHarvest, color = Origin, 
 #       xlab="Population mean shoot mass in control treatment", 
 #       ylab="Population mean days to Harvest in drought treatment", main="Performance in drought vs. control treatments") +geom_smooth(method=glm, se=TRUE)
 
 
 # dev.off()
+
+xtabs(Wilt~Origin+CtrlPopMass.log, modeldata)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 modelg3
 summary(modelg3)
@@ -410,14 +415,14 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
-model1<-lmer(bolt.bin ~ Origin * CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=binomial,data=modeldata)
-model2<-lmer(bolt.bin ~ Origin * CtrlPopMass.log+ Latitude +(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(bolt.bin ~ Origin * CtrlPopMass.log+ Latitude +(1|blank), family=binomial,data=modeldata) # Test population effect
+model1<-lmer(bolt.bin ~ Origin * CtrlPopMass.log+PC1 + (1|Pop/Mom), family=binomial,data=modeldata)
+model2<-lmer(bolt.bin ~ Origin * CtrlPopMass.log+ PC1+(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(bolt.bin ~ Origin * CtrlPopMass.log+ PC1+(1|blank), family=binomial,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
 anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 1-pchisq(2.4076,1)
 
-modelint <- lmer(bolt.bin ~ Origin + CtrlPopMass.log+ Latitude + (1|Pop/Mom), family=binomial,data=modeldata)
+modelint <- lmer(bolt.bin ~ Origin + CtrlPopMass.log+ PC1+ (1|Pop/Mom), family=binomial,data=modeldata)
 anova(modelint, model1)
 
 modelcov <- lmer(bolt.bin ~ Origin + CtrlPopMass.log + (1|Pop/Mom), family=binomial,data=modeldata)
