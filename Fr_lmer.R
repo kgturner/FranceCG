@@ -936,6 +936,8 @@ popAov
 modelint <- lmer(Crown.log ~ Origin +  PC1+ (1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelint, model1)
 
+CI.LS.gaussian.log(modelint)
+
 qplot(data=modeldata,PC1, Crown.log, color = Origin)+geom_point(position="jitter")
 
 #sk included in plot 
@@ -952,9 +954,6 @@ qplot(data=moddata,PC1, popCrown.log, color = Origin,
 # anova(modelg1, modelg, test="LRT") 
 # qchisq(0.8596,1,lower=FALSE)#chisq value
 
-CI.LS.gaussian.log(modelint)
-
-
 #PC2
 model1<-lmer(Crown.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
 model2<-lmer(Crown.log  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -964,6 +963,11 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(18.094,1)
+
+modelint <- lmer(Crown.log ~ Origin +  PC2+ (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, model1)
+
+CI.LS.gaussian.log(modelint)
 
 qplot(data=modeldata,PC2, Crown.log, color = Origin)+geom_point(position="jitter")
 
@@ -1350,7 +1354,7 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(30.13,1)
 
-##RoseAh.log##############
+##RoseAh.log without trt##############
 modeldata <- subset(FrdatSK, Origin%in%c("inv", "nat"))
 modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
 
@@ -1376,6 +1380,11 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(6.6783,1)
+
+modelint <- lmer(RoseAh.log ~ Origin +  PC1+ (1|Pop), family=gaussian,data=modeldata)
+anova(modelint, model2)
+
+CI.LS.gaussian.log(modelint)
 
 qplot(data=modeldata,PC1, RoseAh.log, color = Origin)+geom_point(position="jitter")
 
@@ -1704,7 +1713,8 @@ ocAov
 # CGtrait_sigaov_func_Fr(frGLR.rose_SKtrt, selectaov=1:7, cutoff=0.05)
 # frGLR.rose_SKtrt
 # names(FrdatSK)[c(29,31:33,35:37)]
-# 
+#
+
 modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1726,6 +1736,15 @@ intAov
 modelT <- lmer(RoseAh.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata)
 trtAov <- anova(model2, modelT)
 trtAov
+
+#for lsmeans, control only: 
+modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+
+modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
+CI.LS.gaussian.log(modelint)
 # 
 #PC2
 model1<-lmer(RoseAh.log  ~ Origin * PC2 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1743,6 +1762,16 @@ intAov
 modelT <- lmer(RoseAh.log  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata)
 trtAov <- anova(model2, modelT)
 trtAov
+
+#for lsmeans, control only: 
+modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+
+modelint<-lmer(RoseAh.log  ~ Origin +PC2  +(1|Pop), family=gaussian,data=modeldata)
+CI.LS.gaussian.log(modelint)
+
 # # 
 #PC3
 model1<-lmer(RoseAh.log  ~ Origin * PC3 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)

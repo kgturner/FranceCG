@@ -75,33 +75,33 @@ frBLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,2
 # snglcov_SKint <- load(file="FrDKSKaovlists.RData")
 
 
-CGtrait_sigaov_func_Fr(frGLR.PC1_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.PC1_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.PC1_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.PC1_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.PC1_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.PC1_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.PC2_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.PC2_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.PC2_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.PC3_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.PC3_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.PC3_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.bio11_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.bio11.1_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.bio11_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.bio11_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.bio11.1_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.bio11_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.bio6_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.bio6.1_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.bio6_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.bio6_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.bio6.1_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.bio6_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.bio9_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.bio9.1_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.bio9_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.bio9_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.bio9.1_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.bio9_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.Latitude_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frPLR.Latitude_DKend, selectaov=1:6, cutoff=0.5)
-CGtrait_sigaov_func_Fr(frBLR.Latitude_DKend, selectaov=1:6, cutoff=0.5)
+CGtrait_sigaov_func_Fr(frGLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frPLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
+CGtrait_sigaov_func_Fr(frBLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
 
 CGtrait_sigaov_func_Fr(frGLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
 CGtrait_sigaov_func_Fr(frPLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
@@ -235,6 +235,10 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(1.1616,1)
 
+modelint<-lmer(Bolt.date  ~ Origin +PC1  +(1|Pop/Mom), family=poisson,data=modeldata)
+anova(modelint, model1)
+CI.LS.poisson(modelint)
+
 qplot(data=modeldata,PC1, Bolt.date, color = Origin)+geom_point(position="jitter")
 
 #sk included in plot 
@@ -256,6 +260,10 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(2.7078,1)
+
+modelint<-lmer(Bolt.date  ~ Origin +PC2  +(1|Pop/Mom), family=poisson,data=modeldata)
+anova(modelint, model1)
+CI.LS.poisson(modelint)
 
 qplot(data=modeldata,PC2, Bolt.date, color = Origin)+geom_point(position="jitter")
 
@@ -563,8 +571,8 @@ modelOC <- lmer(Yellow  ~ bio9.1 +(1|Pop), family=poisson,data=modeldata)
 ocAov <- anova(modelint, modelOC)
 ocAov
 # 
-###############
-###Mass.log###
+
+#####Mass.log#####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Mass.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -674,8 +682,8 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 # 1-pchisq(61.831,1)
 #
-#############
-######Harvest.date w/o trt###
+
+############Harvest.date w/o trt#######
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -841,8 +849,8 @@ intAov
 # # # dev.off()
 # # # 
 # 
-##########
-###bolt.bin###
+
+######bolt.bin####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$bolt.bin),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -952,8 +960,8 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(3.6818,1)
 
-################
-###end.bin###
+
+######end.bin####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$end.bin),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1189,8 +1197,8 @@ anova(modelg3, test="LRT")
 # anova(modelg2,modelg1, test="LRT")
 # qchisq(5.0702,1,lower=FALSE)#chisq value
 
-#######
-########sla.log
+
+########sla.log#####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$sla.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1385,8 +1393,8 @@ anova(modelg3, test="LRT")
 # anova(modelg2,modelg1, test="LRT")
 # qchisq(5.0702,1,lower=FALSE)#chisq value
 
-###############
-###Wilt w/o trt###
+
+####Wilt w/o trt####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Wilt),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1643,18 +1651,18 @@ ocAov
 
 ##################
 #models with Trt included
+#not working
+# frPLR.harvest_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Harvest.date",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
+# frPLR.wilt_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Wilt",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
+# frPLR.death_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Death.date",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
+# 
+# 
+# names(frend)[c(37:43)]
+# CGtrait_sigaov_func_Fr(frPLR.harvest_DKtrt, selectaov=1:7, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.wilt_DKtrt, selectaov=1:7, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.death_DKtrt, selectaov=1:7, cutoff=0.05)
 
-frPLR.harvest_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Harvest.date",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
-frPLR.wilt_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Wilt",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
-frPLR.death_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Death.date",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
-
-
-names(frend)[c(37:43)]
-CGtrait_sigaov_func_Fr(frPLR.harvest_DKtrt, selectaov=1:7, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.wilt_DKtrt, selectaov=1:7, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.death_DKtrt, selectaov=1:7, cutoff=0.05)
-######
-##Harvest.date
+###Harvest.date####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1821,8 +1829,8 @@ modelT <- lmer(Harvest.date  ~ Origin * Latitude +(1|Pop/Mom), family=poisson,da
 trtAov <- anova(model1, modelT)
 trtAov
 
-#################
-##wilt
+
+###wilt####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Wilt),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1983,8 +1991,8 @@ covAov
 modelT<-lmer(Wilt  ~ Origin * Latitude +(1|Pop), family=poisson,data=modeldata)
 (trtAov <- anova(model2, modelT))
 
-#################
-##Death.date
+
+###Death.date####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Death.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1998,7 +2006,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(3.8198,1)
+1-pchisq(3.3536,1)
 
 modelint<-lmer(Death.date  ~ Origin +PC1 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)
 intAov <- anova(model1, modelint)

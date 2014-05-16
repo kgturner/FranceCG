@@ -308,6 +308,36 @@ CI.LS.poisson.mdate <- function(model, conf=95){
 #   return(df)
 # }
 
+####gaussian.log, include trt####
+####incomplete
+# CI.LS.gaussian.log.2term<- function(model, conf=95){
+#   library(lsmeans)
+#   ls <- as.data.frame(lsmeans(model, ~ Origin+Trt, conf=conf))    
+#   #effect size, trt=control
+#   int<-ls[1,2]#inv mean
+#   B<-ls[2,2]#Originnat estimate from model summary
+#   pI<-exp(int)
+#   pN<-exp(B)
+#   #inv upper from coeftbl confidence int.
+#   uI<-exp(ls[1,6])
+#   #inv lower from coeftbl conf int
+#   lI<-exp(ls[1,5])
+#   #nat upper from coeftbl conf int
+#   uN<-exp(ls[2,6])
+#   #nat lower from coeftbl conf int
+#   lN<-exp(ls[2,5])
+#   
+# 
+#   
+#   df <- data.frame(Origin=c("Invasive","Native"), mean=c(pI,pN), 
+#                    uCL=c(uI,uN),lCL=c(lI,lN) )
+#   return(df)
+# }
+
+
+
+
+
 #############O DF for lmer?#############
 Data: modeldata
 Models:
