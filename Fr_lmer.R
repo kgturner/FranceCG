@@ -921,6 +921,8 @@ modeldata<-modeldata[!is.na(modeldata$Crown.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 #check pop sig only
 #PC1
@@ -1742,9 +1744,22 @@ modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"contro
 modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
-
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
 CI.LS.gaussian.log(modelint)
+
+#for lsmeans, dr only: 
+modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
+CI.LS.gaussian.log(modelint)
+
+
 # 
 #PC2
 model1<-lmer(RoseAh.log  ~ Origin * PC2 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1768,10 +1783,20 @@ modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"contro
 modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
-
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 modelint<-lmer(RoseAh.log  ~ Origin +PC2  +(1|Pop), family=gaussian,data=modeldata)
 CI.LS.gaussian.log(modelint)
 
+#for lsmeans, dr only: 
+modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+modelint<-lmer(RoseAh.log  ~ Origin +PC2  +(1|Pop), family=gaussian,data=modeldata)
+CI.LS.gaussian.log(modelint)
 # # 
 #PC3
 model1<-lmer(RoseAh.log  ~ Origin * PC3 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)

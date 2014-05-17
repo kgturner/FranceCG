@@ -374,6 +374,10 @@ modelOC <- lmer(Yellow  ~ PC1 +(1|Pop), family=poisson,data=modeldata)
 ocAov <- anova(modelint, modelOC)
 ocAov
 
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 #pc2
 model1<-lmer(Yellow  ~ Origin * PC2 +(1|Pop/Mom), family=poisson,data=modeldata)
 model2<-lmer(Yellow  ~ Origin * PC2 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -577,6 +581,8 @@ modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Mass.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 #check pop sig only
 #PC1
@@ -588,6 +594,10 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(1.2919,1)
+
+modelint<-lmer(Mass.log  ~ Origin +PC1  +(1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, model1)
+CI.LS.gaussian.log(modelint)
 
 qplot(data=modeldata,PC1, Mass.log, color = Origin)+geom_point(position="jitter")
 
@@ -609,6 +619,10 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(20.107,1)
+
+modelint<-lmer(Mass.log  ~ Origin +PC2  +(1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, model1)
+CI.LS.gaussian.log(modelint)
 
 qplot(data=modeldata,PC2, Mass.log, color = Origin)+geom_point(position="jitter")
 
@@ -711,6 +725,26 @@ qplot(data=moddata,PC1, popHarvest.date, color = Origin,
       ylab="Population mean Harvest.date", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
 
+#lsmeans w/ ctrl only
+modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")&Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(Harvest.date  ~ Origin +PC1  +(1|Pop/Mom), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+str(modeldata$Pop)
+
+#lsmeans w/ dr only
+modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")&Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(Harvest.date  ~ Origin +PC1  +(1|Pop/Mom), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 #PC2
 model1<-lmer(Harvest.date  ~ Origin * PC2 +(1|Pop/Mom), family=poisson,data=modeldata)
 model2<-lmer(Harvest.date  ~ Origin * PC2 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -731,6 +765,24 @@ qplot(data=moddata,PC2, popHarvest.date, color = Origin,
       xlab="PC2", 
       ylab="Population mean Harvest.date", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
+
+#lsmeans w/ ctrl only
+modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")&Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(Harvest.date  ~ Origin +PC2  +(1|Pop/Mom), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+
+#lsmeans w/ dr only
+modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")&Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(Harvest.date  ~ Origin +PC2  +(1|Pop/Mom), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 # 
 #PC3
@@ -855,6 +907,9 @@ modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$bolt.bin),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 
 #check pop sig only
 #PC1
@@ -866,6 +921,10 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(2.3804,1)
+
+modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
+anova(modelint, model1)
+CI.LS.binomial(modelint)
 
 qplot(data=modeldata,PC1, bolt.bin, color = Origin)+geom_point(position="jitter")
 
@@ -887,6 +946,10 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(4.54,1)
+
+modelint<-lmer(bolt.bin  ~ Origin +PC2  +(1|Pop/Mom), family=binomial,data=modeldata)
+anova(modelint, model1)
+CI.LS.binomial(modelint)
 
 qplot(data=modeldata,PC2, bolt.bin, color = Origin)+geom_point(position="jitter")
 
@@ -1450,6 +1513,22 @@ anova(modelg3, test="LRT")
 modelg2<- glm(Wilt ~ PC2, family=poisson,data=modeldata)
 anova(modelg2,modelg1, test="LRT")
 # qchisq(0.5399,1,lower=FALSE)#chisq value
+
+#lsmeans for ctrl only
+modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")&Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$Wilt),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelg1 <- glm(Wilt ~ Origin+PC2, family=poisson,data=modeldata)
+CI.LS.poisson(modelg1)
+
+#lsmeans for dr only
+modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")&Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$Wilt),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelg1 <- glm(Wilt ~ Origin+PC2, family=poisson,data=modeldata)
+CI.LS.poisson(modelg1)
 
 #PC3
 model1<-lmer(Wilt  ~ Origin * PC3 +(1|Pop/Mom), family=poisson,data=modeldata)

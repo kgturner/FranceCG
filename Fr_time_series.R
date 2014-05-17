@@ -1137,7 +1137,27 @@ trtAov
 modelmdate<-lmer(lfc ~ Origin*PC1+Trt+(1|Pop), family=poisson,data=modeldata)
 mdateAov <- anova(model2, modelmdate) #test for significance of origin - origin only marginally sig....!
 mdateAov
-# 
+
+#lsmeans, ctrl only
+modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$lfc),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(lfc  ~ Origin +PC1 + m.date+(1|Pop), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
+#lsmeans, dr only
+modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$lfc),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(lfc  ~ Origin +PC1 + m.date+(1|Pop), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 # # #try glm
 # # modelg <- glm(lfc ~ Origin*Latitude+Trt+m.date, family=poisson,data=modeldata)
 # # modelg1 <- glm(lfc ~ Origin+Latitude+Trt+m.date, family=poisson,data=modeldata)
