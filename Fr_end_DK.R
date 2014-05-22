@@ -218,6 +218,9 @@ modelOC <- lmer(Death.date  ~ Trt +(1|Pop/Mom), family=poisson,data=modeldata)
 ocAov <- anova(modelint, modelOC)
 ocAov
 
+CI.LS.poisson(modelint)
+xtabs(~Origin+Trt, modeldata)
+
 ###Bolt.date####################
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Bolt.date),]
