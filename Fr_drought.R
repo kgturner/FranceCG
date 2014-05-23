@@ -68,8 +68,9 @@ CGtrait_sigaov_func_Fr(frGLR.wide_DKdr, selectaov=1:4, cutoff=0.05)
 
 CGtrait_sigaov_func_Fr(frGLR.long_DKdr, selectaov=1:4, cutoff=0.05)
 frPLR.long_DKdr
-######
-###Harvest.date
+######models w/Ctrlpopmass and PC1####
+
+###Harvest.date####
 modeldata<-frend[!is.na(frend$Harvest.date),]
 modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -134,8 +135,8 @@ anova(modelg3, test="LRT")
 
 CI.LS.poisson(modelg3, conf=95)
 
-############
-###Wilt
+
+####Wilt####
 modeldata<-frend[!is.na(frend$Wilt),]
 modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -267,14 +268,14 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
-model1<-lmer(lfc ~ Origin * CtrlPopMass.log+ Latitude +m.date+ (1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(lfc ~ Origin * CtrlPopMass.log+ Latitude +m.date+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(lfc ~ Origin * CtrlPopMass.log+ Latitude +m.date+(1|blank), family=poisson,data=modeldata) # Test population effect
+model1<-lmer(lfc ~ Origin * CtrlPopMass.log+ PC1 +m.date+ (1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(lfc ~ Origin * CtrlPopMass.log+ PC1 +m.date+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(lfc ~ Origin * CtrlPopMass.log+ PC1 +m.date+(1|blank), family=poisson,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
 anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 1-pchisq(2.4076,1)
 
-modelint <- lmer(lfc ~ Origin + CtrlPopMass.log+ Latitude +m.date+ (1|Pop/Mom), family=poisson,data=modeldata)
+modelint <- lmer(lfc ~ Origin + CtrlPopMass.log+ PC1 +m.date+ (1|Pop/Mom), family=poisson,data=modeldata)
 anova(modelint, model1)
 
 modelcov <- lmer(lfc ~ Origin + CtrlPopMass.log +m.date+ (1|Pop/Mom), family=poisson,data=modeldata)

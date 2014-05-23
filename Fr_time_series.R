@@ -19,51 +19,52 @@ subset(Frdatsk.l, Origin%in%c("inv", "nat"))
 CGtrait.LR_snglcov_int_mdate()
 CGtrait.models_snglcov_int_mdate()
 
+#change col numbers for updated PCA values!
 #PC1
-frGLR.PC1_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="PC1"))#apply func to all gaussian traits
-frPLR.PC1_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="PC1", family=poisson)#apply func to all poisson traits
+frGLR.PC1_time <- lapply(names(subset(Frdatsk.l, Origin%in%c("inv", "nat")))[c(25,24,27)],function(n) CGtrait.LR_snglcov_int_mdate(n,subset(Frdatsk.l, Origin%in%c("inv", "nat")), covariate="PC1"))#apply func to all gaussian traits
+# frPLR.PC1_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="PC1", family=poisson)#apply func to all poisson traits
 
-#PC2
-frGLR.PC2_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="PC2"))#apply func to all gaussian traits
-frPLR.PC2_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="PC2", family=poisson)#apply func to all poisson traits
+# #PC2
+# frGLR.PC2_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="PC2"))#apply func to all gaussian traits
+# frPLR.PC2_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="PC2", family=poisson)#apply func to all poisson traits
+# 
+# #PC3
+# frGLR.PC3_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="PC3"))#apply func to all gaussian traits
+# frPLR.PC3_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="PC3", family=poisson)#apply func to all poisson traits
+# 
+# #bio11
+# frGLR.bio11_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="bio11"))#apply func to all gaussian traits
+# frPLR.bio11_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="bio11", family=poisson)#apply func to all poisson traits
+# 
+# #bio9
+# frGLR.bio9_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="bio9"))#apply func to all gaussian traits
+# frPLR.bio9_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="bio9", family=poisson)#apply func to all poisson traits
+# 
+# #bio6
+# frGLR.bio6_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="bio6"))#apply func to all gaussian traits
+# frPLR.bio6_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="bio6", family=poisson)#apply func to all poisson traits
+# 
+# #Latitude
+# frGLR.lat_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="Latitude"))#apply func to all gaussian traits
+# frPLR.lat_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="Latitude", family=poisson)#apply func to all poisson traits
+# 
+# #Treatment
+# frGLR.trt_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="Trt"))#apply func to all gaussian traits
+# frPLR.trt_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="Trt", family=poisson)#apply func to all poisson traits
+# 
+# # all the lfc had non-convergences, have to do by hand; remove harvest measure? time series needed at all?
 
-#PC3
-frGLR.PC3_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="PC3"))#apply func to all gaussian traits
-frPLR.PC3_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="PC3", family=poisson)#apply func to all poisson traits
-
-#bio11
-frGLR.bio11_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="bio11"))#apply func to all gaussian traits
-frPLR.bio11_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="bio11", family=poisson)#apply func to all poisson traits
-
-#bio9
-frGLR.bio9_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="bio9"))#apply func to all gaussian traits
-frPLR.bio9_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="bio9", family=poisson)#apply func to all poisson traits
-
-#bio6
-frGLR.bio6_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="bio6"))#apply func to all gaussian traits
-frPLR.bio6_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="bio6", family=poisson)#apply func to all poisson traits
-
-#Latitude
-frGLR.lat_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="Latitude"))#apply func to all gaussian traits
-frPLR.lat_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="Latitude", family=poisson)#apply func to all poisson traits
-
-#Treatment
-frGLR.trt_time <- lapply(names(frdat.l)[c(30,31,33)],function(n) CGtrait.LR_snglcov_int_mdate(n,frdat.l, covariate="Trt"))#apply func to all gaussian traits
-frPLR.trt_time <- CGtrait.LR_snglcov_int_mdate(trait="lfc",df=frdat.l, covariate="Trt", family=poisson)#apply func to all poisson traits
-
-# all the lfc had non-convergences, have to do by hand; remove harvest measure? time series needed at all?
-
-CGtrait_sigaov_func_Fr(frGLR.PC1_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.PC2_time, selectaov=1:7,cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.PC3_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.bio11_time, selectaov=1:7,cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.bio9_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.bio6_time, selectaov=1:7,cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.lat_time, selectaov=1:7)
-CGtrait_sigaov_func_Fr(frGLR.trt_time, selectaov=1:7)
+CGtrait_sigaov_func_Fr(frGLR.PC1_time, selectaov=1:7,cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.PC2_time, selectaov=1:7,cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.PC3_time, selectaov=1:7)
+# CGtrait_sigaov_func_Fr(frGLR.bio11_time, selectaov=1:7,cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.bio9_time, selectaov=1:7)
+# CGtrait_sigaov_func_Fr(frGLR.bio6_time, selectaov=1:7,cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.lat_time, selectaov=1:7)
+# CGtrait_sigaov_func_Fr(frGLR.trt_time, selectaov=1:7)
 
 ##########DK single traits##########################
-###lfc##############
+###lfc w/o trt##############
 CGtrait.LR_snglcov_int_mdate(trait="lfc", df=subset(Frdatsk.l, Origin%in%c("inv", "nat")), covariate="PC1", family=poisson)
 CGtrait.models_snglcov_int_mdate(trait="lfc", df=frdat.l, covariate="PC1", family=poisson)
 
@@ -503,12 +504,11 @@ qplot(data=moddata,Trt, poplfc, color = Origin,
       ylab="Population mean lf count", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
 
-##################################
 ####lfw#######
 CGtrait.LR_snglcov_int_time(trait="lfw", df=frdat.l, covariate="PC1", family=gaussian)
 CGtrait.models_snglcov_int_time(trait="lfw", df=frdat.l, covariate="PC1", family=gaussian)
 
-modeldata<-frdat.l[!is.na(frdat.l$lfw),]
+modeldata<-subset(Frdatsk.l, Origin%in%c("inv", "nat"))[!is.na(subset(Frdatsk.l, Origin%in%c("inv", "nat"))$lfw),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -522,27 +522,27 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(21.199,1)
-# 
-# modelint<-lmer(lfw  ~ Origin +PC1 + m.date+(1|Pop), family=gaussian,data=modeldata)
-# intAov <- anova(model2, modelint)
-# intAov
-# 
-# modelcov <- lmer(lfw  ~ Origin + m.date+(1|Pop), family=gaussian,data=modeldata)
-# covAov <- anova(modelint, modelcov)
-# covAov
-# 
-# modelO<-lmer(lfw ~ m.date+(1|Pop), family=gaussian,data=modeldata)
-# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
-# originAov
-# 
-# modelOC <- lmer(lfw  ~ PC1 + m.date+(1|Pop), family=gaussian,data=modeldata)
-# ocAov <- anova(modelint, modelOC)
-# ocAov
-# 
-# modelmdate<-lmer(lfw ~ (1|Pop), family=gaussian,data=modeldata)
-# mdateAov <- anova(modelmdate,modelO) #test for significance of origin - origin only marginally sig....!
-# mdateAov
-# 
+
+modelint<-lmer(lfw  ~ Origin +PC1 + m.date+(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+modelcov <- lmer(lfw  ~ Origin + m.date+(1|Pop), family=gaussian,data=modeldata)
+covAov <- anova(modelint, modelcov)
+covAov
+
+modelO<-lmer(lfw ~ m.date+(1|Pop), family=gaussian,data=modeldata)
+originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+originAov
+
+modelOC <- lmer(lfw  ~ PC1 + m.date+(1|Pop), family=gaussian,data=modeldata)
+ocAov <- anova(modelint, modelOC)
+ocAov
+
+modelmdate<-lmer(lfw ~ (1|Pop), family=gaussian,data=modeldata)
+mdateAov <- anova(modelmdate,modelO) #test for significance of origin - origin only marginally sig....!
+mdateAov
+
 # modelO
 # summary(modelO)
 
@@ -1353,18 +1353,3 @@ covAov
 # # modelmdate<-lmer(lfc ~  Latitude+(1|Pop), family=poisson,data=modeldata)
 # # mdateAov <- anova(modelmdate,modelOC) #test for significance of origin - origin only marginally sig....!
 # # mdateAov
-###################demo#############
-# #try glm
-# modelg <- glm(sla.log ~ Origin*Latitude, family=gaussian,data=modeldata)
-# modelg1 <- glm(sla.log ~ Origin+Latitude, family=gaussian,data=modeldata)
-# anova(modelg1, modelg, test="LRT") 
-# qchisq(0.0964,1,lower=FALSE)#chisq value
-# 
-# modelg3<- glm(sla.log ~ Origin, family=gaussian,data=modeldata)
-# anova(modelg3,modelg1, test="LRT")
-# qchisq(0.9672,1,lower=FALSE)#chisq value
-# anova(modelg3, test="LRT")
-# # modelg2<- glm(sla.log ~ Latitude, family=gaussian,data=modeldata)
-# # anova(modelg2,modelg1)
-# qchisq(0.5399,1,lower=FALSE)#chisq value
-

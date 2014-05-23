@@ -14,18 +14,16 @@ library(plyr)
 #for multiplot function, see bottom
 
 #crown.log and RoseAh.log
-grdat <- FrdatSK[, c(1:7,33,35:37,49,52)]
-levels(grdat$Origin)[levels(grdat$Origin)=="inv"] <- "Invasive C. diffusa"
-levels(grdat$Origin)[levels(grdat$Origin)=="nat"] <- "Native C. diffusa"
-levels(grdat$Origin)[levels(grdat$Origin)=="sk"] <- "Native C. stoebe"
+grdat_cr <- FrdatSK[, c(1:7,53:55, 48,45)]
+levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="nat"] <- "Native C. diffusa"
+levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="sk"] <- "Native C. stoebe"
 #change order? but then have to change colors...
 # grdat$Origin <- factor(grdat$Origin, c("Native C. diffusa", "Invasive C. diffusa", "Native C. stoebe"))
+colnames(grdat_cr)[4] <- "Treatment"
 
-#for plots of pop means
-grd <- ddply(grdat, .(Pop, Origin, Trt, PC1), summarize, popCount=length(Pop), popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE))
-
-#crown.log
-pCrown <- ggplot(grdat,aes(Origin, Crown.log, fill=Origin))+
+#crown.log box
+pCrown <- ggplot(grdat_cr,aes(Origin, Crown.log, fill=Origin))+
   geom_boxplot()+
   xlab("Origin")+ylab("Root crown diameter at harvest [mm](log))")+ 
   theme_bw() #+
@@ -42,22 +40,57 @@ pCrown <- ggplot(grdat,aes(Origin, Crown.log, fill=Origin))+
 #         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 ))
 pCrown
 
-pCrown.2 <- qplot(data=grd,  PC1,popCrown, color=Origin)+geom_smooth(method=glm, se=TRUE)
+#crown.log interaction
+#for plots of pop means
+grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE))
+
+pCrown.2 <- qplot(data=grd_c,  PC1,popCrown, color=Origin)+geom_smooth(method=glm, se=TRUE)
 pCrown.2
 
-#roseAh.log
-pRose <- ggplot(grdat,aes(Trt, RoseAh.log, fill=Origin))+
+#roseAh.log box
+pRose <- ggplot(grdat_cr,aes(Trt, RoseAh.log, fill=Origin))+
   geom_boxplot()+
-  xlab("Treatment")+ylab("Rosette diameter at harvest [cm2](log))")+ 
+  xlab("Treatment")+ylab("Rosette diameter at harvest [cm2](log)")+ 
   theme_bw() +
   theme(legend.justification=c(1,1), legend.position=c(1,1),
         legend.title = element_text(size=14, face="bold"),
         legend.text = element_text(size = 13))
 pRose
 
+#roseAh.log interaction
+#for plots of pop means
+grd_r <- ddply(grdat_cr, .(Pop, Origin, Treatment, PC1), summarize, popCount=length(Pop), popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE))
 
-pRose.2 <- qplot(data=grd, PC1, popRose, shape=Trt, color=Origin)+geom_smooth(method=glm, se=TRUE)
+pRose.2 <- qplot(data=grd_r, PC1, popRose, shape=Trt, color=Origin, facets=grd_r$Trt)+geom_smooth(method=glm, se=TRUE)
 pRose.2
+
+pRose.3 <- ggplot(grd_r,aes(PC1, popRose, color=Origin))+ 
+  geom_point(aes(shape=Treatment))+
+
+  geom_smooth(aes(linetype=Treatment),method=glm, se=TRUE)+
+  
+  xlab("PC1")+
+  ylab("Rosette diameter at harvest [cm2](log)")+ 
+  #title("Performance in drought vs. control treatments")+
+#   theme_bw()+
+  theme(legend.justification=c(0,0), legend.position=c(0,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13))
+pRose.3
+# p1 <- p1 +  
+#   #   annotate('point',x = 1.94, y = 7, pch=8, color="red",parse=T,size=3) +
+#   #   annotate('point',x = 2.06, y = 7, pch=8, color="red",parse=T,size=3) +
+#   #   annotate(geom="text", x=2, y=7.3, label="Origin", size=5) +
+#   annotate(geom="text", x=2, y=7.3, label="Origin*Control mass", size=5) +
+#   annotate('point',x = 2, y = 7, pch=8, color="red",parse=T,size=3)+
+#   annotate(geom="text", x=1.25, y=1, label="(a)",fontface="bold", size=5)+
+#   theme(axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
+#         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 ))
+# p1
+
+
+
+
 
 ####Mass, bolt, harvest, wilt, yellow, death.date####
 grdat2 <- frend[, c(1:7,8,10,12,15,21,24,31,33:35)]
@@ -108,10 +141,16 @@ pHarvest.2
 
 
 ####DEMO####
-# pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=13.38)
+####export####
+#pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=13.38)
 # # png("STsizebox_color.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
-# 
+# #plot....
+# # multiplot(p1,p2, cols=2) #size plots only
+# multiplot(p1,p2,p3, cols=3) #all st plots, code for p3 LH plot below
+# dev.off()
+
+####boxplot####
 # p1 <- ggplot(grdat,aes(Trt, RootMass.g, fill=Origin))+
 #   geom_boxplot()+
 #   xlab("Treatment")+ylab("Root mass [g]")+ 
@@ -146,6 +185,8 @@ pHarvest.2
 #   theme(axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
 #         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 ))
 # # p2
+
+####mosaic plot####
 #for p3
 # grBatH2 <- ddply(grdatB, .(Trt, Origin), summarize, totcount = length(BoltedatH))
 # grBatH2$xmax <- cumsum(grBatH2$totcount)
@@ -187,7 +228,6 @@ pHarvest.2
 # grBatHStd$RevStackymin <- grBatHStd$RevStackymax-grBatHStd$ymax
 # grBatHStd[grBatHStd$RevStackymin<0,]$RevStackymin <- 0
 
-
 #p3 <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xmin, xmax=xmax, fill=factor(col)))+
 # geom_rect(colour = I("white"))+
 #   scale_x_continuous(breaks=c(20,60,100),labels=c("Control", "Herbivory", "Nutr. Stress"), name="Treatment") +
@@ -213,10 +253,28 @@ pHarvest.2
 #   
 #   annotate(geom="text", x=2.5, y=98, label="(c)",fontface="bold", size=5)
 
+####interaction plot####
+# p1 <- ggplot(stdrwiltTO,aes(CtrlPopShoot, popWilt, color=Origin))+ geom_point()+
+#   geom_smooth(method=glm, se=FALSE)+
+#   xlab("Population mean shoot mass [g] in control treatment")+
+#   ylab("Population mean days to wilt in drought treatment")+ 
+#   #title("Performance in drought vs. control treatments")+
+#   theme_bw()+
+#   theme(legend.justification=c(1,1), legend.position=c(1,1),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
 # 
-# # multiplot(p1,p2, cols=2) #size plots only
-# multiplot(p1,p2,p3, cols=3) #all st plots, code for p3 LH plot below
-# dev.off()
+# p1 <- p1 +  
+#   #   annotate('point',x = 1.94, y = 7, pch=8, color="red",parse=T,size=3) +
+#   #   annotate('point',x = 2.06, y = 7, pch=8, color="red",parse=T,size=3) +
+#   #   annotate(geom="text", x=2, y=7.3, label="Origin", size=5) +
+#   annotate(geom="text", x=2, y=7.3, label="Origin*Control mass", size=5) +
+#   annotate('point',x = 2, y = 7, pch=8, color="red",parse=T,size=3)+
+#   annotate(geom="text", x=1.25, y=1, label="(a)",fontface="bold", size=5)+
+#   theme(axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
+#         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 ))
+# p1
+
 
 
 ##########

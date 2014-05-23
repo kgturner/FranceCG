@@ -1,6 +1,6 @@
 ###Getting means and CI from non-normally distributed mixed models (lmer)
 
-# # ###binomial###
+####binomial####
 # # coBatH <- CGtrait.LR.int("bolt.bin", mfco.dk1, family=binomial)
 # # comodels <- CGtrait.models.int("bolt.bin", mfco.dk1, family=binomial)
 # # comodels$model2
@@ -72,7 +72,7 @@
 # # 
 # # #bootMer
 # 
-##binomial lsmeans##
+####binomial lsmeans####
 CI.LS.binomial <- function(model, conf=95){
   library(lsmeans)
   ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    
@@ -132,6 +132,7 @@ CI.LS.binomial <- function(model, conf=95){
 # }
 # 
 # library(lsmeans)
+#####
 CI.LS.poisson <- function(model, conf=95){
   library(lsmeans)
   ls <- as.data.frame(lsmeans(model, ~ Origin, conf=conf))    

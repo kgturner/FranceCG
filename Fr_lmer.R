@@ -196,40 +196,40 @@ CGtrait_sigaov_func_Fr(frGLR.trt_int, selectaov=1:6)
 CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=1:6)
 boltLR.trt_int
 
-##########
-##Crown.log and RoseAh.log only
+####Crown.log and RoseAh.log only####
 #PC1
-frGLR.PC1_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC1"))
+frGLR.PC1_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(45,48)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC1"))
 
-#PC2
-frGLR.PC2_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC2"))#apply func to all gaussian traits
-
-#PC3
-frGLR.PC3_cr <-  lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC3"))#apply func to all gaussian traits
-
-#bio11
-frGLR.bio11_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio11"))#apply func to all gaussian traits
-
-#bio9
-frGLR.bio9_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio9"))#apply func to all gaussian traits
-
-#bio6
-frGLR.bio6_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio6"))#apply func to all gaussian traits
-
-#Latitude
-frGLR.lat_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="Latitude"))#apply func to all gaussian traits
-
-#Trt
-frGLR.trt_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="Trt"))#apply func to all gaussian traits
+#adjust col numbers for new df updated with PCA values!
+# #PC2
+# frGLR.PC2_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC2"))#apply func to all gaussian traits
+# 
+# #PC3
+# frGLR.PC3_cr <-  lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC3"))#apply func to all gaussian traits
+# 
+# #bio11
+# frGLR.bio11_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio11"))#apply func to all gaussian traits
+# 
+# #bio9
+# frGLR.bio9_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio9"))#apply func to all gaussian traits
+# 
+# #bio6
+# frGLR.bio6_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="bio6"))#apply func to all gaussian traits
+# 
+# #Latitude
+# frGLR.lat_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="Latitude"))#apply func to all gaussian traits
+# 
+# #Trt
+# frGLR.trt_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="Trt"))#apply func to all gaussian traits
 
 CGtrait_sigaov_func_Fr(frGLR.PC1_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.PC2_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.PC3_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.bio11_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.bio9_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.bio6_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.lat_cr, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frGLR.trt_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.PC2_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.PC3_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.bio11_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.bio9_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.bio6_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.lat_cr, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.trt_cr, selectaov=1:6, cutoff=0.05)
 
 
 ##########DK single traits##########################
@@ -1709,8 +1709,7 @@ ocAov
 ##################
 #models with Trt included
 
-#####
-##RoseAh.log
+####RoseAh.log####
 # frGLR.rose_SKtrt<- lapply(names(FrdatSK)[c(29,31:33,35:37)],function(n) CGtrait.LR_snglcov_trt("RoseAh.log",FrdatSK, covariate=n, family=gaussian))
 # CGtrait_sigaov_func_Fr(frGLR.rose_SKtrt, selectaov=1:7, cutoff=0.05)
 # frGLR.rose_SKtrt
@@ -1730,7 +1729,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(6.657,1)
+1-pchisq(6.1418,1)
 modelint<-lmer(RoseAh.log  ~ Origin +PC1 +Trt +(1|Pop), family=gaussian,data=modeldata)
 intAov <- anova(model2, modelint)
 intAov

@@ -25,46 +25,46 @@ frGLR.PC1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:2
 frPLR.PC1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC1", family=poisson))#apply func to all poisson traits
 frBLR.PC1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC1", family=binomial)) #apply to binomial trait
 
-#PC2
-frGLR.PC2_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC2"))#apply func to all gaussian traits
-frPLR.PC2_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC2", family=poisson))#apply func to all poisson traits
-frBLR.PC2_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC2", family=binomial)) #apply to binomial trait
-
-#PC3
-frGLR.PC3_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC3"))#apply func to all gaussian traits
-frPLR.PC3_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC3", family=poisson))#apply func to all poisson traits
-frBLR.PC3_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC3", family=binomial)) #apply to binomial trait
-
-#bio11
-#to fix false convergence
-frend$bio11.1 <- frend$bio11/100
-frGLR.bio11_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio11"))#apply func to all gaussian traits
-frPLR.bio11.1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio11.1", family=poisson))#apply func to all poisson traits
-frBLR.bio11_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio11", family=binomial)) #apply to binomial trait
-
-#bio6
-#to fix false convergence
-frend$bio6.1 <- frend$bio6/100
-frGLR.bio6_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio6"))#apply func to all gaussian traits
-frPLR.bio6.1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio6.1", family=poisson))#apply func to all poisson traits
-frBLR.bio6_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio6", family=binomial)) #apply to binomial trait
-
-#bio9
-#to fix false convergence
-frend$bio9.1 <- frend$bio9/100
-frGLR.bio9_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio9"))#apply func to all gaussian traits
-frPLR.bio9.1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio9.1", family=poisson))#apply func to all poisson traits
-frBLR.bio9_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio9", family=binomial)) #apply to binomial trait
-
-#lat
-frGLR.Latitude_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Latitude"))#apply func to all gaussian traits
-frPLR.Latitude_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Latitude", family=poisson))#apply func to all poisson traits
-frBLR.Latitude_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Latitude", family=binomial)) #apply to binomial trait
-
-#trt
-frGLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Trt"))#apply func to all gaussian traits
-frPLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Trt", family=poisson))#apply func to all poisson traits
-frBLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Trt", family=binomial)) #apply to binomial trait
+# #PC2
+# frGLR.PC2_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC2"))#apply func to all gaussian traits
+# frPLR.PC2_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC2", family=poisson))#apply func to all poisson traits
+# frBLR.PC2_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC2", family=binomial)) #apply to binomial trait
+# 
+# #PC3
+# frGLR.PC3_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC3"))#apply func to all gaussian traits
+# frPLR.PC3_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC3", family=poisson))#apply func to all poisson traits
+# frBLR.PC3_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="PC3", family=binomial)) #apply to binomial trait
+# 
+# #bio11
+# #to fix false convergence
+# frend$bio11.1 <- frend$bio11/100
+# frGLR.bio11_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio11"))#apply func to all gaussian traits
+# frPLR.bio11.1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio11.1", family=poisson))#apply func to all poisson traits
+# frBLR.bio11_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio11", family=binomial)) #apply to binomial trait
+# 
+# #bio6
+# #to fix false convergence
+# frend$bio6.1 <- frend$bio6/100
+# frGLR.bio6_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio6"))#apply func to all gaussian traits
+# frPLR.bio6.1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio6.1", family=poisson))#apply func to all poisson traits
+# frBLR.bio6_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio6", family=binomial)) #apply to binomial trait
+# 
+# #bio9
+# #to fix false convergence
+# frend$bio9.1 <- frend$bio9/100
+# frGLR.bio9_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio9"))#apply func to all gaussian traits
+# frPLR.bio9.1_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio9.1", family=poisson))#apply func to all poisson traits
+# frBLR.bio9_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="bio9", family=binomial)) #apply to binomial trait
+# 
+# #lat
+# frGLR.Latitude_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Latitude"))#apply func to all gaussian traits
+# frPLR.Latitude_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Latitude", family=poisson))#apply func to all poisson traits
+# frBLR.Latitude_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Latitude", family=binomial)) #apply to binomial trait
+# 
+# #trt
+# frGLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(23:24)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Trt"))#apply func to all gaussian traits
+# frPLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(8:10,12,15:16)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Trt", family=poisson))#apply func to all poisson traits
+# frBLR.Trt_DKend <- lapply(names(subset(frend, Origin%in%c("inv", "nat")))[c(21,25)],function(n) CGtrait.LR_snglcov_int(n,subset(frend, Origin%in%c("inv", "nat")), covariate="Trt", family=binomial)) #apply to binomial trait
 
 #which anovas have sig covariate or origin?
 # snglcov_DKint <- c(frGLR.PC1_SKint,frGLR.PC2_SKint,frGLR.bio11_SKint,frGLR.bio9_SKint,frGLR.bio6_SKint,frGLR.Trt_SKint,
@@ -79,40 +79,39 @@ CGtrait_sigaov_func_Fr(frGLR.PC1_DKend, selectaov=1:6, cutoff=0.05)
 CGtrait_sigaov_func_Fr(frPLR.PC1_DKend, selectaov=1:6, cutoff=0.05)
 CGtrait_sigaov_func_Fr(frBLR.PC1_DKend, selectaov=1:6, cutoff=0.05)
 
-CGtrait_sigaov_func_Fr(frGLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
-
-CGtrait_sigaov_func_Fr(frGLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
-
-CGtrait_sigaov_func_Fr(frGLR.bio11_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.bio11.1_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.bio11_DKend, selectaov=1:6, cutoff=0.05)
-
-CGtrait_sigaov_func_Fr(frGLR.bio6_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.bio6.1_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.bio6_DKend, selectaov=1:6, cutoff=0.05)
-
-CGtrait_sigaov_func_Fr(frGLR.bio9_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.bio9.1_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.bio9_DKend, selectaov=1:6, cutoff=0.05)
-
-CGtrait_sigaov_func_Fr(frGLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
-
-CGtrait_sigaov_func_Fr(frGLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frPLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
-CGtrait_sigaov_func_Fr(frBLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frGLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.PC2_DKend, selectaov=1:6, cutoff=0.05)
+# 
+# CGtrait_sigaov_func_Fr(frGLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.PC3_DKend, selectaov=1:6, cutoff=0.05)
+# 
+# CGtrait_sigaov_func_Fr(frGLR.bio11_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.bio11.1_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.bio11_DKend, selectaov=1:6, cutoff=0.05)
+# 
+# CGtrait_sigaov_func_Fr(frGLR.bio6_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.bio6.1_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.bio6_DKend, selectaov=1:6, cutoff=0.05)
+# 
+# CGtrait_sigaov_func_Fr(frGLR.bio9_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.bio9.1_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.bio9_DKend, selectaov=1:6, cutoff=0.05)
+# 
+# CGtrait_sigaov_func_Fr(frGLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.Latitude_DKend, selectaov=1:6, cutoff=0.05)
+# 
+# CGtrait_sigaov_func_Fr(frGLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frPLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
+# CGtrait_sigaov_func_Fr(frBLR.Trt_DKend, selectaov=1:6, cutoff=0.05)
 
 
 ##########DK only single traits##########################
 #focus on single timept measures, poisson model fails: 
 
-########
-###Death.date w/o trt###
+###Death.date w/o trt####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Death.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -923,7 +922,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(2.3804,1)
+1-pchisq(2.87,1)
 
 modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
 anova(modelint, model1)
@@ -1731,8 +1730,7 @@ modelOC <- lmer(Wilt  ~ Trt +(1|Pop), family=poisson,data=modeldata)
 ocAov <- anova(modelint, modelOC)
 ocAov
 
-##################
-#models with Trt included
+####models with Trt included####
 #not working
 # frPLR.harvest_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Harvest.date",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
 # frPLR.wilt_DKtrt<- lapply(names(frend)[c(37:43)],function(n) CGtrait.LR_snglcov_trt("Wilt",subset(frend, Origin%in%c("inv", "nat")), covariate=n, family=poisson))
