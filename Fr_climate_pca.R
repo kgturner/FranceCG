@@ -4,6 +4,7 @@
 #get population coordinates
 allpop <- read.table("Popcoord.txt", header=T, sep="\t") #Popcoord.txt !not wordlclim approximations
 Frdes <- read.table("Frdes.txt", header=T, sep="\t")
+Frclim <- read.table("Frbioclimdata.txt", header=TRUE)
 Frpop <- allpop[allpop$Pop %in% Frdes$Pop,]
 rownames(Frpop) <- Frpop$Pop
 Frpop$Pop <- droplevels(Frpop$Pop)
@@ -11,35 +12,37 @@ Frpop <- Frpop[,1:3]
 
 Frclim$Pop <- row.names(Frclim)
 Frclimdat <- merge(Frclim, Frpop,all.x=TRUE)
-Frclimdat <- merge(Frclimdat, Frdes[,c(5,7)],all.x=TRUE)
+Frclimdat <- merge(Frclimdat, unique(Frdes[,c(5,7)]),all.x=TRUE)
 row.names(Frclimdat) <- Frclimdat$Pop
 
 #PCA fun times
-Frclim.pca <- prcomp(Frclimdat[2:23], center=TRUE, scale=TRUE)
+#Origin and longitude artificially separates groups...
+Frclim.pca <- prcomp(Frclimdat[2:22], center=TRUE, scale=TRUE)
 summary(Frclim.pca)
 # Importance of components:
-#                           PC1    PC2    PC3    PC4     PC5     PC6     PC7
-# Standard deviation     2.5058 2.3797 2.1050 1.5462 1.14469 0.93389 0.77103
-# Proportion of Variance 0.2854 0.2574 0.2014 0.1087 0.05956 0.03964 0.02702
-# Cumulative Proportion  0.2854 0.5428 0.7442 0.8529 0.91247 0.95211 0.97914
+#                          PC1    PC2    PC3    PC4    PC5     PC6     PC7
+# Standard deviation     2.4945 2.3784 1.9951 1.5061 1.0420 0.93344 0.73651
+# Proportion of Variance 0.2963 0.2694 0.1895 0.1080 0.0517 0.04149 0.02583
+# Cumulative Proportion  0.2963 0.5657 0.7552 0.8632 0.9150 0.95644 0.98227
 
 #visualize components
 plot(Frclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
 # screeplot(Frclim.pca, type="lines")
+# biplot(Frclim.pca)
 #see bottom for figure
 
 # variances of the principal components:
 apply(Frclim.pca$x, 2, var)
-# PC1          PC2          PC3          PC4          PC5          PC6          PC7          PC8          PC9 
-# 6.279154e+00 5.663064e+00 4.431218e+00 2.390612e+00 1.310309e+00 8.721422e-01 5.944830e-01 1.988468e-01 1.169503e-01 
-# PC10         PC11         PC12         PC13         PC14         PC15         PC16         PC17         PC18 
-# 5.837038e-02 4.636666e-02 1.700358e-02 1.093465e-02 4.941391e-03 2.515499e-03 1.583054e-03 7.478564e-04 4.882819e-04 
-# PC19         PC20         PC21         PC22 
-# 2.066600e-04 4.057127e-05 2.179807e-05 6.733788e-32 
+# PC1          PC2          PC3          PC4          PC5          PC6          PC7 
+# 6.222319e+00 5.656794e+00 3.980600e+00 2.268456e+00 1.085800e+00 8.713113e-01 5.424501e-01 
+# PC8          PC9         PC10         PC11         PC12         PC13         PC14 
+# 1.986467e-01 8.162214e-02 4.683574e-02 1.714412e-02 1.113305e-02 7.202734e-03 4.776770e-03 
+# PC15         PC16         PC17         PC18         PC19         PC20         PC21 
+# 2.367863e-03 1.469710e-03 5.929469e-04 3.777926e-04 5.993845e-05 4.056082e-05 2.955439e-32
 
 biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data")
 biplot(Frclim.pca, var.axes=TRUE, main="PCA analysis of climate data", cex=c(1,2), col=c(Frclimdat$Origin,"red"))
-# biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data", choices=1:2, scale=1)
+biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data", choices=c(1,3))
 
 #see bottom for figure
 
@@ -50,15 +53,17 @@ PC3 <- as.matrix(Frclim.pca$x[,3])
 PC4 <- as.matrix(Frclim.pca$x[,4])
 Frclimdat2 <- cbind(Frclimdat, PC1, PC2, PC3, PC4)
 
+
+
 #find top loadings (for PC1)
 loadings <- Frclim.pca$rotation[,1]
 sort(abs(loadings), decreasing=TRUE)
-#       bio11        bio9        bio6        bio4        bio1        bio3       bio19        bio7 
-# 0.340912515 0.332758344 0.326315353 0.322945390 0.266800012 0.262227179 0.254227563 0.227854928 
-#   Latitude       bio18       bio15        bio8       bio16       bio13       bio14       bio12 
-# 0.220288560 0.213953960 0.186201310 0.184740915 0.176494679 0.164047194 0.138930963 0.135513808 
-#       bio5   Longitude       bio17       bio10        bio2         alt 
-# 0.115751459 0.112019618 0.105026831 0.090877697 0.041357958 0.001561833 
+# bio11       bio6       bio4       bio9       bio1      bio19       bio7       bio3 
+# 0.35561348 0.34405154 0.32821929 0.32780965 0.28576342 0.25315144 0.24798843 0.23885621 
+# Latitude      bio18      bio16      bio15      bio13       bio8      bio12      bio14 
+# 0.22882643 0.20459253 0.17627689 0.17079849 0.16539931 0.16311250 0.14120526 0.12468296 
+# bio5      bio10      bio17        alt       bio2 
+# 0.10843923 0.10654302 0.08999619 0.02125970 0.01044607 
 
 BIO4 = Temperature Seasonality (standard deviation *100)
 BIO6 = Min Temperature of Coldest Month
@@ -72,12 +77,12 @@ BIO11 = Mean Temperature of Coldest Quarter
 #find top loadings (for PC2)
 loadings2 <- Frclim.pca$rotation[,2]
 sort(abs(loadings2), decreasing=TRUE)
-#       bio5      bio17      bio14      bio12       bio7       bio2      bio13      bio10      bio16 
-# 0.35997025 0.35814999 0.34097909 0.33161588 0.27124791 0.25704538 0.24785737 0.24481185 0.24102295 
-#     bio19      bio18       bio4   Latitude      bio15       bio1       bio9       bio6       bio3 
-# 0.23807320 0.19295129 0.18111880 0.15672227 0.13026160 0.09110723 0.07874105 0.07353062 0.06975585 
-#  Longitude        alt       bio8      bio11 
-# 0.03920001 0.03870989 0.02445978 0.01259052
+# bio5       bio17       bio14       bio12       bio10        bio7        bio2 
+# 0.365558016 0.359169391 0.343189009 0.329961839 0.259354158 0.257856811 0.246805130 
+# bio13       bio16       bio19       bio18        bio4    Latitude       bio15 
+# 0.246297501 0.239684519 0.234413896 0.197982641 0.170699151 0.169973427 0.129965360 
+# bio1        bio9        bio3        bio6         alt        bio8       bio11 
+# 0.110706298 0.088031679 0.067558509 0.055121674 0.028756031 0.019952580 0.005689587 
 
 BIO5 = Max Temperature of Warmest Month
 BIO12 = Annual Precipitation
@@ -87,12 +92,14 @@ BIO17 = Precipitation of Driest Quarter
 #find top loadings (for PC3)
 loadings3 <- Frclim.pca$rotation[,3]
 sort(abs(loadings3), decreasing=TRUE)
-# Longitude        alt       bio1      bio10       bio2       bio3       bio8       bio6      bio11      bio15       bio7      bio16      bio13      bio19 
-# 0.33942690 0.33029422 0.32357096 0.32067456 0.30915891 0.27005795 0.26266292 0.24659173 0.22972959 0.22345157 0.18660130 0.17422014 0.16445824 0.14553332 
-# Latitude      bio12      bio17      bio14       bio5      bio18       bio4       bio9 
-# 0.12498506 0.12450323 0.08738670 0.08602603 0.06216595 0.04099850 0.03425357 0.02952072 
+# alt       bio2       bio1      bio10      bio15       bio3       bio8       bio6 
+# 0.37124460 0.32319500 0.30504092 0.29604980 0.29138159 0.28473454 0.25856074 0.23958625 
+# bio16      bio13      bio11       bio7      bio19      bio12      bio14      bio17 
+# 0.22324272 0.21688301 0.21638487 0.19477620 0.17172262 0.15830856 0.13734286 0.13543037 
+# Latitude      bio18       bio9       bio4       bio5 
+# 0.06189877 0.06002142 0.05691771 0.03715797 0.03674185 
 
-Longitude and altitude (continentiality?)
+altitude
 BIO1 = Annual Mean Temperature
 BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))
 BIO10 = Mean Temperature of Warmest Quarter
@@ -103,35 +110,33 @@ BIO10 = Mean Temperature of Warmest Quarter
 #the absolute values to account for negative loadings.
 
 sweep(abs(Frclim.pca$rotation),2, colSums(abs(Frclim.pca$rotation)),"/")
-#                   PC1         PC2         PC3          PC4         PC5          PC6          PC7
-# alt       0.0003700317 0.009726293 0.080241106 0.0002862402 0.136541025 0.1278128350 0.0113478423
-# bio1      0.0632106477 0.022891707 0.078607769 0.0197688472 0.032485009 0.0207426481 0.0080142155
-# bio10     0.0215308765 0.061511709 0.077904121 0.0529325300 0.025750881 0.0107554990 0.0560709160
-# bio11     0.0807694899 0.003163509 0.055810108 0.0076301154 0.025825855 0.0367513497 0.0256461059
-# bio12     0.0321061289 0.083322189 0.030246598 0.0639083589 0.007402877 0.0009263328 0.0640894387
-# bio13     0.0388663002 0.062276928 0.039953199 0.0994800838 0.004540169 0.0237631698 0.0149642109
-# bio14     0.0329157262 0.085674801 0.020899014 0.0355625489 0.044405426 0.0796467270 0.0594965680
-# bio15     0.0441150857 0.032729680 0.054284938 0.0994125720 0.002882290 0.0278806752 0.0889688938
-# bio16     0.0418153767 0.060559705 0.042324740 0.0961729617 0.013779842 0.0241376604 0.0136096546
-# bio17     0.0248831098 0.089989180 0.021229573 0.0353264673 0.045935055 0.0533400401 0.0720805482
-# bio18     0.0506902840 0.048481164 0.009960104 0.0752581763 0.084748060 0.1095400238 0.0154371401
-# bio19     0.0602319648 0.059818548 0.035355612 0.0047388288 0.022094921 0.1048296893 0.0640415598
-# bio2      0.0097985876 0.064585518 0.075106530 0.0114835372 0.085156190 0.0652519646 0.0349710045
-# bio3      0.0621272455 0.017526937 0.065607410 0.0164990538 0.087410183 0.0535887000 0.0008687706
-# bio4      0.0765126926 0.045508118 0.008321502 0.0448817539 0.016522566 0.0553113710 0.0684137402
-# bio5      0.0274240044 0.090446541 0.015102487 0.0265584306 0.062781020 0.0087702754 0.0852951457
-# bio6      0.0773111090 0.018475389 0.059906567 0.0213585749 0.013082718 0.0112977951 0.0275192990
-# bio7      0.0539837218 0.068154063 0.045332597 0.0343578629 0.023982701 0.0051759384 0.0733621660
-# bio8      0.0437690870 0.006145793 0.063810874 0.1041215792 0.041087821 0.0086414085 0.0403542468
-# bio9      0.0788375918 0.019784568 0.007171714 0.0427338314 0.015725496 0.0292312529 0.0986024888
-# Latitude  0.0521910868 0.039378219 0.030363654 0.0489836923 0.101534551 0.1362725193 0.0162156998
-# Longitude 0.0265398512 0.009849439 0.082459782 0.0585439532 0.106325346 0.0063321248 0.0606303448
-
+#                 PC1         PC2         PC3         PC4         PC5         PC6        PC7
+# alt      0.00519412 0.007323155 0.091066713 0.029883229 0.145611854 0.121636450 0.02838832
+# bio1     0.06981705 0.028193020 0.074826878 0.034655793 0.017984088 0.020759359 0.01243912
+# bio10    0.02603034 0.066048428 0.072621344 0.068393274 0.007563910 0.010547462 0.07054704
+# bio11    0.08688265 0.001448939 0.053079449 0.002045350 0.017351499 0.036492360 0.02752563
+# bio12    0.03449894 0.084029733 0.038833266 0.058248313 0.005133899 0.001666514 0.06916862
+# bio13    0.04040997 0.062723354 0.053201643 0.093821351 0.013798304 0.024226537 0.02190727
+# bio14    0.03046225 0.087398230 0.033690357 0.025904070 0.056664936 0.082407192 0.05091982
+# bio15    0.04172909 0.033097629 0.071476228 0.091262334 0.019079958 0.029936551 0.09121042
+# bio16    0.04306756 0.061039259 0.054761687 0.091969855 0.009708941 0.023551224 0.01535396
+# bio17    0.02198766 0.091467874 0.033221220 0.026128391 0.062620053 0.056803028 0.06296393
+# bio18    0.04998557 0.050419250 0.014723322 0.092632060 0.067088013 0.110514000 0.02291785
+# bio19    0.06184937 0.059697016 0.042123749 0.016953202 0.003330594 0.102314065 0.06358563
+# bio2     0.00255216 0.062852629 0.079280094 0.006279525 0.126497539 0.071675834 0.00128328
+# bio3     0.05835679 0.017204788 0.069845700 0.022253103 0.134974256 0.060320773 0.04237009
+# bio4     0.08018977 0.043471100 0.009114891 0.044098529 0.019914523 0.055037966 0.08137944
+# bio5     0.02649362 0.093094834 0.009012817 0.032745977 0.083665579 0.013665928 0.07373292
+# bio6     0.08405787 0.014037561 0.058770774 0.012768158 0.006009599 0.010830548 0.02885084
+# bio7     0.06058795 0.065667106 0.047778819 0.030148264 0.042247076 0.001966599 0.06797490
+# bio8     0.03985126 0.005081224 0.063425238 0.125497736 0.001549413 0.010745086 0.02912205
+# bio9     0.08008969 0.022418588 0.013961977 0.053000116 0.018582731 0.025835189 0.09321769
+# Latitude 0.05590634 0.043286283 0.015183836 0.041311370 0.140623236 0.129067335 0.04514117
 #....
 
 
 #write table
-write.table(Frclimdat, file="FrbioclimPCAdat.txt")
+write.table(Frclimdat2, file="FrbioclimPCAdat.txt")
 # 
 Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE)
 
@@ -145,20 +150,24 @@ origincol <- c("#F8766D", "#00BA38", "#619CFF")
 # Frclimdat$colCode <- "#F8766D"
 # Frclimdat[Frclimdat$Origin %in% "nat",]$colCode <- "#00BA38"
 # Frclimdat[Frclimdat$Origin %in% "sk",]$colCode <- "#619CFF"
+
+#see top for loading all data
+
 Frdes$colCode <- "F8766D"
 Frdes[Frdes$Origin %in% "nat",]$colCode <- "00BA38"
 Frdes[Frdes$Origin %in% "sk",]$colCode <- "619CFF"
 
-#ggplot2 version
-#with pops labeled
-library("ggplot2")
-library("grid") 
+# #ggplot2 version PC1 vs PC2
+# #with pops labeled
+# library("ggplot2")
+# library("grid") 
 # data <- data.frame(obsnames=row.names(Frclim.pca$x), Frclim.pca$x)
 # data <- merge(data, unique(Frdes[,c(5,7,12)]),by.x="obsnames", by.y="Pop")
 # 
 # plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
 #   geom_text(size=5, aes(label=obsnames,color=colCode,fontface=2))+
 #   scale_x_continuous(expand = c(0,1))
+# plot
 # 
 # plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 # datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
@@ -176,6 +185,7 @@ library("grid")
 #                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 # plot
 
+###PC1 vs PC2
 #pts instead of labels for pops
 data <- data.frame(obsnames=row.names(Frclim.pca$x), Frclim.pca$x)
 data <- merge(data, unique(Frdes[,c(5,7,12)]),by.x="obsnames", by.y="Pop")
@@ -210,6 +220,37 @@ datapc <- transform(datapc,
 
 plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
                                          size = 6, vjust=1, color="gray47", alpha=0.75)
+plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
+plot
+dev.off()
+
+##PC1 vs PC3
+png("FrClimatePCA1v3.png",width=800, height = 600, pointsize = 16)
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+plot <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=5) +
+  #   scale_x_continuous(expand = c(0,1)) #+
+  theme(legend.justification=c(1,0), legend.position=c(1,0))
+
+# plot
+
+plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+
+datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
+mult <- min(
+  (max(data[,"PC3"]) - min(data[,"PC3"])/(max(datapc[,"PC3"])-min(datapc[,"PC3"]))),
+  (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
+)
+datapc <- transform(datapc,
+                    v1 = .7 * mult * (get("PC1")),
+                    v2 = .7 * mult * (get("PC3"))
+)
+
+plot <- plot  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                         size = 6, vjust=1, color="gray47", alpha=0.75)
+
 plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot

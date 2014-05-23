@@ -68,17 +68,21 @@ levels(grdat2$Origin)[levels(grdat2$Origin)=="sk"] <- "Native C. stoebe"
 # grdat$Origin <- factor(grdat$Origin, c("Native C. diffusa", "Invasive C. diffusa", "Native C. stoebe"))
 
 #for plots of pop means
-grd2 <- ddply(grdat2, .(Pop, Origin, Trt, PC1), summarize, popCount=length(Pop), 
-              popWilt=mean(Wilt,na.rm = TRUE), popYellow=mean(Yellow, na.rm=TRUE),
-              popDeath=mean(Death.date,na.rm = TRUE), popHarvest=mean(Harvest.date, na.rm=TRUE),
+grd2 <- ddply(grdat2, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
+               popYellow=mean(Yellow, na.rm=TRUE),
               popbolt=mean(bolt.bin,na.rm = TRUE), popMass=mean(Mass.log, na.rm=TRUE))
 
-#Mass.log
+#for plots of pop means with Trt
+grd2trt <- ddply(grdat2, .(Pop, Origin, Trt, PC1), summarize, popCount=length(Pop), 
+              popWilt=mean(Wilt,na.rm = TRUE), 
+              popDeath=mean(Death.date,na.rm = TRUE), popHarvest=mean(Harvest.date, na.rm=TRUE))
+
+# Mass.log
 pMass <- ggplot(grdat2,aes(Origin, Mass.log, fill=Origin))+
   geom_boxplot()+
-  xlab("Origing")+ylab("Shoot mass at harvest [g](log))")+ 
+  xlab("Origin")+ylab("Shoot mass at harvest [g](log))")+ 
   theme_bw() +
-  theme(legend.justification=c(1,1), legend.position=c(1,1),
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
         legend.title = element_text(size=14, face="bold"),
         legend.text = element_text(size = 13))
 pMass
@@ -97,7 +101,7 @@ pHarvest <- ggplot(grdat2,aes(Origin, Harvest.date, fill=Origin))+
         legend.text = element_text(size = 13))
 pHarvest
 
-pHarvest.2 <- qplot(data=grd2, PC1, popHarvest,  color=Origin)+geom_smooth(method=glm, se=TRUE)
+pHarvest.2 <- qplot(data=grd2trt, PC1, popHarvest, shape=Trt,  color=Origin)+geom_smooth(method=glm, se=TRUE)
 pHarvest.2
 
 #bolt.bin needs mosaic plot!
