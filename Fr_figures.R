@@ -5,6 +5,7 @@
 #read
 FrdatSK<- read.table("FrTraitClimDat_SK.txt", header=T, sep="\t",quote='"', row.names=1)
 Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
+frend<- read.table("FrEnd.txt", header=T, sep="\t",quote='"', row.names=1)
 
 # library(lme4)
 # library(lsmeans)
@@ -48,7 +49,7 @@ pCrown.2 <- qplot(data=grd_c,  PC1,popCrown, color=Origin)+geom_smooth(method=gl
 pCrown.2
 
 #roseAh.log box
-pRose <- ggplot(grdat_cr,aes(Trt, RoseAh.log, fill=Origin))+
+pRose <- ggplot(grdat_cr,aes(Treatment, RoseAh.log, fill=Origin))+
   geom_boxplot()+
   xlab("Treatment")+ylab("Rosette diameter at harvest [cm2](log)")+ 
   theme_bw() +
@@ -61,8 +62,8 @@ pRose
 #for plots of pop means
 grd_r <- ddply(grdat_cr, .(Pop, Origin, Treatment, PC1), summarize, popCount=length(Pop), popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE))
 
-pRose.2 <- qplot(data=grd_r, PC1, popRose, shape=Trt, color=Origin, facets=grd_r$Trt)+geom_smooth(method=glm, se=TRUE)
-pRose.2
+# pRose.2 <- qplot(data=grd_r, PC1, popRose, shape=Treatment, color=Origin, facets=grd_r$Trt)+geom_smooth(method=glm, se=TRUE)
+# pRose.2
 
 pRose.3 <- ggplot(grd_r,aes(PC1, popRose, color=Origin))+ 
   geom_point(aes(shape=Treatment))+
@@ -93,25 +94,25 @@ pRose.3
 
 
 ####Mass, bolt, harvest, wilt, yellow, death.date####
-grdat2 <- frend[, c(1:7,8,10,12,15,21,24,31,33:35)]
-levels(grdat2$Origin)[levels(grdat2$Origin)=="inv"] <- "Invasive C. diffusa"
-levels(grdat2$Origin)[levels(grdat2$Origin)=="nat"] <- "Native C. diffusa"
-levels(grdat2$Origin)[levels(grdat2$Origin)=="sk"] <- "Native C. stoebe"
+grdat_d <- frend[, c(1:7,8,10,12,15,21,24,31,33:35)]
+levels(grdat_d$Origin)[levels(grdat_d$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(grdat_d$Origin)[levels(grdat_d$Origin)=="nat"] <- "Native C. diffusa"
+levels(grdat_d$Origin)[levels(grdat_d$Origin)=="sk"] <- "Native C. stoebe"
 #change order? but then have to change colors...
 # grdat$Origin <- factor(grdat$Origin, c("Native C. diffusa", "Invasive C. diffusa", "Native C. stoebe"))
 
 #for plots of pop means
-grd2 <- ddply(grdat2, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
+grd2 <- ddply(grdat_d, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
                popYellow=mean(Yellow, na.rm=TRUE),
               popbolt=mean(bolt.bin,na.rm = TRUE), popMass=mean(Mass.log, na.rm=TRUE))
 
 #for plots of pop means with Trt
-grd2trt <- ddply(grdat2, .(Pop, Origin, Trt, PC1), summarize, popCount=length(Pop), 
+grd2trt <- ddply(grdat_d, .(Pop, Origin, Trt, PC1), summarize, popCount=length(Pop), 
               popWilt=mean(Wilt,na.rm = TRUE), 
               popDeath=mean(Death.date,na.rm = TRUE), popHarvest=mean(Harvest.date, na.rm=TRUE))
-
+colnames(grd2trt)[4] <- "Treatment"
 # Mass.log
-pMass <- ggplot(grdat2,aes(Origin, Mass.log, fill=Origin))+
+pMass <- ggplot(grdat_d,aes(Origin, Mass.log, fill=Origin))+
   geom_boxplot()+
   xlab("Origin")+ylab("Shoot mass at harvest [g](log))")+ 
   theme_bw() +
@@ -124,8 +125,9 @@ pMass
 pMass.2 <- qplot(data=grd2, PC1, popMass,  color=Origin)+geom_smooth(method=glm, se=TRUE)
 pMass.2
 
+###dates
 #harvest
-pHarvest <- ggplot(grdat2,aes(Origin, Harvest.date, fill=Origin))+
+pHarvest <- ggplot(grdat_d,aes(Origin, Harvest.date, fill=Origin))+
   geom_boxplot()+
   xlab("Origin")+ylab("Harvest date (based on bolting) [g](log))")+ 
   theme_bw() +
@@ -138,6 +140,7 @@ pHarvest.2 <- qplot(data=grd2trt, PC1, popHarvest, shape=Trt,  color=Origin)+geo
 pHarvest.2
 
 #bolt.bin needs mosaic plot!
+
 
 
 ####DEMO####
