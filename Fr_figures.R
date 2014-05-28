@@ -94,7 +94,7 @@ pRose.3
 
 
 ####Mass, bolt, harvest, wilt, yellow, death.date####
-grdat_d <- frend[, c(1:7,8,10,12,15,21,24,31,33:35)]
+grdat_d <- frend[, c(1:7,8,10,12,13,15,21,24,31,33:35)]
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="inv"] <- "Invasive C. diffusa"
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="nat"] <- "Native C. diffusa"
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="sk"] <- "Native C. stoebe"
@@ -140,6 +140,150 @@ pHarvest.2 <- qplot(data=grd2trt, PC1, popHarvest, shape=Trt,  color=Origin)+geo
 pHarvest.2
 
 #bolt.bin needs mosaic plot!
+#with treatment
+grdat_B <- subset(grdat_d, !is.na(BoltedatH))
+grdat_B1 <- ddply(grdat_B, .(Trt, Origin), summarize, totcount = length(BoltedatH))
+grdat_B1$xmax <- cumsum(grdat_B1$totcount) # to set width of bars, if you want them represent sample size
+grdat_B1$xmin <- grdat_B1$xmax-grdat_B1$totcount
+grdat_B3 <- ddply(grdat_B, .(Trt, Origin, BoltedatH), summarize, count = length(BoltedatH))
+grBatH <- merge(grdat_B1,grdat_B3, all.y=TRUE)
+# grBatH$Trt <- factor(grBatH$Trt, c("cont","nut def","cut")) #set order
+grBatH$Treatment <- paste(grBatH$Trt, grBatH$Origin, grBatH$BoltedatH)
+# 
+# #percentages - to set heights of bars
+grBatHn <- grBatH[grBatH$BoltedatH=="No",]
+grBatHn<- ddply(grBatHn, .(Treatment), transform, ymax = cumsum(count/totcount*100))
+grBatHn <- ddply(grBatHn, .(Treatment), transform,
+                 ymin = ymax-(count/totcount*100))
+
+grBatHy <- grBatH[grBatH$BoltedatH=="Yes",]
+grBatHy<- ddply(grBatHy, .(Treatment), transform, ymax = 100)
+grBatHy <- ddply(grBatHy, .(Treatment), transform,
+                 ymin = ymax-cumsum(count/totcount*100))
+grBatH1 <- merge(grBatHn, grBatHy, all=TRUE)
+
+#labels and tidying
+levels(grBatH1$Origin)[levels(grBatH1$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(grBatH1$Origin)[levels(grBatH1$Origin)=="nat"] <- "Native C. diffusa"
+levels(grBatH1$Origin)[levels(grBatH1$Origin)=="sk"] <- "Native C. stoebe"
+
+levels(grBatH1$BoltedatH)[levels(grBatH1$BoltedatH)=="No"] <- "Not Bolted"
+levels(grBatH1$BoltedatH)[levels(grBatH1$BoltedatH)=="Yes"] <- "Bolted"
+
+col <-  with( grBatH1, interaction(Origin, Trt, BoltedatH))
+colorset <- c("white","white","white","white","white","white","#F8766D", "#00BA38", "#619CFF","#F8766D", "#00BA38", "#619CFF")
+cscale = scale_fill_manual(values=colorset)
+# 
+#evenly spaced columns - max xmax at 120
+grBatHStd <- grBatH1
+grBatHStd$xmin <- c(0,0,20,20,40,40,60,60,80,80,100,100)
+grBatHStd$xmax <- grBatHStd$xmin + 20
+#reverse stacking, not bolted comes out as white
+grBatHStd$RevStackymax  <-  grBatHStd$ymax - grBatHStd$ymin
+grBatHStd[grBatHStd$BoltedatH=="Not Bolted",]$RevStackymax  <-  100
+grBatHStd$RevStackymin <- grBatHStd$RevStackymax-grBatHStd$ymax
+grBatHStd[grBatHStd$RevStackymin<0,]$RevStackymin <- 0
+
+pBolt <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xmin, xmax=xmax, fill=factor(col))) +
+geom_rect(colour = I("white"))+
+  scale_x_continuous(breaks=c(30,90),labels=c("Control", "Drought"), name="Treatment") +
+  scale_y_continuous(name="Percent Bolted at Harvest") + theme_bw()+cscale
+pBolt
+# annotate 
+pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())+
+  #annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=105, label=grBatHStd$Origin, size=4) +
+  #annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=grBatHStd$ymin+2, label=grBatHStd$BoltedatH, size=4)+ 
+  theme(legend.position="none", axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
+        axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 )) #+ 
+#   annotate('point',x = 20, y = 50, pch=8, color="red",parse=T, size=4)+
+#   annotate('point',x = 20, y = 54, pch=8, color="red",parse=T, size=4)+
+#   annotate('point',x = 20, y = 50, pch=0, color="red",parse=T, size=6)+
+#   annotate('point',x = 20, y = 54, pch=0, color="red",parse=T, size=6)+
+#   
+#   annotate('point',x = 60, y = 50, pch=8, color="red",parse=T,size=4)+
+#   annotate('point',x = 60, y = 54, pch=8, color="red",parse=T,size=4)+
+#   annotate('point',x = 60, y = 58, pch=8, color="red",parse=T,size=4)+
+#   annotate('point',x = 60, y = 50, pch=0, color="red",parse=T,size=6)+
+#   annotate('point',x = 60, y = 54, pch=0, color="red",parse=T,size=6)+
+#   annotate('point',x = 60, y = 58, pch=0, color="red",parse=T,size=6)+
+#   
+#   annotate(geom="text", x=2.5, y=98, label="(c)",fontface="bold", size=5)
+
+#without trt
+grdat_B <- subset(grdat_d, !is.na(BoltedatH))
+grdat_B1 <- ddply(grdat_B, .( Origin), summarize, totcount = length(BoltedatH))
+grdat_B1$xmax <- cumsum(grdat_B1$totcount) # to set width of bars, if you want them represent sample size
+grdat_B1$xmin <- grdat_B1$xmax-grdat_B1$totcount
+grdat_B3 <- ddply(grdat_B, .( Origin, BoltedatH), summarize, count = length(BoltedatH))
+grBatH <- merge(grdat_B1,grdat_B3, all.y=TRUE)
+# grBatH$Trt <- factor(grBatH$Trt, c("cont","nut def","cut")) #set order
+grBatH$group <- paste(grBatH$Origin, grBatH$BoltedatH)
+# 
+# #percentages - to set heights of bars
+grBatHn <- grBatH[grBatH$BoltedatH=="No",]
+grBatHn<- ddply(grBatHn, .(group), transform, ymax = cumsum(count/totcount*100))
+grBatHn <- ddply(grBatHn, .(group), transform,
+                 ymin = ymax-(count/totcount*100))
+
+grBatHy <- grBatH[grBatH$BoltedatH=="Yes",]
+grBatHy<- ddply(grBatHy, .(group), transform, ymax = 100)
+grBatHy <- ddply(grBatHy, .(group), transform,
+                 ymin = ymax-cumsum(count/totcount*100))
+grBatH1 <- merge(grBatHn, grBatHy, all=TRUE)
+
+#labels and tidying
+levels(grBatH1$Origin)[levels(grBatH1$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(grBatH1$Origin)[levels(grBatH1$Origin)=="nat"] <- "Native C. diffusa"
+levels(grBatH1$Origin)[levels(grBatH1$Origin)=="sk"] <- "Native C. stoebe"
+
+levels(grBatH1$BoltedatH)[levels(grBatH1$BoltedatH)=="No"] <- "Not Bolted"
+levels(grBatH1$BoltedatH)[levels(grBatH1$BoltedatH)=="Yes"] <- "Bolted"
+
+col <-  with( grBatH1, interaction(Origin, BoltedatH))
+colorset <- c("white","white","white","#F8766D", "#00BA38", "#619CFF")
+cscale = scale_fill_manual(values=colorset)
+# 
+#evenly spaced columns - max xmax at 60
+grBatHStd <- grBatH1
+grBatHStd$xmin <- c(0,0,20,20,40,40)
+grBatHStd$xmax <- grBatHStd$xmin + 20
+#reverse stacking, not bolted comes out as white
+grBatHStd$RevStackymax  <-  grBatHStd$ymax - grBatHStd$ymin
+grBatHStd[grBatHStd$BoltedatH=="Not Bolted",]$RevStackymax  <-  100
+grBatHStd$RevStackymin <- grBatHStd$RevStackymax-grBatHStd$ymax
+grBatHStd[grBatHStd$RevStackymin<0,]$RevStackymin <- 0
+
+pBolt <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xmin, xmax=xmax, fill=factor(col))) +
+  geom_rect(colour = I("white"))+
+  scale_x_continuous(breaks=c(30,90),labels=c("Control", "Drought"), name="Treatment") +
+  scale_y_continuous(name="Percent Bolted at Harvest") + theme_bw()+cscale
+pBolt
+# annotate 
+pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())+
+  #annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=105, label=grBatHStd$Origin, size=4) +
+  #annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=grBatHStd$ymin+2, label=grBatHStd$BoltedatH, size=4)+ 
+  theme(legend.position="none", axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
+        axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 )) #+ 
+#   annotate('point',x = 20, y = 50, pch=8, color="red",parse=T, size=4)+
+#   annotate('point',x = 20, y = 54, pch=8, color="red",parse=T, size=4)+
+#   annotate('point',x = 20, y = 50, pch=0, color="red",parse=T, size=6)+
+#   annotate('point',x = 20, y = 54, pch=0, color="red",parse=T, size=6)+
+#   
+#   annotate('point',x = 60, y = 50, pch=8, color="red",parse=T,size=4)+
+#   annotate('point',x = 60, y = 54, pch=8, color="red",parse=T,size=4)+
+#   annotate('point',x = 60, y = 58, pch=8, color="red",parse=T,size=4)+
+#   annotate('point',x = 60, y = 50, pch=0, color="red",parse=T,size=6)+
+#   annotate('point',x = 60, y = 54, pch=0, color="red",parse=T,size=6)+
+#   annotate('point',x = 60, y = 58, pch=0, color="red",parse=T,size=6)+
+#   
+#   annotate(geom="text", x=2.5, y=98, label="(c)",fontface="bold", size=5)
+
+
+
+
+
+
+
 
 
 
