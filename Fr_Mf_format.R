@@ -13,7 +13,7 @@ library(ggplot2)
 Mfcont<- read.table("MF_full_control.txt", header=T, sep="\t",quote='"', row.names=1)
 Mfdr <- read.table("MF_full_drought.txt", header=T, sep="\t",quote='"', row.names=1)
 Mfmom <- read.table("MF_mom.dk.txt", header=T, sep="\t",quote='"', row.names=1)
-Mfh <- read.table("MF_harvest.txt", header=T, sep="\t",quote='"', row.names=1)
+
 # #for long data formating, see FrSKdata_format.R
 # #read
 # Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
