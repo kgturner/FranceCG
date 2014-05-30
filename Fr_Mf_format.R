@@ -12,6 +12,8 @@ library(ggplot2)
 #with SK
 Mfcont<- read.table("MF_full_control.txt", header=T, sep="\t",quote='"', row.names=1)
 Mfdr <- read.table("MF_full_drought.txt", header=T, sep="\t",quote='"', row.names=1)
+Mfmom <- read.table("MF_mom.dk.txt", header=T, sep="\t",quote='"', row.names=1)
+Mfh <- read.table("MF_harvest.txt", header=T, sep="\t",quote='"', row.names=1)
 # #for long data formating, see FrSKdata_format.R
 # #read
 # Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
@@ -59,7 +61,7 @@ Mf <- merge(Mfcont, Mfdr, all=TRUE)
 
 summary(Mf)
 head(Mf)
-Mf <- Mf[,c(1:12, 18:21,31,36:38,40:42,44:48,66:68)]
+Mf <- Mf[,c(1:12, 18:21,31,33:34,36:38,41:42,44:48,66:68)]
 str(Mf)
 summary(subset(Mf, FlrHeadCount>0)) #86 indiv, evenly distributed among origins
 #remove small pops, only one, HUG
@@ -98,16 +100,6 @@ Mf <- droplevels(Mf)
 #leave all dates as int
 day0 <- as.Date("2010-07-27") #stress start date
 
-# BoltDate 9/30/2010
-Mf$BoltDate2 <- strptime(Mf$BoltDate, format="%m/%d/%Y")
-Mf$BoltDate2 <- as.Date(Mf$BoltDate2)
-Mf$BoltDate3 <- as.numeric(Mf$BoltDate2-day0)
-str(Mf)
-summary(Mf$BoltDate2)
-summary(Mf$BoltDate3)
-Mf$BoltDate <- as.integer(Mf$BoltDate3)
-Mf <- Mf[,1:31]
-
 # FlwrDate 9/3/2010
 Mf$FlwrDate2 <- strptime(Mf$FlwrDate, format="%m/%d/%Y")
 Mf$FlwrDate2 <- as.Date(Mf$FlwrDate2)
@@ -116,17 +108,70 @@ str(Mf)
 summary(Mf$FlwrDate2)
 summary(Mf$FlwrDate3)
 Mf$FlwrDate <- as.integer(Mf$FlwrDate3)
-Mf <- Mf[,1:31]
+Mf <- Mf[,1:32]
 
-# # SLAdate 10/13/2010
-# Mf$SLAdate <- strptime(Mf$SLAdate, format="%m/%d/%Y")
-# Mf$SLAdate2 <- as.Date(Mf$SLAdate2)
-# Mf$SLAdate3 <- as.numeric(Mf$SLAdate2-day0)
-# str(Mf)
-# summary(Mf$SLAdate2)
-# summary(Mf$SLAdate3)
-# Mf$SLAdate <- as.integer(Mf$SLAdate3)
-# Mf <- Mf[,1:31]
+# SLAdate 10/13/2010
+Mf$SLAdate2 <- strptime(Mf$SLAdate, format="%m/%d/%Y")
+Mf$SLAdate2 <- as.Date(Mf$SLAdate2)
+Mf$SLAdate3 <- as.numeric(Mf$SLAdate2-day0)
+str(Mf)
+summary(Mf$SLAdate2)
+summary(Mf$SLAdate3)
+Mf$SLAdate <- as.integer(Mf$SLAdate3)
+Mf <- Mf[,1:32]
+
+Mf$m.date1 <- as.numeric(as.Date(strptime("07/27/2010", format="%m/%d/%Y"))-day0)
+Mf$m.date2 <- as.numeric(as.Date(strptime("08/18/2010", format="%m/%d/%Y"))-day0)
+Mf$m.dateH <- as.numeric(as.Date(strptime("10/13/2010", format="%m/%d/%Y"))-day0)
+
+#mom data
+Mf$CrossID <- paste0(Mf$PopID,"-",Mf$CrossNum)
+Mfmom$CrossID <- as.character(Mfmom$CrossID)
+Mf2 <- merge(Mf, Mfmom[,c(1:3,7:13)], by="CrossID", all.x=TRUE)
+setdiff(Mf2$Origin.x, Mf2$Origin.y)
+Mf2 <- Mf2[,c(1:36,39:44)]
+colnames(Mf2)[5] <- "Origin"
+colnames(Mf2)[8] <- "Pop"
+colnames(Mf2)[9] <- "CrossNum"
+summary(Mf2$Origin)
+subset(Mf2, Origin%in%"SK")
+Mf2$Mom <- as.character(Mf2$Mom)
+Mf2[Mf2$Origin%in%"SK",]$Mom <- Mf2[Mf2$Origin%in%"SK",]$CrossNum
+setdiff(Mf2[Mf2$Origin%in%"SK",]$Mom, Mf2[Mf2$Origin%in%"SK",]$CrossNum)
+Mf2[Mf2$Origin%in%"SK",]$MomFam <- Mf2[Mf2$Origin%in%"SK",]$CrossNum
+Mf2$Origin <- as.character(Mf2$Origin)
+Mf2[Mf2$Origin%in%"SK",]$Origin <- "sk"
+summary(Mf2)
+Mf <- Mf2
+
+#factors
+Mf$CrossID <- as.factor(Mf$CrossID)
+Mf$Origin <- as.factor(Mf$Origin)
+Mf$Mom <- as.factor(Mf$Mom)
+Mf$MomFam <- as.factor(Mf$MomFam)
+
+Mf$bolt.bin <- as.numeric(Mf$BoltedatH)-1
+
+Mf$sla <- Mf$SLAarea / Mf$SLAmass.g
+Mf$sla.log <- log(Mf$sla)
+
+Mf$Mass.log <- log(Mf$ShootMass.g)
+Mf$Crown.log <- log(Mf$CrownDiam.mm)
 
 #write
 write.table(Mf, file="Fr_Mf_data.txt",sep="\t", quote=F)
+#read
+Mf <- read.table("Fr_Mf_data.txt", header=T, sep="\t",quote='"', row.names=1)
+
+
+####long data format####
+Mf.l <- reshape(Mf, idvar="Barcode", direction="long", 
+                     varying=list(m.date=c(34,35,36), lfl=c(12,22,15), lfw=c(13,23,16), lfc=c(11,21,14)),
+                     v.names=c("m.date","lfl", "lfw","lfc"))
+str(Mf.l)
+Mf.l <- Mf.l[,c(1:11,20:21,25:31,34:40)]
+
+#write
+write.table(Mf.l, file="Fr_Mf_data_long.txt",sep="\t", quote=F)
+#read
+Mf.l <- read.table("Fr_Mf_data_long.txt", header=T, sep="\t",quote='"', row.names=1)
