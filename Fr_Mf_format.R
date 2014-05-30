@@ -59,7 +59,7 @@ Mf <- merge(Mfcont, Mfdr, all=TRUE)
 
 summary(Mf)
 head(Mf)
-Mf <- Mf[,c(1:12, 18:20,23,31,35:38,40:42,44:49,51,66:68)]
+Mf <- Mf[,c(1:12, 18:21,31,36:38,40:42,44:48,66:68)]
 str(Mf)
 summary(subset(Mf, FlrHeadCount>0)) #86 indiv, evenly distributed among origins
 #remove small pops, only one, HUG
@@ -95,35 +95,38 @@ Mf[Mf$Trt!="drought",]$Trt <- "control"
 Mf <- droplevels(Mf)
 
 #dates
-#day0 of stress=7/27/10
+#leave all dates as int
+day0 <- as.Date("2010-07-27") #stress start date
+
 # BoltDate 9/30/2010
+Mf$BoltDate2 <- strptime(Mf$BoltDate, format="%m/%d/%Y")
+Mf$BoltDate2 <- as.Date(Mf$BoltDate2)
+Mf$BoltDate3 <- as.numeric(Mf$BoltDate2-day0)
+str(Mf)
+summary(Mf$BoltDate2)
+summary(Mf$BoltDate3)
+Mf$BoltDate <- as.integer(Mf$BoltDate3)
+Mf <- Mf[,1:31]
+
 # FlwrDate 9/3/2010
-# SLAdate 10/13/2010
+Mf$FlwrDate2 <- strptime(Mf$FlwrDate, format="%m/%d/%Y")
+Mf$FlwrDate2 <- as.Date(Mf$FlwrDate2)
+Mf$FlwrDate3 <- as.numeric(Mf$FlwrDate2-day0)
+str(Mf)
+summary(Mf$FlwrDate2)
+summary(Mf$FlwrDate3)
+Mf$FlwrDate <- as.integer(Mf$FlwrDate3)
+Mf <- Mf[,1:31]
 
-
-# #all dates as int -- m1.date (factor), m2.date (chr)
-# # FrdatSK$m1.date2 <- strptime(FrdatSK$m1.date, format="%m/%d/%Y")
-# # FrdatSK$m1.date2 <- as.Date(FrdatSK$m1.date2)
-# day0 <- as.Date("2011-05-12") #planting date
-# # FrdatSK$m1.date3 <- as.numeric(FrdatSK$m1.date2-day0)
-# str(FrdatSK)
-# # summary(FrdatSK$m1.date2)
-# # summary(FrdatSK$m1.date3)
-# # FrdatSK$m1.date <- FrdatSK$m1.date3
-# # FrdatSK <- FrdatSK[,1:57]
-# 
-# FrdatSK$m2.date2 <- strptime(FrdatSK$m2.date, format="%m/%d/%Y")
-# FrdatSK$m2.date2 <- as.Date(FrdatSK$m2.date2)
-# day0 <- as.Date("2011-05-12") #planting date
-# FrdatSK$m2.date3 <- as.numeric(FrdatSK$m2.date2-day0)
-# str(FrdatSK)
-# summary(FrdatSK$m2.date2)
-# summary(FrdatSK$m2.date3)
-# FrdatSK$m2.date <- FrdatSK$m2.date3
-# FrdatSK <- FrdatSK[,1:57]
-# 
-# FrdatSK$m1.date <- as.integer(FrdatSK$m1.date)
-# FrdatSK$m2.date <- as.integer(FrdatSK$m2.date)
+# # SLAdate 10/13/2010
+# Mf$SLAdate <- strptime(Mf$SLAdate, format="%m/%d/%Y")
+# Mf$SLAdate2 <- as.Date(Mf$SLAdate2)
+# Mf$SLAdate3 <- as.numeric(Mf$SLAdate2-day0)
+# str(Mf)
+# summary(Mf$SLAdate2)
+# summary(Mf$SLAdate3)
+# Mf$SLAdate <- as.integer(Mf$SLAdate3)
+# Mf <- Mf[,1:31]
 
 #write
 write.table(Mf, file="Fr_Mf_data.txt",sep="\t", quote=F)
