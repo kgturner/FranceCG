@@ -158,6 +158,10 @@ Mf$sla.log <- log(Mf$sla)
 Mf$Mass.log <- log(Mf$ShootMass.g)
 Mf$Crown.log <- log(Mf$CrownDiam.mm)
 
+#add climate datas
+Mfclim <- read.table("MfbioclimPCAdat.txt", header=TRUE)
+Mf <- merge(Mf, Mfclim[,c(1,2,22:25)],all.x=TRUE)
+
 #write
 write.table(Mf, file="Fr_Mf_data.txt",sep="\t", quote=F)
 #read
@@ -169,7 +173,7 @@ Mf.l <- reshape(Mf, idvar="Barcode", direction="long",
                      varying=list(m.date=c(34,35,36), lfl=c(12,22,15), lfw=c(13,23,16), lfc=c(11,21,14)),
                      v.names=c("m.date","lfl", "lfw","lfc"))
 str(Mf.l)
-Mf.l <- Mf.l[,c(1:11,20:21,25:31,34:40)]
+Mf.l <- Mf.l[,c(1:11,20:21,25:31,34:44)]
 
 #write
 write.table(Mf.l, file="Fr_Mf_data_long.txt",sep="\t", quote=F)
