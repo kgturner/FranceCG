@@ -1,3 +1,14 @@
+#France/Maternal effects comparison_PCA and climate data
+#for SK material
+
+#REML, using lme4
+#mixed effect models 
+library(plyr)
+library(lme4)
+library(lsmeans)
+library(ggplot2)
+
+
 
 #for just B3 (Mf)
 #BG3 42.1153  23.3203
@@ -42,7 +53,8 @@ Mfbioclim <- droplevels(Mfbioclim)
 
 #PCA fun times
 #Origin and longitude artificially separates groups...
-Mfclim.pca <- prcomp(Mfbioclim[c(2:22)], center=TRUE, scale=TRUE)
+# Mfclim.pca <- prcomp(Mfbioclim[c(2:22)], center=TRUE, scale=TRUE)
+Mfclim.pca <- prcomp(Mfclim[c(2:22)], center=TRUE, scale=TRUE)
 summary(Mfclim.pca)
 # Importance of components:
 #                           PC1    PC2    PC3     PC4     PC5     PC6    PC7     PC8
@@ -53,7 +65,8 @@ summary(Mfclim.pca)
 #visualize components
 plot(Mfclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
 # screeplot(Frclim.pca, type="lines")
-# biplot(Frclim.pca)
+biplot(Mfclim.pca)
+
 #see bottom for figure
 
 # variances of the principal components:
@@ -63,10 +76,12 @@ apply(Mfclim.pca$x, 2, var)
 # PC7          PC8          PC9         PC10         PC11 
 # 1.658040e-01 6.680188e-02 1.263456e-02 9.371928e-03 3.868380e-32
 
-biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data")
-biplot(Frclim.pca, var.axes=TRUE, main="PCA analysis of climate data", cex=c(1,2), col=c(Frclimdat$Origin,"red"))
-biplot(Frclim.pca, var.axes=FALSE, main="PCA analysis of climate data", choices=c(1,3))
-
+# biplot(Mfclim.pca, var.axes=FALSE, main="PCA analysis of climate data")
+biplot(Mfclim.pca, var.axes=TRUE, main="PCA analysis of climate data", cex=c(1,2), col=c(Frclimdat$Origin,"red"))
+subset(Mfclim, Pop%in%c("SERG","CA001","US001","US002"), select=c(bio5,bio17,bio14,bio12))
+subset(Mfclim, Pop%in%c("RU008","SERG","TR001","CA001"), select=c(bio19,bio6,bio4,bio11))
+biplot(Mfclim.pca, var.axes=FALSE, main="PCA analysis of climate data", choices=c(1,3))
+subset(Mfclim, Pop%in%c("US001","US003","GR002","BG001"), select=c(bio1,bio3,bio15,bio2))
 #see bottom for figure
 
 #get top 4 PCs
