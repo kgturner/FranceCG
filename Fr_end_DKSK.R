@@ -116,8 +116,7 @@ CGtrait_sigaov_func_Fr(frBLR.Trt_SKend, selectaov=1:6, cutoff=0.05)
 ##########DK+SK single traits##########################
 #check sig level for pop/mom: Death.date, yellow
 
-########
-###Death.date###
+####Death.date####
 modeldata<-frend[!is.na(frend$Death.date),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -237,8 +236,7 @@ pdr<-exp(Bdr)
 pC #31.47835 death date in control
 pdr #27.18804 death date in drought
 
-######
-###Yellow###
+####Yellow####
 modeldata<-frend[!is.na(frend$Yellow),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -556,8 +554,7 @@ CI.LS.poisson(modelint)
 # # # dev.off()
 # # # 
 
-##############
-#######Mass.log
+####Mass.log####
 modeldata<-frend[!is.na(frend$Mass.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -573,6 +570,13 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(1.2919,1)
+
+modelint<-lmer(Mass.log  ~ Origin +PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
+intAov <- anova(model1, modelint)
+intAov
+
+model1
+CI.LS.gaussian.log(modelint)
 
 #PC2
 model1<-lmer(Mass.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
