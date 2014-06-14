@@ -599,6 +599,12 @@ popAov
 
 modelint<-lmer(Mass.log  ~ Origin +PC1  +(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelint, model1)
+
+model1
+modelg <- glm(Mass.log ~ Origin*PC1, family=gaussian,data=modeldata)
+summary(modelg)
+
+
 CI.LS.gaussian.log(modelint)
 
 qplot(data=modeldata,PC1, Mass.log, color = Origin)+geom_point(position="jitter")
@@ -926,6 +932,9 @@ popAov
 
 modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
 anova(modelint, model1)
+
+model1
+
 CI.LS.binomial(modelint)
 
 qplot(data=modeldata,PC1, bolt.bin, color = Origin)+geom_point(position="jitter")
@@ -1764,6 +1773,8 @@ intAov
 modelT <- lmer(Harvest.date  ~ Origin * PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
 trtAov <- anova(model1, modelT)
 trtAov
+
+model1
 # 
 #PC2
 model1<-lmer(Harvest.date  ~ Origin * PC2 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)
@@ -1942,6 +1953,18 @@ modelT <- lmer(Wilt  ~ (1|Pop), family=poisson,data=modeldata)
 trtAov <- anova(modelO, modelT)
 trtAov
 
+lsmeans(modelO, ~Trt, conf=95)
+# $`Trt lsmeans`
+#     Trt   lsmean         SE df asymp.LCL asymp.UCL
+# control 3.811387 0.02010636 NA  3.771979  3.850795
+# drought 3.702058 0.02407447 NA  3.654873  3.749243
+intc<-3.811387#cont mean
+Bdr<-3.702058#dr mean
+pc<-exp(intc)
+pdr<-exp(Bdr)
+pc #45.21311
+pdr #40.53063
+
 #PC2
 model1<-lmer(Wilt  ~ Origin * PC2 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)
 model2<-lmer(Wilt  ~ Origin * PC2 +Trt+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -2103,6 +2126,20 @@ originAov
 modelT <- lmer(Death.date  ~ (1|Pop/Mom), family=poisson,data=modeldata)
 trtAov <- anova(modelO, modelT)
 trtAov
+
+lsmeans(modelO, ~Trt, conf=95)
+# $`Trt lsmeans`
+#     Trt   lsmean        SE df asymp.LCL asymp.UCL
+# control 3.457070 0.0468643 NA  3.365217  3.548922
+# drought 3.279163 0.0714766 NA  3.139072  3.419255
+
+intc<-3.457070#cont mean
+Bdr<-3.279163#dr mean
+pc<-exp(intc)
+pdr<-exp(Bdr)
+pc #31.72389
+pdr #26.55354
+
 # 
 #PC2
 model1<-lmer(Death.date  ~ Origin * PC2 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)

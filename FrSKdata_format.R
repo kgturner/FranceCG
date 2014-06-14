@@ -297,7 +297,6 @@ FrdatSK <- FrdatSK[!(FrdatSK$Pop %in% c("CA008", "GR003","UA004")),]
 FrdatSK <- droplevels(FrdatSK)
 
 
-
 #write
 write.table(FrdatSK, file="FrTraitClimDat_SK.txt",sep="\t", quote=F)
 #read

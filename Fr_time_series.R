@@ -1138,6 +1138,8 @@ modelmdate<-lmer(lfc ~ Origin*PC1+Trt+(1|Pop), family=poisson,data=modeldata)
 mdateAov <- anova(model2, modelmdate) #test for significance of origin - origin only marginally sig....!
 mdateAov
 
+model2
+
 #lsmeans, ctrl only
 modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"control"))
 modeldata<-modeldata[!is.na(modeldata$lfc),]

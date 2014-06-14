@@ -184,6 +184,7 @@ boltLR.Trt_SKint
 
 ################
 #Crown.log and RoseAh.log only
+
 #PC1
 frGLR.PC1_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="PC1"))#apply func to all gaussian traits
 
@@ -1239,7 +1240,7 @@ ocAov
 #skip uneccessary models, such as those in repeated measures or non-optimal transformations
 #focus on:bolt.bin, Mass.log, Harvest.date, Crown.log
 
-###Crown.log###
+####Crown.log####
 modeldata<-FrdatSK[!is.na(FrdatSK$Crown.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))

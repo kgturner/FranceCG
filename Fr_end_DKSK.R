@@ -224,6 +224,19 @@ modelOC <- lmer(Death.date  ~ Trt +(1|Pop/Mom), family=poisson,data=modeldata)
 ocAov <- anova(modelint, modelOC)
 ocAov
 
+CI.LS.poisson(modelint)
+lsmeans(modelOC, ~ Trt, conf=95)
+#     Trt   lsmean         SE df asymp.LCL asymp.UCL
+# control 3.449300 0.04205686 NA  3.366871  3.531730
+# drought 3.302777 0.06056471 NA  3.184073  3.421482
+#effect size, binomial
+intCont<- 3.449300 #cont mean
+Bdr<-3.302777 #Originnat estimate from model summary
+pC<-exp(intCont)
+pdr<-exp(Bdr)
+pC #31.47835 death date in control
+pdr #27.18804 death date in drought
+
 ######
 ###Yellow###
 modeldata<-frend[!is.na(frend$Yellow),]
@@ -350,6 +363,23 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(2.2467,1)
+
+modelint<-lmer(Bolt.date  ~ Origin +PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+CI.LS.poisson(modelint)
+
+qplot(data=modeldata, PC1, Bolt.date, color=Origin, geom = "jitter")
+
+moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,PC1, popBolt.date, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean Bolt.date", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 
 #pc2
 model1<-lmer(Bolt.date  ~ Origin * PC2 +(1|Pop/Mom), family=poisson,data=modeldata)
