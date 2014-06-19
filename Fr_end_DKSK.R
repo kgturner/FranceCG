@@ -648,8 +648,8 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(61.831,1)
 
-################
-###Harvest.date###
+
+####Harvest.date####
 modeldata<-frend[!is.na(frend$Harvest.date),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -665,6 +665,26 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(232.07,1)
+
+#lsmeans w/ ctrl only
+modeldata <- droplevels(subset(frend, Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(Harvest.date  ~ Origin +PC1  +(1|Pop/Mom), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+str(modeldata$Pop)
+
+#lsmeans w/ dr only
+modeldata <- droplevels(subset(frend, Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(Harvest.date  ~ Origin +PC1  +(1|Pop/Mom), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 #PC2
 model1<-lmer(Harvest.date  ~ Origin * PC2 +(1|Pop/Mom), family=poisson,data=modeldata)
@@ -850,12 +870,13 @@ CI.LS.poisson(modelg1)
 # # dev.off()
 # # 
 # 
-##############
-###bolt.bin###
+
+####bolt.bin####
 modeldata<-frend[!is.na(frend$bolt.bin),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
 
 #check pop sig only
 #PC1
@@ -867,6 +888,14 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(1.554,1)
+
+modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
+anova(modelint, model1)
+
+model1
+
+CI.LS.binomial(modelint)
+
 
 #PC2
 model1<-lmer(bolt.bin  ~ Origin * PC2 +(1|Pop/Mom), family=binomial,data=modeldata)
@@ -938,8 +967,8 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(3.0479,1)
 
-################
-###end.bin###
+
+####end.bin####
 modeldata<-frend[!is.na(frend$end.bin),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1303,8 +1332,8 @@ qplot(data=moddata,Latitude, popend.bin, color = Origin,
       ylab="Population mean end.bin", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
 
-#######
-########sla.log
+
+########sla.log####
 modeldata<-frend[!is.na(frend$sla.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
