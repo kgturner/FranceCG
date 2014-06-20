@@ -14,7 +14,7 @@ library(plyr)
 
 #for multiplot function, see bottom
 
-#crown.log and RoseAh.log
+#####crown.log and RoseAh.log####
 grdat_cr <- FrdatSK[, c(1:7,53:55, 48,45)]
 levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="inv"] <- "Invasive C. diffusa"
 levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="nat"] <- "Native C. diffusa"
