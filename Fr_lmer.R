@@ -197,6 +197,9 @@ CGtrait_sigaov_func_Fr(frPLR.trt_int, selectaov=1:6)
 boltLR.trt_int
 
 ####Crown.log and RoseAh.log only####
+# necessary? to get rosette area in m2
+# fine as is for modeling, but for reporting means, multiply by 100
+
 #PC1
 frGLR.PC1_cr <- lapply(names(subset(FrdatSK, Origin%in%c("inv", "nat")))[c(45,48)],function(n) CGtrait.LR_snglcov_int(n,subset(FrdatSK, Origin%in%c("inv", "nat")), covariate="PC1"))
 
@@ -937,6 +940,10 @@ popAov
 
 modelint <- lmer(Crown.log ~ Origin +  PC1+ (1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelint, model1)
+
+model1
+modelg <- glm(Crown.log ~ Origin*PC1, family=gaussian,data=modeldata)
+summary(modelg)
 
 CI.LS.gaussian.log(modelint)
 
@@ -1738,6 +1745,11 @@ modelT <- lmer(RoseAh.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modelda
 trtAov <- anova(model2, modelT)
 trtAov
 
+model2
+modelg <- glm(RoseAh.log ~ Origin*PC1+Trt, family=gaussian,data=modeldata)
+summary(modelg)
+
+
 #for lsmeans, control only: 
 modeldata <- droplevels(subset(FrdatSK, Origin%in%c("inv", "nat")&Trt%in%"control"))
 modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
@@ -1757,7 +1769,6 @@ summary(modeldata$Origin)
 summary(modeldata$Pop)
 modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
 CI.LS.gaussian.log(modelint)
-
 
 # 
 #PC2

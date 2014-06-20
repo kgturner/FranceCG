@@ -10,8 +10,8 @@ library(plyr)
 #read
 Frdatsk.l<- read.table("FrTraitClimDat_SK_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
-############
-###plots
+
+####plots####
 qplot(data=Frdatsk.l, m.date, lfl, color=Origin)+geom_line(group=Origin)
 ggplot(Frdatsk.l,aes(m.date, lfl, color=Origin))+
   geom_point()+xlab("date")+ geom_smooth(method=glm, se=FALSE)+
@@ -128,8 +128,29 @@ mdateAov
 modelO
 summary(modelO)
 
+#lsmeans, ctrl only
+modeldata <- droplevels(subset(Frdatsk.l, Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$lfc),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(lfc  ~ Origin +PC1 + m.date+(1|Pop), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
+#lsmeans, dr only
+modeldata <- droplevels(subset(Frdatsk.l, Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$lfc),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modelint<-lmer(lfc  ~ Origin +PC1 + m.date+(1|Pop), family=poisson,data=modeldata)
+CI.LS.poisson(modelint)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
+
 #means and CI #needs work
-CI.LS.poisson.mdate(modelcov)
+CI.LS.poisson.mdate(modelint)
 # ls <- as.data.frame(lsmeans(modelcov, ~ Origin +m.date, conf=95))    
 ls2 <- as.data.frame(lsmeans(modelcov, ~ Origin, conf=95))  
 modelmtime <- lmer(lfc  ~ Origin + time +(1|Pop), family=poisson,data=modeldata)

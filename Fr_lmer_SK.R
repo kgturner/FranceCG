@@ -184,6 +184,7 @@ boltLR.Trt_SKint
 
 ################
 #Crown.log and RoseAh.log only
+
 #PC1
 frGLR.PC1_SKcr <- lapply(names(FrdatSK)[c(49,52)],function(n) CGtrait.LR_snglcov_int(n,FrdatSK, covariate="PC1"))#apply func to all gaussian traits
 
@@ -966,6 +967,27 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(4.9208,1)
 
+#for lsmeans, control only: 
+modeldata <- droplevels(subset(FrdatSK, Trt%in%"control"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
+CI.LS.gaussian.log(modelint)
+
+#for lsmeans, dr only: 
+modeldata <- droplevels(subset(FrdatSK, Trt%in%"drought"))
+modeldata<-modeldata[!is.na(modeldata$RoseAh.log),]
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
+CI.LS.gaussian.log(modelint)
+
+
 #PC2
 model1<-lmer(RoseAh.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
 model2<-lmer(RoseAh.log  ~ Origin * PC2 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
@@ -1239,11 +1261,12 @@ ocAov
 #skip uneccessary models, such as those in repeated measures or non-optimal transformations
 #focus on:bolt.bin, Mass.log, Harvest.date, Crown.log
 
-###Crown.log###
+####Crown.log####
 modeldata<-FrdatSK[!is.na(FrdatSK$Crown.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
 
 #check pop sig only
 #PC1
@@ -1255,6 +1278,15 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(1.2991,1)
+
+modelint <- lmer(Crown.log ~ Origin +  PC1+ (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, model1)
+
+model1
+# modelg <- glm(Crown.log ~ Origin*PC1, family=gaussian,data=modeldata)
+# summary(modelg)
+
+CI.LS.gaussian.log(modelint)
 
 #PC2
 model1<-lmer(Crown.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)

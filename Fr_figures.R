@@ -399,18 +399,31 @@ pLfc <- ggplot(grdat_l,aes(PC1, lfc,color=Origin))+geom_point(position=position_
 pLfc
 
 ####lfc int pop means####
+#time goes right
 pLfc.2 <- ggplot(grd_l2,aes(PC1, poplfc,color=Origin))+geom_point()+ 
   facet_grid(Trt ~ time,scales="free_y")+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Population mean leaf number")+ 
-  theme_bw() +
-  theme(legend.justification=c(0,1), legend.position=c(0,1),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+  theme_bw() #+
+#   theme(legend.justification=c(0,0), legend.position=c(0,0),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
 pLfc.2
 # position=position_jitter(width=1,height=.5)
 # scales="free", space="free"
+
+# #time goes down
+# pLfc.2 <- ggplot(grd_l2,aes(PC1, poplfc,color=Origin))+geom_point()+ 
+#   facet_grid(time ~ Trt,scales="free_y")+
+#   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
+#   #coord_cartesian(ylim = c(0, 1.02)) +
+#   xlab("PC1")+ylab("Population mean leaf number")+ 
+#   theme_bw() #+
+# #   theme(legend.justification=c(0,0), legend.position=c(0,0),
+# #         legend.title = element_text(size=14, face="bold"),
+# #         legend.text = element_text(size = 13))
+# pLfc.2
 
 ####make sngl figs####
 png("FrCrown_popmean.png",width=800, height = 600, pointsize = 16)

@@ -138,8 +138,7 @@ anova(modelg1, modelg, test="LRT")
 modelg4<- glm(lfc ~ Origin*PC2, family=poisson,data=modeldata)
 anova(modelg4,modelg, test="LRT")
 
-modelg1
-summary(modelg1)
+summary(modelg)
 
 #means and CI #needs work #means across mean cov
 CI.LS.poisson.mdate(modelg1)
@@ -212,6 +211,10 @@ popAov
 
 modelint<-lmer(Mass.log  ~ Origin +PC2  +(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelint, model1)
+
+model1
+modelg <- glm(Mass.log~Origin*PC2, family=gaussian, data=modeldata)
+summary(modelg)
 CI.LS.gaussian.log(modelint)
 
 # qplot(data=modeldata,PC2, Mass.log, color = Origin)+geom_point(position="jitter")
