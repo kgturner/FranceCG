@@ -173,7 +173,7 @@ Mf.l <- reshape(Mf, idvar="Barcode", direction="long",
                      varying=list(m.date=c(38,39,40), lfl=c(16,26,19), lfw=c(17,27,20), lfc=c(15,25,18)),
                      v.names=c("m.date","lfl", "lfw","lfc"))
 str(Mf.l)
-Mf.l <- Mf.l[,c(1:14,18,24,29:35,38,40:46)]
+Mf.l <- Mf.l[,c(1:15,18,24,29:35,38,40:46)]
 
 #write
 write.table(Mf.l, file="Fr_Mf_data_long.txt",sep="\t", quote=F)

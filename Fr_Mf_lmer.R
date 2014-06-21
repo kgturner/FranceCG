@@ -9,7 +9,7 @@ library(lsmeans)
 library(ggplot2)
 
 # #necessary...?
-# library(AER)
+library(AER)
 # dispersiontest(modelg1)
 
 #read
@@ -24,7 +24,7 @@ Mf.l <- read.table("Fr_Mf_data_long.txt", header=T, sep="\t",quote='"', row.name
 # # CGtrait.models_snglcov_int_mdate(trait="lfc", df=Mf.l, covariate="PC1", family=poisson)
 
 modeldata<-Mf.l[!is.na(Mf.l$lfc),]
-# modeldata <- subset(modeldata, Trt%in%"control")
+modeldata <- subset(modeldata, Trt%in%"control")
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
@@ -98,11 +98,13 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata$PopMom <- as.factor(paste0(modeldata$Pop,"_",modeldata$Mom))
 xtabs(lfc~ m.date+PopMom, data=modeldata)
 count(modeldata, vars=c("Pop","Mom", "m.date"))
-summary(glm(lfc  ~ Origin * PC1 +m.date, family=poisson, data=modeldata))
-# modeldata$PC2.1 <- modeldata$PC2/100
+count(modeldata, vars=c("PopMom", "m.date"))
+count(modeldata, vars=c("Pop", "m.date"))
+# summary(glm(lfc  ~ Origin * PC1 +m.date, family=poisson, data=modeldata))
+modeldata$PC2.1 <- modeldata$PC2/1000
 # modeldata <- subset(modeldata, PopMom!=c("RU008_17L","SAND_2","BG001_16N"))
 
-model1<-lmer(lfc  ~ Origin * PC2 + m.date+(1|Pop/Mom), family=poisson,data=modeldata)
+model1<-lmer(lfc  ~ Origin * PC2.1 + m.date+(1|Pop/Mom), family=poisson,data=modeldata)
 model2<-lmer(lfc  ~ Origin * PC2.1 + m.date+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
 model3<-lmer(lfc  ~ Origin * PC2 + m.date+(1|blank), family=poisson,data=modeldata) # Test population effect
 # # momAov <- anova(model2,model1) # mom is sig!
@@ -154,13 +156,15 @@ summary(modelg)
 CI.LS.poisson.mdate(modelg1)
 
 #overdispersion
-deviance(modelg) 
-summary(modelg)$dispersion 
-dfr <- df.residual(modelg)
-deviance(modelg)/dfr 
-d_2 <- sum(residuals(modelg,"pearson")^2) 
+deviance(modelgQ) 
+summary(modelgQ)$dispersion 
+dfr <- df.residual(modelgQ)
+deviance(modelgQ)/dfr 
+d_2 <- sum(residuals(modelgQ,"pearson")^2) 
 (disp2 <- d_2/dfr)  
 pchisq(d_2,df=dfr,lower.tail=FALSE) 
+
+modelgQ <- glm(lfc ~ Origin*PC2+m.date, family=quasipoisson,data=modeldata)
 
 # interaction.plot(response = modeldata$lfc, x.factor = modeldata$PC2, trace.factor = modeldata$Origin)
 # plot(modeldata$PC2, modeldata$Origin)
