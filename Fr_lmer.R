@@ -929,19 +929,22 @@ summary(modeldata$Pop)
 
 #check pop sig only
 #PC1
-model1<-lmer(Crown.log  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(Crown.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Crown.log  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+model1<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.2991,1)
+1-pchisq(1.2957,1)
+
+modelT <- lmer(Crown.log  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelT, model1)
 
 modelint <- lmer(Crown.log ~ Origin +  PC1+ (1|Pop/Mom), family=gaussian,data=modeldata)
-anova(modelint, model1)
+anova(modelint, modelT)
 
-model1
+modelT
 modelg <- glm(Crown.log ~ Origin*PC1, family=gaussian,data=modeldata)
 summary(modelg)
 
@@ -1737,13 +1740,16 @@ momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
 1-pchisq(6.1418,1)
-modelint<-lmer(RoseAh.log  ~ Origin +PC1 +Trt +(1|Pop), family=gaussian,data=modeldata)
-intAov <- anova(model2, modelint)
-intAov
 
 modelT <- lmer(RoseAh.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata)
 trtAov <- anova(model2, modelT)
 trtAov
+
+modelint<-lmer(RoseAh.log  ~ Origin +PC1 +Trt +(1|Pop), family=gaussian,data=modeldata)
+intAov <- anova(model2, modelint)
+intAov
+
+
 
 model2
 modelg <- glm(RoseAh.log ~ Origin*PC1+Trt, family=gaussian,data=modeldata)

@@ -228,17 +228,27 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 
 # check pop sig: all
 #pc1
-model1<-lmer(Bolt.date  ~ Origin * PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(Bolt.date  ~ Origin * PC1 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Bolt.date  ~ Origin * PC1 +(1|blank), family=poisson,data=modeldata) # Test population effect
+model1<-lmer(Bolt.date  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(Bolt.date  ~ Origin * PC1 +Trt+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Bolt.date  ~ Origin * PC1 +Trt+(1|blank), family=poisson,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.1616,1)
+1-pchisq(0.008,1)
+
+modelT <- lmer(Bolt.date  ~ Origin * PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
+anova(modelT, model1)
 
 modelint<-lmer(Bolt.date  ~ Origin +PC1  +(1|Pop/Mom), family=poisson,data=modeldata)
-anova(modelint, model1)
+anova(modelint, modelT)
+
+modelcov <- lmer(Bolt.date  ~ Origin  +(1|Pop/Mom), family=poisson,data=modeldata)
+anova(modelcov, modelint)
+
+modeloc <- lmer(Bolt.date  ~ PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
+anova(modeloc, modelint)
+
 CI.LS.poisson(modelint)
 
 qplot(data=modeldata,PC1, Bolt.date, color = Origin)+geom_point(position="jitter")
@@ -351,17 +361,20 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 
 #full models
 #pc1
-model1<-lmer(Yellow  ~ Origin * PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(Yellow  ~ Origin * PC1 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Yellow  ~ Origin * PC1 +(1|blank), family=poisson,data=modeldata) # Test population effect
+model1<-lmer(Yellow  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=poisson,data=modeldata)
+model2<-lmer(Yellow  ~ Origin * PC1 +Trt+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Yellow  ~ Origin * PC1 +Trt+(1|blank), family=poisson,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(21.955,1)
+1-pchisq(22.405,1)
+
+modelT <- lmer(Yellow  ~ Origin * PC1 +(1|Pop), family=poisson,data=modeldata)
+anova(modelT, model2)
 
 modelint<-lmer(Yellow  ~ Origin +PC1 +(1|Pop), family=poisson,data=modeldata)
-intAov <- anova(model2, modelint)
+intAov <- anova(modelT, modelint)
 intAov
 
 modelcov <- lmer(Yellow  ~ Origin +(1|Pop), family=poisson,data=modeldata)
@@ -588,19 +601,19 @@ summary(modeldata$Pop)
 
 #check pop sig only
 #PC1
-model1<-lmer(Mass.log  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(Mass.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Mass.log  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+model1<-lmer(Mass.log  ~ Origin * PC1 + Trt+ (1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(Mass.log  ~ Origin * PC1 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Mass.log  ~ Origin * PC1 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.2919,1)
+1-pchisq(1.2993,1)
 
-modelint<-lmer(Mass.log  ~ Origin +PC1  +(1|Pop/Mom), family=gaussian,data=modeldata)
-anova(modelint, model1)
+modelT <- lmer(Mass.log  ~ Origin * PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelT, model1)
 
-model1
+modelT
 modelg <- glm(Mass.log ~ Origin*PC1, family=gaussian,data=modeldata)
 summary(modelg)
 
@@ -921,19 +934,22 @@ summary(modeldata$Pop)
 
 #check pop sig only
 #PC1
-model1<-lmer(bolt.bin  ~ Origin * PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
-model2<-lmer(bolt.bin  ~ Origin * PC1 +(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(bolt.bin  ~ Origin * PC1 +(1|blank), family=binomial,data=modeldata) # Test population effect
+model1<-lmer(bolt.bin  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=binomial,data=modeldata)
+model2<-lmer(bolt.bin  ~ Origin * PC1 +Trt+(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(bolt.bin  ~ Origin * PC1 +Trt+(1|blank), family=binomial,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(2.87,1)
+1-pchisq(2.9127 ,1)
+
+modelT <- lmer(bolt.bin  ~ Origin * PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
+anova(modelT, model1)
 
 modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelint, model1)
+anova(modelint, modelT)
 
-model1
+modelT
 
 CI.LS.binomial(modelint)
 
@@ -1043,9 +1059,9 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 
 #all full models
 #PC1
-model1<-lmer(end.bin  ~ Origin * PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
-model2<-lmer(end.bin  ~ Origin * PC1 +(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(end.bin  ~ Origin * PC1 +(1|blank), family=binomial,data=modeldata) # Test population effect
+model1<-lmer(end.bin  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=binomial,data=modeldata)
+model2<-lmer(end.bin  ~ Origin * PC1 +Trt+(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(end.bin  ~ Origin * PC1 +Trt+(1|blank), family=binomial,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
@@ -1069,10 +1085,14 @@ popAov
 # ocAov
 
 #try glm
-modelg <- glm(end.bin ~ Origin*PC1, family=binomial,data=modeldata)
+modelg <- glm(end.bin ~ Origin*PC1+Trt, family=binomial,data=modeldata)
+modelgT <- glm(end.bin ~ Origin*PC1, family=binomial,data=modeldata)
+anova(modelgT, modelg, test="LRT")#put in pval to get chisq value HOWEVER, for non-gaussian models, Deviance = chisq
+qchisq(0.4327, 1, lower=FALSE)
+
 modelg1 <- glm(end.bin ~ Origin+PC1, family=binomial,data=modeldata)
-anova(modelg1, modelg, test="LRT") 
-# qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+anova(modelg1, modelgT, test="LRT") 
+# qchisq(0.09753,1,lower=FALSE)#put in pval to get chisq value
 
 modelg3<- glm(end.bin ~ Origin, family=binomial,data=modeldata)
 anova(modelg3,modelg1, test="LRT")
@@ -1280,28 +1300,33 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 
 #full models
 #PC1
-model1<-lmer(sla.log  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(sla.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(sla.log  ~ Origin * PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+model1<-lmer(sla.log  ~ Origin * PC1 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+model2<-lmer(sla.log  ~ Origin * PC1 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(sla.log  ~ Origin * PC1 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.2919,1)
+1-pchisq(1.2984,1)
 # 
 #try glm
-modelg <- glm(sla.log ~ Origin*PC1, family=gaussian,data=modeldata)
+modelg <- glm(sla.log ~ Origin*PC1+Trt, family=gaussian,data=modeldata)
+modelgT <- glm(sla.log ~ Origin*PC1, family=gaussian,data=modeldata)
+anova(modelgT, modelg, test="LRT")
+qchisq(0.9338,1,lower=FALSE)#put in pval to get chisq value
+
 modelg1 <- glm(sla.log ~ Origin+PC1, family=gaussian,data=modeldata)
-anova(modelg1, modelg, test="LRT") 
-# qchisq(0.0964,1,lower=FALSE)#put in pval to get chisq value
+anova(modelg1, modelgT, test="LRT") 
+qchisq(0.3571,1,lower=FALSE)#put in pval to get chisq value
 
 modelg3<- glm(sla.log ~ Origin, family=gaussian,data=modeldata)
 anova(modelg3,modelg1, test="LRT")
-# qchisq(0.9672,1,lower=FALSE)#chisq value
+qchisq(0.1803,1,lower=FALSE)#chisq value
+
 anova(modelg3, test="LRT")
 # modelg2<- glm(sla.log ~ PC1, family=gaussian,data=modeldata)
 # anova(modelg2,modelg1, test="LRT")
-# qchisq(5.0702,1,lower=FALSE)#chisq value
+qchisq(0.2667,1,lower=FALSE)#chisq value
 # # 
 #PC2
 model1<-lmer(sla.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1765,14 +1790,16 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(4.8901,1)
-modelint<-lmer(Harvest.date  ~ Origin +PC1 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)
-intAov <- anova(model1, modelint)
-intAov
+1-pchisq(272.19,1)
+
 # 
 modelT <- lmer(Harvest.date  ~ Origin * PC1 +(1|Pop/Mom), family=poisson,data=modeldata)
-trtAov <- anova(model1, modelT)
+trtAov <- anova(modelT, model1)
 trtAov
+
+modelint<-lmer(Harvest.date  ~ Origin +PC1 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)
+intAov <- anova(modelint, model1)
+intAov
 
 model1
 # 
@@ -1935,7 +1962,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(6.419,1)
+1-pchisq(6.56,1)
 
 modelint<-lmer(Wilt  ~ Origin +PC1 +Trt +(1|Pop), family=poisson,data=modeldata)
 intAov <- anova(model2, modelint)
@@ -2109,7 +2136,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(3.3536,1)
+1-pchisq(3.5618,1)
 
 modelint<-lmer(Death.date  ~ Origin +PC1 +Trt +(1|Pop/Mom), family=poisson,data=modeldata)
 intAov <- anova(model1, modelint)
