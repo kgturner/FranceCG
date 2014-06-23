@@ -28,6 +28,9 @@ modeldata <- subset(modeldata, Trt%in%"control")
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 # #pc1
 # modeldata$PC1.1 <- modeldata$PC1/10000
 # model1<-lmer(lfc  ~ Origin + PC1.1 +m.date+(1|Pop/Mom), family=poisson,data=modeldata)
@@ -95,76 +98,84 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 # dev.off()
 
 #pc2
-modeldata$PopMom <- as.factor(paste0(modeldata$Pop,"_",modeldata$Mom))
-xtabs(lfc~ m.date+PopMom, data=modeldata)
-count(modeldata, vars=c("Pop","Mom", "m.date"))
-count(modeldata, vars=c("PopMom", "m.date"))
-count(modeldata, vars=c("Pop", "m.date"))
-# summary(glm(lfc  ~ Origin * PC1 +m.date, family=poisson, data=modeldata))
-modeldata$PC2.1 <- modeldata$PC2/1000
-# modeldata <- subset(modeldata, PopMom!=c("RU008_17L","SAND_2","BG001_16N"))
+# modeldata$PopMom <- as.factor(paste0(modeldata$Pop,"_",modeldata$Mom))
+# xtabs(lfc~ m.date+PopMom, data=modeldata)
+# count(modeldata, vars=c("Pop","Mom", "m.date"))
+# count(modeldata, vars=c("PopMom", "m.date"))
+# count(modeldata, vars=c("Pop", "m.date"))
+# # modeldata <- subset(modeldata, subset=PopMom!="BG001_16N")
+# # summary(glm(lfc  ~ Origin * PC1 +m.date, family=poisson, data=modeldata))
+# modeldata$PC2.1 <- modeldata$PC2/100
+# modeldata$PC2x <- (modeldata$PC2-mean(modeldata$PC2))/sd(modeldata$PC2) #to standarize PC2
+modeldata$lfc.sqrt <- sqrt(modeldata$lfc) #to avoid false convergence, sqrt transform lfc and use gaussian distribution
+summary(modeldata$)
 
-model1<-lmer(lfc  ~ Origin * PC2.1 + m.date+(1|Pop/Mom), family=poisson,data=modeldata)
-model2<-lmer(lfc  ~ Origin * PC2.1 + m.date+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(lfc  ~ Origin * PC2 + m.date+(1|blank), family=poisson,data=modeldata) # Test population effect
-# # momAov <- anova(model2,model1) # mom is sig!
-# popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
-# popAov
+model1<-lmer(lfc.sqrt  ~ Origin * PC2 + m.date+(1|Pop/Mom), family=gaussian,data=modeldata) #, verbose=TRUE
+model2<-lmer(lfc.sqrt  ~ Origin * PC2 + m.date+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(lfc.sqrt  ~ Origin * PC2 + m.date+(1|blank), family=gaussian,data=modeldata) # Test population effect
+momAov <- anova(model2,model1) # mom is sig!
+popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+momAov
+popAov
 # # 1-pchisq(558.65,1)
 # # qchisq(558.65,1,lower=FALSE)#chisq value
 # 
-# modelint<-lmer(lfc  ~ Origin +PC2 + m.date+(1|Pop), family=poisson,data=modeldata)
-# #false convergence??
-# intAov <- anova(model2, modelint)
-# intAov
-# 
-# modelcov <- lmer(lfc  ~ Origin + m.date+(1|Pop), family=poisson,data=modeldata)
+modelint<-lmer(lfc.sqrt  ~ Origin +PC2 + m.date+(1|Pop), family=gaussian,data=modeldata)
+#false convergence??
+intAov <- anova(model2, modelint)
+intAov
+
+# modelcov <- lmer(lfc.sqrt  ~ Origin + m.date+(1|Pop), family=gaussian,data=modeldata)
 # covAov <- anova(modelint, modelcov)
 # covAov
 # 
-# modelO<-lmer(lfc ~ m.date+(1|Pop), family=poisson,data=modeldata)
+# modelO<-lmer(lfc.sqrt ~ m.date+(1|Pop), family=gaussian,data=modeldata)
 # originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
 # originAov
 # 
-# modelOC <- lmer(lfc  ~ PC2 + m.date+(1|Pop), family=poisson,data=modeldata)
+# modelOC <- lmer(lfc.sqrt  ~ PC2 + m.date+(1|Pop), family=gaussian,data=modeldata)
 # ocAov <- anova(modelint, modelOC)
 # ocAov
 
-# modelmdate<-lmer(lfc ~ Origin * PC2+(1|Pop), family=poisson,data=modeldata)
-# mdateAov <- anova(modelmdate,model2) #test for significance of origin - origin only marginally sig....!
-# mdateAov
+modelmdate<-lmer(lfc.sqrt ~ Origin * PC2+(1|Pop), family=gaussian,data=modeldata)
+mdateAov <- anova(modelmdate,model2) #test for significance of origin - origin only marginally sig....!
+mdateAov
 
-#try glm
-modelg <- glm(lfc ~ Origin*PC2+m.date, family=poisson,data=modeldata)
-modelg1 <- glm(lfc ~ Origin+PC2+m.date, family=poisson,data=modeldata)
-anova(modelg1, modelg, test="LRT") 
-qchisq(4.969e-07,1,lower=FALSE)#chisq value
+model1
+modelgG <- glm(lfc.sqrt ~ Origin*PC2+m.date, family=gaussian,data=modeldata)
+summary(modelgG)
+
+CI.LS.gaussian.sqrt.mdate(modelint)
+
+# #try glm - poisson
+# modelg <- glm(lfc ~ Origin*PC2+m.date, family=poisson,data=modeldata)
+# modelg1 <- glm(lfc ~ Origin+PC2+m.date, family=poisson,data=modeldata)
+# anova(modelg1, modelg, test="LRT") 
+# qchisq(4.969e-07,1,lower=FALSE)#chisq value
+# # 
+# # modelg3<- glm(lfc ~ Origin+m.date, family=poisson,data=modeldata)
+# # anova(modelg3,modelg1, test="LRT")
+# # # qchisq(0.9672,1,lower=FALSE)#chisq value
+# # 
+# # modelg2<- glm(lfc ~ PC2+m.date, family=poisson,data=modeldata)
+# # anova(modelg2,modelg1, test="LRT")
+# # # qchisq(0.5399,1,lower=FALSE)#chisq value
+# modelg4<- glm(lfc ~ Origin*PC2, family=poisson,data=modeldata)
+# anova(modelg4,modelg, test="LRT")
 # 
-# modelg3<- glm(lfc ~ Origin+m.date, family=poisson,data=modeldata)
-# anova(modelg3,modelg1, test="LRT")
-# # qchisq(0.9672,1,lower=FALSE)#chisq value
+# #means and CI #needs work #means across mean cov
+# CI.LS.poisson.mdate(modelg1)
 # 
-# modelg2<- glm(lfc ~ PC2+m.date, family=poisson,data=modeldata)
-# anova(modelg2,modelg1, test="LRT")
-# # qchisq(0.5399,1,lower=FALSE)#chisq value
-modelg4<- glm(lfc ~ Origin*PC2, family=poisson,data=modeldata)
-anova(modelg4,modelg, test="LRT")
-
-summary(modelg)
-
-#means and CI #needs work #means across mean cov
-CI.LS.poisson.mdate(modelg1)
-
-#overdispersion
-deviance(modelgQ) 
-summary(modelgQ)$dispersion 
-dfr <- df.residual(modelgQ)
-deviance(modelgQ)/dfr 
-d_2 <- sum(residuals(modelgQ,"pearson")^2) 
-(disp2 <- d_2/dfr)  
-pchisq(d_2,df=dfr,lower.tail=FALSE) 
-
-modelgQ <- glm(lfc ~ Origin*PC2+m.date, family=quasipoisson,data=modeldata)
+# #overdispersion
+# deviance(modelgQ) 
+# summary(modelgQ)$dispersion 
+# dfr <- df.residual(modelgQ)
+# deviance(modelgQ)/dfr 
+# d_2 <- sum(residuals(modelgQ,"pearson")^2) 
+# (disp2 <- d_2/dfr)  
+# pchisq(d_2,df=dfr,lower.tail=FALSE) 
+# 
+# modelgQ <- glm(lfc ~ Origin*PC2+m.date, family=quasipoisson,data=modeldata)
 
 # interaction.plot(response = modeldata$lfc, x.factor = modeldata$PC2, trace.factor = modeldata$Origin)
 # plot(modeldata$PC2, modeldata$Origin)

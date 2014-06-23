@@ -1101,12 +1101,22 @@ anova(modelg3, test="LRT")
 # modelg2<- glm(end.bin ~ PC1, family=binomial,data=modeldata)
 # anova(modelg2,modelg1, test="LRT")
 # # qchisq(5.0702,1,lower=FALSE)#chisq value
-# 
-# # 
-# # # modelg
-# # # summary(modelg)
-# # # 
-# CI.LS.binomial(modelg1)
+
+
+modelg
+summary(modelg)
+
+CI.LS.binomial(modelg1)
+
+#overdispersion
+deviance(modelg) 
+summary(modelg)$dispersion 
+dfr <- df.residual(modelg)
+deviance(modelg)/dfr 
+d_2 <- sum(residuals(modelg,"pearson")^2) 
+(disp2 <- d_2/dfr)  
+pchisq(d_2,df=dfr,lower.tail=FALSE) 
+
 # # # 
 # # interaction.plot(response = modeldata$end.bin, x.factor = modeldata$PC1, trace.factor = modeldata$Origin)
 # # plot(modeldata$PC1, modeldata$Origin)

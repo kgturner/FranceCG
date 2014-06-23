@@ -266,6 +266,50 @@ CI.LS.poisson.mdate <- function(model, conf=95){
   return(df)
 }
 
+CI.LS.gaussian.sqrt.mdate <- function(model, conf=95){
+  library(lsmeans)
+  ls <- as.data.frame(lsmeans(model, ~ Origin+m.date, conf=conf))      
+  #effect size, poisson
+  intI<-ls[1,3]#inv mean
+  BN<-ls[2,3]#Originnat estimate from model summary
+  BS<-ls[3,3]#OriginSK estimate from model summary
+  
+  pI<-intI^2
+  pN<-BN^2
+  pS<-BS^2
+  
+  #inv upper from coeftbl confidence int.
+  uI<-(ls[1,7])^2
+  #inv lower from coeftbl conf int
+  lI<-(ls[1,6])^2
+  #nat upper from coeftbl conf int
+  uN<-(ls[2,7])^2
+  #nat lower from coeftbl conf int
+  lN<-(ls[2,6])^2
+  #Sk upper from coeftbl conf int
+  uS<-(ls[3,7])^2
+  #sk lower from coeftbl conf int
+  lS<-(ls[3,6])^2
+  
+  
+  df <- data.frame(Origin=c("Invasive","Native","SK"), mean=c(pI,pN,pS), 
+                   uCL=c(uI,uN,uS),lCL=c(lI,lN,lS) )
+  #   print("Generation 0")
+  #   print(paste("Native mean",pN0))
+  #   print(paste("Native CI", lN0, "-",uN0))
+  #   print(paste("Invasive mean",pI0))
+  #   print(paste("Invasive CI", lI0, "-", uI0))
+  #   
+  #   print("Generation 1")
+  #   print(paste("Native mean",pN1))
+  #   print(paste("Native CI", lN1, "-",uN1))
+  #   print(paste("Invasive mean",pI1))
+  #   print(paste("Invasive CI", lI1, "-", uI1))
+  
+  return(df)
+}
+
+
 # #############Include second term, binomial########
 # # ##binomial lsmeans##
 # # CI.LS.binomial <- function(model, conf=95){
