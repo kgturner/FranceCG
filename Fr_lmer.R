@@ -949,6 +949,7 @@ modelg <- glm(Crown.log ~ Origin*PC1, family=gaussian,data=modeldata)
 summary(modelg)
 
 CI.LS.gaussian.log(modelint)
+CI.LS.gaussian.log(model1)
 
 qplot(data=modeldata,PC1, Crown.log, color = Origin)+geom_point(position="jitter")
 

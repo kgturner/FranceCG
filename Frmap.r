@@ -53,16 +53,22 @@ colourPalette <- c("#F8766D","#00BA38", "palegreen","lightgray") #inv, nat, pres
 
 #points
 pop <- read.table("Popcoord.txt", header=TRUE, stringsAsFactor=FALSE)
-pop <- merge(pop, unique(Frdes[,c(5,7,12)], all.y=TRUE))
+frend<- read.table("FrEnd.txt", header=T, sep="\t",quote='"', row.names=1)
+
+pop <- merge(pop, unique(frend[,c(1,7)], all.y=TRUE))
 #add Montpellier lat:  43.638814°, long:   3.864083°
+#and add BG3  Latitude Longitude Pop
+#         64  42.1153   23.3203 BG3
 pop$Origin <- as.character(pop$Origin)
-cnrs <- c("CNRS",43.638814,3.864083, "CNRS", "000000")
-pop <- rbind(pop, cnrs) #blurgh, factors didn't transfer...
+cnrs <- c("CNRS",43.638814,3.864083, "CNRS")
+BG3 <- c("BG3", 42.1153, 23.3203, "sk")
+pop <- rbind(pop, cnrs, BG3) #blurgh, factors didn't transfer...
 pop$Pop <- as.factor(pop$Pop)
 pop$Origin <- as.factor(pop$Origin)
 pop$Latitude <- as.numeric(pop$Latitude)
 pop$Longitude <- as.numeric(pop$Longitude)
-pop$pch <- 19
+
+pop$pch <- 1 #for invasives
 pop[pop$Origin %in% "nat",]$pch <- 17
 pop[pop$Origin %in% "sk",]$pch <- 0
 pop[pop$Origin %in% "CNRS",]$pch <- 8
@@ -105,7 +111,7 @@ llgridlines(sPDF, easts=c(-90,-180,0,90,180), norths=seq(0,90,by=15),
 text(sPointsDFmark, labels = sPointsDFmark$name, cex=1) #pch2 for triangles
 
 legend("topright", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe", "Experimental field"), 
-       pch=c(19,17,0,8),  bg="white", title = "Sampled populations", cex=1.2)
+       pch=c(1,17,0,8),  bg="white", title = "Sampled populations", cex=1.2)
 legend("bottomleft", c("Invasive", "Native","Naturalized"), fill=colourPalette,
        title="Ranges of C. diffusa", bg="white", cex=1.2)
 box(lty="solid", col = "black")
