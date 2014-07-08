@@ -929,7 +929,9 @@ summary(modeldata$Pop)
 
 #check pop sig only
 #PC1
+modelOr <- lmer(Crown.log  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
+anova(model1, modelOr)
 model2<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
 model3<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
@@ -1044,7 +1046,9 @@ popAov
 1-pchisq(3.0526,1)
 
 #trt
+modelOr <- lmer(Crown.log  ~ Origin * Trt +(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(Crown.log  ~ Origin * Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+anova(model1, modelOr)
 model2<-lmer(Crown.log  ~ Origin * Trt +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
 model3<-lmer(Crown.log  ~ Origin * Trt +(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
@@ -1053,7 +1057,7 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(44.874,1)
 
-###Mass.log###
+####Mass.log####
 modeldata<-frdat[!is.na(frdat$Mass.log),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1140,7 +1144,7 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 # 1-pchisq(61.831,1)
 # 
-#####Harvest.date###
+#####Harvest.date####
 modeldata<-frdat[!is.na(frdat$Harvest.date),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1280,7 +1284,7 @@ CI.LS.poisson(modelg1)
 # # dev.off()
 # # 
  
-###bolt.bin###
+####bolt.bin####
 modeldata<-frdat[!is.na(frdat$bolt.bin),]
 
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -1733,7 +1737,9 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
 #PC1
+modelOr <- lmer(RoseAh.log  ~ Origin * PC1 +Trt +(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(RoseAh.log  ~ Origin * PC1 +Trt +(1|Pop/Mom), family=gaussian,data=modeldata)
+anova(model1, modelOr)
 model2<-lmer(RoseAh.log  ~ Origin * PC1 +Trt +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
 model3<-lmer(RoseAh.log  ~ Origin * PC1 +Trt +(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!

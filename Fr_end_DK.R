@@ -613,12 +613,16 @@ popAov
 modelT <- lmer(Mass.log  ~ Origin * PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelT, model1)
 
+modelint<- lmer(Mass.log  ~ Origin + PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
+
 modelT
 modelg <- glm(Mass.log ~ Origin*PC1, family=gaussian,data=modeldata)
 summary(modelg)
 
 
 CI.LS.gaussian.log(modelint)
+modelT.rg1 = ref.grid(modelT)
+
 
 qplot(data=modeldata,PC1, Mass.log, color = Origin)+geom_point(position="jitter")
 
