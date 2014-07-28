@@ -68,7 +68,11 @@ CGtrait_sigaov_func_Fr(frGLR.wide_DKdr, selectaov=1:4, cutoff=0.05)
 
 CGtrait_sigaov_func_Fr(frGLR.long_DKdr, selectaov=1:4, cutoff=0.05)
 frPLR.long_DKdr
-######models w/Ctrlpopmass and PC1####
+
+######models w/Ctrlpopmass and PC1 drought only####
+##traits which have both 
+#1) sig origin or origin*pc1 term in pc1 models
+#2) sig trt in either pc1 models or origin*trt models
 
 ###Harvest.date####
 modeldata<-frend[!is.na(frend$Harvest.date),]
@@ -77,7 +81,9 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
+modelOr <- lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 + (Origin|Pop/Mom), family=poisson,data=modeldata)
 model1<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=poisson,data=modeldata)
+anova(model1, modelOr)
 model2<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
 model3<-lmer(Harvest.date ~ Origin * CtrlPopMass.log+ PC1 +(1|blank), family=poisson,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
@@ -135,7 +141,73 @@ anova(modelg3, test="LRT")
 
 CI.LS.poisson(modelg3, conf=95)
 
+###RoseAh.log####################
+modeldata<-FrdatSK[!is.na(FrdatSK$RoseAh.log),]
+modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
 
+modelOr <- lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 + (Origin|Pop/Mom), family=gaussian,data=modeldata)
+model1<-lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(model1, modelOr)
+model2<-lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
+anova(model2,model1) # mom not sig
+anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+1-pchisq(4.3199,1)
+
+modelint <- lmer(RoseAh.log ~ Origin + CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, model1)
+
+# modelcov <- lmer(RoseAh.log ~ Origin + CtrlPopMass.log + (1|Pop/Mom), family=gaussian,data=modeldata)
+# anova(modelcov, modelint)
+# 
+# modelctrl<- lmer(RoseAh.log ~ Origin  + (1|Pop/Mom), family=gaussian,data=modeldata)
+# anova(modelctrl, modelcov)
+# 
+# modelO<- lmer(RoseAh.log ~ CtrlPopMass.log + (1|Pop/Mom), family=gaussian,data=modeldata)
+# anova(modelO, modelcov)
+
+qplot(data=modeldata,CtrlPopMass.log, RoseAh.log, color = Origin)+geom_point(position="jitter")
+moddata <- ddply(modeldata, .(Pop, Origin, Latitude, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popRoseAh.log=mean(RoseAh.log))
+
+# png("STdr_deathtradeoff_color.png",width=800, height = 600, pointsize = 16)
+qplot(data=moddata,CtrlPopMass.log, popRoseAh.log, color = Origin, 
+      xlab="Population mean log shoot mass in control treatment", 
+      ylab="Population mean log shoot mass in drought treatment", main="Performance in drought vs. control treatments") +
+  geom_smooth(method=glm, se=TRUE)
+# qplot(data=moddata,CtrlPopShoot, popBolt, color = Origin, 
+#       xlab="Population mean shoot mass in control treatment", 
+#       ylab="Population mean days to Bolt in drought treatment", main="Performance in drought vs. control treatments") +geom_smooth(method=glm, se=TRUE)
+
+
+# dev.off()
+
+####death.date####
+modeldata<-frend[!is.na(frend$Death.date),]
+modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
+modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
+modeldata$Mom<-as.factor(modeldata$Mom)
+modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
+
+modelOr <- lmer(Death.date ~ Origin * CtrlPopMass.log+ PC1 + (Origin|Pop/Mom), family=poisson,data=modeldata)
+model1<-lmer(Death.date ~ Origin * CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=poisson,data=modeldata)
+anova(model1, modelOr)
+model2<-lmer(Death.date ~ Origin * CtrlPopMass.log+ PC1 +(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Death.date ~ Origin * CtrlPopMass.log+ PC1 +(1|blank), family=poisson,data=modeldata) # Test population effect
+anova(model2,model1) # mom not sig
+anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
+1-pchisq(2.4076,1)
+
+# modelint <- lmer(Death.date ~ Origin + CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=poisson,data=modeldata)
+# anova(modelint, model1)
+
+modelg <- glm(Death.date ~ Origin * CtrlPopMass.log +PC1, family=poisson,data=modeldata)
+modelg1 <- glm(Death.date ~ Origin + CtrlPopMass.log +PC1, family=poisson,data=modeldata)
+anova(modelg1, modelg, test="LRT")
+
+############other traits.....######################
 ####Wilt####
 modeldata<-frend[!is.na(frend$Wilt),]
 modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
@@ -204,8 +276,6 @@ summary(modelg3)
 anova(modelg3, test="LRT")
 
 CI.LS.poisson(modelg3, conf=95)
-
-
 
 ###Bolt.date####################
 modeldata<-frend[!is.na(frend$Bolt.date),]
@@ -356,47 +426,6 @@ moddata <- ddply(modeldata, .(Pop, Origin, Latitude, CtrlPopMass.log, CtrlPopSho
 
 # png("STdr_deathtradeoff_color.png",width=800, height = 600, pointsize = 16)
 qplot(data=moddata,CtrlPopMass.log, popMass.log, color = Origin, 
-      xlab="Population mean log shoot mass in control treatment", 
-      ylab="Population mean log shoot mass in drought treatment", main="Performance in drought vs. control treatments") +
-  geom_smooth(method=glm, se=TRUE)
-# qplot(data=moddata,CtrlPopShoot, popBolt, color = Origin, 
-#       xlab="Population mean shoot mass in control treatment", 
-#       ylab="Population mean days to Bolt in drought treatment", main="Performance in drought vs. control treatments") +geom_smooth(method=glm, se=TRUE)
-
-
-# dev.off()
-
-###RoseAh.log####################
-modeldata<-FrdatSK[!is.na(FrdatSK$RoseAh.log),]
-modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
-modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
-modeldata$Mom<-as.factor(modeldata$Mom)
-modeldata <- merge(modeldata, ctrlmeans, all.x=TRUE)
-
-model1<-lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
-model2<-lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 +(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(RoseAh.log ~ Origin * CtrlPopMass.log+ PC1 +(1|blank), family=gaussian,data=modeldata) # Test population effect
-anova(model2,model1) # mom not sig
-anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
-1-pchisq(2.4076,1)
-
-modelint <- lmer(RoseAh.log ~ Origin + CtrlPopMass.log+ PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
-anova(modelint, model1)
-
-# modelcov <- lmer(RoseAh.log ~ Origin + CtrlPopMass.log + (1|Pop/Mom), family=gaussian,data=modeldata)
-# anova(modelcov, modelint)
-# 
-# modelctrl<- lmer(RoseAh.log ~ Origin  + (1|Pop/Mom), family=gaussian,data=modeldata)
-# anova(modelctrl, modelcov)
-# 
-# modelO<- lmer(RoseAh.log ~ CtrlPopMass.log + (1|Pop/Mom), family=gaussian,data=modeldata)
-# anova(modelO, modelcov)
-
-qplot(data=modeldata,CtrlPopMass.log, RoseAh.log, color = Origin)+geom_point(position="jitter")
-moddata <- ddply(modeldata, .(Pop, Origin, Latitude, CtrlPopMass.log, CtrlPopShoot), summarize, popCount=length(Pop), popRoseAh.log=mean(RoseAh.log))
-
-# png("STdr_deathtradeoff_color.png",width=800, height = 600, pointsize = 16)
-qplot(data=moddata,CtrlPopMass.log, popRoseAh.log, color = Origin, 
       xlab="Population mean log shoot mass in control treatment", 
       ylab="Population mean log shoot mass in drought treatment", main="Performance in drought vs. control treatments") +
   geom_smooth(method=glm, se=TRUE)
