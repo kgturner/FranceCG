@@ -22,6 +22,9 @@ modeldata<-modeldata[!is.na(modeldata$lfc),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 # modeldata$PopMom <- as.factor(paste0(modeldata$Pop,"_",modeldata$Mom))
 
 #pc1
@@ -151,6 +154,9 @@ modeldata<-subset(Frdatsk.l, !is.na(lfw)&Origin%in%c("inv", "nat"))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 #pc1
 modelOr <- lmer(lfw  ~ Origin * PC1 + Trt+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(lfw  ~ Origin * PC1 + Trt+(m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -185,6 +191,9 @@ originAov <- anova(modelO,modelcov) #test for significance of origin - origin on
 originAov
 
 modelcov
+
+modelg <- glm(lfw~Origin, family=gaussian, data=modeldata)
+summary(modelg)
 
 # # #means and CI #needs work
 # # CI.LS.gaussian.mdate(modelcov)
@@ -267,6 +276,9 @@ modeldata<-subset(Frdatsk.l, !is.na(rd)&Origin%in%c("inv", "nat"))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 #pc1
 modelOr <- lmer(rd  ~ Origin * PC1 + Trt+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(rd  ~ Origin * PC1 + Trt+ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -294,6 +306,9 @@ modelO <- lmer(rd  ~ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata
 anova(modelO, modelcov)
 
 modelcov
+
+modelg <- glm(rd~Origin, family=gaussian, data=modeldata)
+summary(modelg)
 ####rd~origin*trt####
 modelOr <- lmer(rd  ~ Origin * Trt+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(rd  ~ Origin * Trt+ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -331,6 +346,9 @@ modeldata<-subset(Frdatsk.l, !is.na(lfl)&Origin%in%c("inv", "nat"))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 #pc1
 modelOr <- lmer(lfl  ~ Origin * PC1 + Trt+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(lfl  ~ Origin * PC1 + Trt+ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -358,6 +376,9 @@ modelO <- lmer(lfl  ~ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldat
 anova(modelO, modelcov)
 
 modelO
+
+modelg <- glm(lfl~1, family=gaussian, data=modeldata)
+summary(modelg)
 ####lfl~origin*trt####
 modelOr <- lmer(lfl  ~ Origin *Trt+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(lfl  ~ Origin *Trt+ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)

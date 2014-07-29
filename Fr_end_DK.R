@@ -114,6 +114,8 @@ modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 # 
 #PC1
 modelOr <- lmer(Harvest.date  ~ Origin * PC1 +Trt +(Origin|Pop/Mom), family=poisson,data=modeldata)
@@ -186,6 +188,8 @@ modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Wilt),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 # 
 #PC1
 modelOr <- lmer(Wilt  ~ Origin * PC1 +Trt +(Origin|Pop/Mom), family=poisson,data=modeldata)
@@ -263,6 +267,8 @@ modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Death.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 # 
 #PC1
 modelOr <- lmer(Death.date  ~ Origin * PC1 +Trt +(Origin|Pop/Mom), family=poisson,data=modeldata)
@@ -345,6 +351,9 @@ modeldata<-modeldata[!is.na(modeldata$Bolt.date),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 # check pop sig: all
 #pc1
 modelOr <- lmer(Bolt.date  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=poisson,data=modeldata)
@@ -414,6 +423,8 @@ modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Yellow),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 #pc1
 modelOr <- lmer(Yellow  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=poisson,data=modeldata)
