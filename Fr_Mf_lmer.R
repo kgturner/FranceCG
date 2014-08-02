@@ -291,7 +291,7 @@ summary(modeldata$Origin)
 summary(modeldata$Pop)
 
 # check pop sig: all
-#pc1
+#pc2
 modelOr <- lmer(BoltDay.adj  ~ Origin * PC2+(Origin|Pop/Mom), family=poisson,data=modeldata)
 model1<-lmer(BoltDay.adj  ~ Origin * PC2+(1|Pop/Mom), family=poisson,data=modeldata)
 anova(model1, modelOr)
@@ -332,8 +332,10 @@ modeldata <- droplevels(subset(Mf, Trt%in%"control"))
 modeldata<-modeldata[!is.na(modeldata$sla.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
-#PC1
+#PC2
 modelOr <- lmer(sla.log  ~ Origin * PC2 +(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(sla.log  ~ Origin * PC2 +(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
