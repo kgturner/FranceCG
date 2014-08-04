@@ -941,9 +941,11 @@ CI.LS.poisson(modelg1)
 # CGtrait.models_snglcov_int(trait="RoseAh.log", df=frdat, covariate="PC1", family=gaussian)
 
 modeldata<-FrdatSK[!is.na(FrdatSK$RoseAh.log),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
+summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=Rose.AreaH.m2))
 
 #check pop sig only for bio9, lat, PC1, PC2, PC3
 
@@ -1263,10 +1265,11 @@ ocAov
 
 ####Crown.log####
 modeldata<-FrdatSK[!is.na(FrdatSK$Crown.log),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
 summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=CrownDiam.mm)
 
 #check pop sig only
 #PC1

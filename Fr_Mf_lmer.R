@@ -117,6 +117,8 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
+summary(subset(modeldata, Origin=="sk", select=bolt.bin))
+
 #PC2
 modelOr <- lmer(bolt.bin  ~ Origin * PC2+(Origin|Pop/Mom), family=binomial,data=modeldata)
 model1<-lmer(bolt.bin  ~ Origin * PC2+(1|Pop/Mom), family=binomial,data=modeldata)

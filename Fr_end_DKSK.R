@@ -556,9 +556,11 @@ CI.LS.poisson(modelint)
 
 ####Mass.log####
 modeldata<-frend[!is.na(frend$Mass.log),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
+summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=Shoot.mass.gH))
 
 #check pop sig only: all
 #PC1
@@ -651,9 +653,11 @@ popAov
 
 ####Harvest.date####
 modeldata<-frend[!is.na(frend$Harvest.date),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
+summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=Harvest.date))
 
 #check pop sig only: all except bio11, bio9
 #PC1
@@ -873,10 +877,11 @@ CI.LS.poisson(modelg1)
 
 ####bolt.bin####
 modeldata<-frend[!is.na(frend$bolt.bin),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
 summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=c(bolt.bin, BoltedatH)))
 
 #check pop sig only
 #PC1

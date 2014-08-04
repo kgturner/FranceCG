@@ -533,13 +533,15 @@ qplot(data=moddata,Trt, poplfc, color = Origin,
 
 ##################################
 ####lfw#######
-CGtrait.LR_snglcov_int_time(trait="lfw", df=Frdatsk.l, covariate="PC1", family=gaussian)
-CGtrait.models_snglcov_int_time(trait="lfw", df=Frdatsk.l, covariate="PC1", family=gaussian)
+# CGtrait.LR_snglcov_int_time(trait="lfw", df=Frdatsk.l, covariate="PC1", family=gaussian)
+# CGtrait.models_snglcov_int_time(trait="lfw", df=Frdatsk.l, covariate="PC1", family=gaussian)
 
 modeldata<-Frdatsk.l[!is.na(Frdatsk.l$lfw),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
+summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=lfw))
 
 #pc1
 model1<-lmer(lfw  ~ Origin * PC1 + m.date+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -1046,9 +1048,11 @@ popAov
 
 ####rd#######
 modeldata<-Frdatsk.l[!is.na(Frdatsk.l$rd),]
-
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+
+summary(modeldata$Origin)
+summary(subset(modeldata, Origin=="sk", select=rd))
 
 #pc1
 model1<-lmer(rd  ~ Origin * PC1 + m.date+(1|Pop/Mom), family=gaussian,data=modeldata)
