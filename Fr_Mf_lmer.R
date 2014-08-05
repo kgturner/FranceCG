@@ -16,7 +16,7 @@ library(AER)
 Mf <- read.table("Fr_Mf_data.txt", header=T, sep="\t",quote='"', row.names=1)
 Mf.l <- read.table("Fr_Mf_data_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
-#for equivalent traits only:
+#traits measured in both france and mf:
 #crown, bolt.bin, mass, lfc
 
 ####final models####

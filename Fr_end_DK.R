@@ -328,22 +328,34 @@ modelint<-lmer(Death.date  ~ Origin +Trt +(Origin|Pop/Mom), family=poisson,data=
 intAov <- anova(modelOr, modelint)
 intAov
 
-modelcov <- lmer(Death.date  ~ Origin +(Origin|Pop/Mom), family=poisson,data=modeldata)
-covAov <- anova(modelint, modelcov)
-covAov
-
-modelO<-lmer(Death.date ~ (Origin|Pop/Mom), family=poisson,data=modeldata)
-originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
-originAov
-
-modelOC <- lmer(Death.date  ~ Trt +(1|Pop/Mom), family=poisson,data=modeldata)
-ocAov <- anova(modelint, modelOC)
-ocAov
+# modelcov <- lmer(Death.date  ~ Origin +(Origin|Pop/Mom), family=poisson,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(Death.date ~ (Origin|Pop/Mom), family=poisson,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
+# 
+# modelOC <- lmer(Death.date  ~ Trt +(1|Pop/Mom), family=poisson,data=modeldata)
+# ocAov <- anova(modelint, modelOC)
+# ocAov
 
 modelOr
 
 CI.LS.poisson(modelint)
 xtabs(~Origin+Trt, modeldata)
+
+qplot(data=modeldata, Trt, Death.date, color=Origin, geom = "jitter")
+interaction.plot(response = modeldata$Death.date, x.factor = modeldata$Trt, trace.factor = modeldata$Origin)
+
+moddata <- ddply(modeldata, .(Pop, Origin, Trt), summarize, popCount=length(Pop), popDeath.date=mean(Death.date, na.rm=TRUE))
+
+#png("MF_    .png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,Trt, popDeath.date, color = Origin, 
+      xlab="Treatment", 
+      ylab="Population mean Death.date", main="") +geom_smooth(method=glm, se=TRUE)
+# dev.off()
+
 
 ###Bolt.date####################
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
