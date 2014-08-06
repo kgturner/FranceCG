@@ -236,6 +236,7 @@ modelg2 <- glm(TotWiltDay ~ Origin * CtrlPopShoot, family=poisson,data=modeldata
 anova(modelg2, modelg, test="LRT")
 
 modelg3 <- glm(TotWiltDay ~ Origin + CtrlPopShoot, family=poisson,data=modeldata)
+anova(modelg3, modelg1)
 
 modelg4 <- glm(TotWiltDay ~ Origin * CtrlPopShoot, family=poisson,data=modeldata)
 anova(modelg4, modelg3, test="LRT")

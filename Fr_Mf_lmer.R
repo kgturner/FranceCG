@@ -19,6 +19,9 @@ Mf.l <- read.table("Fr_Mf_data_long.txt", header=T, sep="\t",quote='"', row.name
 #traits measured in both france and mf:
 #crown, bolt.bin, mass, lfc
 
+summary(subset(Mf, Origin=="sk", select=c(Pop, Origin,Mass.log, bolt.bin, Crown.log, sla.log, BoltDay)))
+summary(subset(Mf.l, Origin=="sk", select=c(Pop, Origin,lfc, lfl, lfw)))
+
 ####final models####
 
 ####lfc####
@@ -99,8 +102,8 @@ modelg <- glm(Mass.log~Origin*PC2, family=gaussian, data=modeldata)
 summary(modelg)
 CI.LS.gaussian.log(modelint)
 
-# qplot(data=modeldata,PC2, Mass.log, color = Origin)+geom_point(position="jitter")
-# 
+qplot(data=modeldata,PC2, Mass.log, color = Origin)+geom_point(position="jitter")
+interaction.plot(response = modeldata$Mass.log, x.factor = modeldata$PC2, trace.factor = modeldata$Origin)
 #sk included in plot 
 moddata <- ddply(modeldata, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popMass.log=mean(Mass.log, na.rm=TRUE))
 
@@ -109,6 +112,18 @@ qplot(data=moddata,PC2, popMass.log, color = Origin,
       xlab="PC2", 
       ylab="Population mean Mass.log", main="") +geom_smooth(method=glm, se=TRUE)
 dev.off()
+
+#Weirdly large estimate for sk. categorize pc2?
+modeldata$PC2.cat <- "large"
+modeldata[modeldata$PC2<(-2),]$PC2.cat <- "small"
+modeldata[modeldata$PC2>=(-2)&modeldata$PC2<=1,]$PC2.cat <- "mid"
+modeldata$PC2.cat <- as.factor(modeldata$PC2.cat)
+
+model1cat<-lmer(Mass.log  ~ Origin * PC2.cat+ (1|Pop), family=gaussian,data=modeldata)
+model1cat
+modelgcat <- glm(Mass.log~Origin*PC2.cat, family=gaussian, data=modeldata)
+summary(modelgcat)
+
 ####bolt.bin####
 modeldata <- droplevels(subset(Mf, Trt%in%"control"))
 modeldata<-modeldata[!is.na(modeldata$bolt.bin),]
@@ -195,6 +210,15 @@ qplot(data=moddata,PC2, popCrown, color = Origin,
       xlab="Mf PC2", 
       ylab="Population mean Crown.log", main="") +geom_smooth(method=glm, se=TRUE)
 dev.off()
+
+#pc1 graph
+moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popCrown=mean(Crown.log, na.rm=TRUE))
+
+qplot(data=moddata,PC1, popCrown, color = Origin, 
+      xlab="Mf PC1", 
+      ylab="Population mean Crown.log", main="") +geom_smooth(method=glm, se=TRUE)
+
+
 ####lfw#######
 modeldata <- droplevels(subset(Mf.l, Trt%in%"control"))
 modeldata<-modeldata[!is.na(modeldata$lfw),]
