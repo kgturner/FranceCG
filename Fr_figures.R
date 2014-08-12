@@ -119,7 +119,7 @@ pRose.3 <- ggplot(grdat_cr,aes(PC1, RoseAh.log,color=Origin))+geom_point(positio
 pRose.3
 
 ####Mass, bolt, harvest, wilt, yellow, death.date####
-grdat_d <- frend[, c(1:7,8,10,12,13,15,21,24,31,33:35)]
+grdat_d <- frend[, c(1:7,8,10,12,13,15,17,21,24,31,33:35)]
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="inv"] <- "Invasive C. diffusa"
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="nat"] <- "Native C. diffusa"
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="sk"] <- "Native C. stoebe"
@@ -128,7 +128,7 @@ levels(grdat_d$Origin)[levels(grdat_d$Origin)=="sk"] <- "Native C. stoebe"
 
 #for plots of pop means
 grd2 <- ddply(grdat_d, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
-               popYellow=mean(Yellow, na.rm=TRUE),
+               popShootMass=mean(Shoot.mass.gH, na.rm=TRUE),
               popbolt=mean(bolt.bin,na.rm = TRUE), popMass=mean(Mass.log, na.rm=TRUE))
 
 #for plots of pop means with Trt
@@ -160,6 +160,17 @@ pMass.2<- ggplot(grd2,aes(PC1, popMass,color=Origin))+geom_point() + #facet_grid
         legend.text = element_text(size = 13))
 pMass.2
 # position=position_jitter(width=1,height=.5)
+
+####Shoot mass int pop means (not log)####
+pShoot.2<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point() + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
+  coord_cartesian(ylim = c(0, 120)) +
+  xlab("PC1")+ylab("Shoot mass at harvest [g]")+ 
+  theme_bw() +
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13))
+pShoot.2
 
 ####Mass.log int data####
 pMass.3 <- ggplot(grdat_d,aes(PC1, Mass.log,color=Origin))+geom_point(position=position_jitter(width=1,height=.5)) + #facet_grid(. ~ Trt)
@@ -365,11 +376,11 @@ levels(moddata$Origin)[levels(moddata$Origin)=="sk"] <- "Native C. stoebe"
 pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point()+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC1")+ylab("Proportion bolted at harvest")+ 
-  theme_bw() +
-  theme(legend.justification=c(1,1), legend.position=c(1,1),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+  xlab("PC1")+ylab("Bolting probability")+ 
+  theme_bw() + theme(legend.position="none")
+#   theme(legend.justification=c(1,1), legend.position=c(1,1),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
 pBolt.3
 
 ####lfc scatterplot####
@@ -449,6 +460,12 @@ dev.off()
 png("Frlfc_tmpt_popmean.png",width=800, height = 600, pointsize = 16)
 pLfc.2
 dev.off()
+
+####make multi figs####
+png("Fr_mass_bolt_popmean.png",width=1000, height = 600, pointsize = 16)
+multiplot(pShoot.2, pBolt.3, cols=2)
+dev.off()
+
 
 ####DEMO####
 ####export####
