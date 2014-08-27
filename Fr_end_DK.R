@@ -354,7 +354,7 @@ modelP
 CI.LS.poisson(modelint)
 xtabs(~Origin+Trt, modeldata)
 
-qplot(data=modeldata, Trt, Death.date, color=Origin, geom = "jitter")
+qplot(data=modeldata, Trt, Death.date, color=Origin, geom = "jitter") #
 interaction.plot(response = modeldata$Death.date, x.factor = modeldata$Trt, trace.factor = modeldata$Origin)
 
 moddata <- ddply(modeldata, .(Pop, Origin, Trt), summarize, popCount=length(Pop), popDeath.date=mean(Death.date, na.rm=TRUE))
