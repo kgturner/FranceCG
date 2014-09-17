@@ -33,6 +33,7 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
+summary(subset(modeldata, Origin%in%"sk")$lfc)
 
 #pc2
 modelOr <- lmer(lfc  ~ Origin * PC2 + (m.date|Barcode)+(Origin|Pop/Mom), family=poisson,data=modeldata)
@@ -81,6 +82,8 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
+
+summary(subset(modeldata, Origin%in%"sk")$ShootMass.g)
 
 #PC2
 modelOr <- lmer(Mass.log  ~ Origin * PC2+ (Origin|Pop/Mom), family=gaussian,data=modeldata)
@@ -184,6 +187,8 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
+summary(subset(modeldata, Origin%in%"sk")$CrownDiam.mm)
+
 #PC2
 modelOr <- lmer(Crown.log  ~ Origin * PC2+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(Crown.log  ~ Origin * PC2+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -227,6 +232,8 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 
 summary(modeldata$Origin)
 summary(modeldata$Pop)
+
+summary(subset(modeldata, Origin%in%"sk")$lfw)
 
 #pc2
 modelOr <- lmer(lfw  ~ Origin * PC2+(m.date|Barcode)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
@@ -281,6 +288,8 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
+summary(subset(modeldata, Origin%in%"sk")$lfl)
+
 #pc2
 modelOr <- lmer(lfl  ~ Origin * PC2+(m.date|Barcode)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(lfl  ~ Origin * PC2+(m.date|Barcode)+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -315,6 +324,8 @@ modeldata$BoltDay.adj <- modeldata$BoltDay + 4 #adjust so there are no negative 
 
 summary(modeldata$Origin)
 summary(modeldata$Pop)
+
+summary(subset(modeldata, Origin%in%"sk")$BoltDay.adj)
 
 # check pop sig: all
 #pc2
@@ -360,6 +371,8 @@ modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
+
+summary(subset(modeldata, Origin%in%"sk")$sla)
 
 #PC2
 modelOr <- lmer(sla.log  ~ Origin * PC2 +(Origin|Pop/Mom), family=gaussian,data=modeldata)
