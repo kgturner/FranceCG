@@ -164,8 +164,9 @@ pMass.2
 ####Shoot mass box####
 pShoot <- ggplot(grdat_d,aes(Origin, Shoot.mass.gH, fill=Origin))+ #facet_grid(. ~ Treatment)+
   geom_boxplot()+
-  xlab("Origin")+ylab("Shoot mass at harvest [g])")+ 
+  xlab("Origin")+ylab("Shoot mass at harvest [g]")+ 
   scale_x_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+  annotate(geom="text", x=0.7, y=260, label="(a)",fontface="bold", size=5)+
   theme_bw() +  theme(legend.position="none")
 #   theme(legend.justification=c(1,1), legend.position=c(1,1),
 #         legend.title = element_text(size=14, face="bold"),
@@ -177,7 +178,8 @@ pShoot
 pShoot.2<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   coord_cartesian(ylim = c(0, 120)) +
-  xlab("PC1")+ylab("Shoot mass at harvest [g]")+ 
+  xlab("PC1")+ylab("Shoot mass at harvest [g]")+
+  annotate(geom="text", x=-5.1, y=110, label="(b)",fontface="bold", size=5)+
   theme_bw() +theme(legend.position="none")
 #   theme(legend.justification=c(1,0), legend.position=c(1,0),
 #         legend.title = element_text(size=14, face="bold"),
@@ -355,6 +357,7 @@ pBolt <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xm
 # pBolt
 # annotate 
 pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())+
+  annotate(geom="text", x=0.5, y=95, label="(c)",fontface="bold", size=5)+
   theme(legend.position="none")
 #         , axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
 #         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 )) #+
@@ -402,7 +405,8 @@ pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=O
   coord_cartesian(ylim = c(0, 1.02)) +
 #   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
 #   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
-  xlab("PC1")+ylab("Bolting probability")+ 
+  xlab("PC1")+ylab("Bolting probability")+
+  annotate(geom="text", x=-5.1, y=0.95, label="(d)",fontface="bold", size=5)+
   theme_bw() + theme(legend.position="none")
 #   theme(legend.justification=c(1,1), legend.position=c(1,1),
 #         legend.title = element_text(size=14, face="bold"),
@@ -490,12 +494,12 @@ dev.off()
 ####make multi figs####
 origincol <- c("#F8766D", "#00BA38", "#619CFF")
 
-# png("Fr_mass_bolt_popmean.png",width=1000, height = 600, pointsize = 16)
-pdf("KTurnerFig3_legend.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
-multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
-# legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
-#        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
-dev.off()
+# # png("Fr_mass_bolt_popmean.png",width=1000, height = 600, pointsize = 16)
+# pdf("KTurnerFig3_legend.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
+# multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
+# # legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
+# #        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
+# dev.off()
 
 pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
 multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
