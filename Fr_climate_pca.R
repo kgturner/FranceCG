@@ -2,18 +2,22 @@
 
 #add lat/long
 #get population coordinates
-allpop <- read.table("Popcoord.txt", header=T, sep="\t") #Popcoord.txt !not wordlclim approximations
+# allpop <- read.table("Popcoord.txt", header=T, sep="\t") #Popcoord.txt !not wordlclim approximations
 Frdes <- read.table("Frdes.txt", header=T, sep="\t")
-Frclim <- read.table("Frbioclimdata.txt", header=TRUE)
-Frpop <- allpop[allpop$Pop %in% Frdes$Pop,]
-rownames(Frpop) <- Frpop$Pop
-Frpop$Pop <- droplevels(Frpop$Pop)
-Frpop <- Frpop[,1:3]
+# Frclim <- read.table("Frbioclimdata.txt", header=TRUE)
+# Frpop <- allpop[allpop$Pop %in% Frdes$Pop,]
+# rownames(Frpop) <- Frpop$Pop
+# Frpop$Pop <- droplevels(Frpop$Pop)
+# Frpop <- Frpop[,1:3]
+# 
+# Frclim$Pop <- row.names(Frclim)
+# Frclimdat <- merge(Frclim, Frpop,all.x=TRUE)
+# Frclimdat <- merge(Frclimdat, unique(Frdes[,c(5,7)]),all.x=TRUE)
+# row.names(Frclimdat) <- Frclimdat$Pop
+#OR
+Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE) #climate table with PC1-4 included
 
-Frclim$Pop <- row.names(Frclim)
-Frclimdat <- merge(Frclim, Frpop,all.x=TRUE)
-Frclimdat <- merge(Frclimdat, unique(Frdes[,c(5,7)]),all.x=TRUE)
-row.names(Frclimdat) <- Frclimdat$Pop
+
 
 #PCA fun times
 #Origin and longitude artificially separates groups...
@@ -187,6 +191,8 @@ Frdes[Frdes$Origin %in% "sk",]$colCode <- "619CFF"
 
 ###PC1 vs PC2
 #pts instead of labels for pops
+# library("ggplot2")
+library("grid") 
 data <- data.frame(obsnames=row.names(Frclim.pca$x), Frclim.pca$x)
 data <- merge(data, unique(Frdes[,c(5,7,12)]),by.x="obsnames", by.y="Pop")
 levels(data$Origin)[levels(data$Origin)=="inv"] <- "Invasive C. diffusa"
@@ -196,14 +202,19 @@ levels(data$Origin)[levels(data$Origin)=="sk"] <- "Native C. stoebe"
 # data[data$Origin %in% "nat",]$pch <- 16
 # data[data$Origin %in% "sk",]$pch <- 17
 
-# pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=13.38)
-png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
+pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
+# png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
 plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
-  geom_point(aes(shape=Origin, color=Origin), size=5) +
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
   #   scale_x_continuous(expand = c(0,1)) #+
-  theme(legend.justification=c(1,0), legend.position=c(1,0))
+  theme_bw() +
+  theme(legend.justification=c(1,0), legend.position=c(1,0), 
+        legend.title = element_text(size=7, face="bold"), 
+        legend.text = element_text(size = 7),
+        axis.title = element_text( size=7),
+        axis.text  = element_text(size=5), axis.text.y= element_text(angle=0))
 
 # plot
 
@@ -219,13 +230,13 @@ datapc <- transform(datapc,
 )
 
 plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
-                                         size = 6, vjust=1, color="gray47", alpha=0.75)
+                                         size = 4, vjust=1, color="gray47", alpha=0.75)
 plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot
 dev.off()
 
-##PC1 vs PC3
+####PC1 vs PC3####
 png("FrClimatePCA1v3.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 

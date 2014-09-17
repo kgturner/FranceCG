@@ -84,8 +84,8 @@ proj4string(markings) <- CRS("+proj=longlat +ellps=WGS84")
 sPointsDFmark <- spTransform(markings, CRS=projectionCRS)
 
 ####plot map####
-# pdf("KTurnerFig1.pdf", useDingbats=FALSE, width=13.38)
-png("FrMap.png", width=600, height = 600, pointsize = 16)
+pdf("KTurnerFig1.pdf", useDingbats=FALSE, width=6.65, height = 5, pointsize = 12) #4.4 or 6.65
+# png("FrMap.png", width=600, height = 600, pointsize = 16)
 #svg("collectionMap_bw.svg", pointsize = 12)
 # setEPS( horizontal = FALSE, onefile = FALSE, paper = "special") #340 mm is c. 13 in, height and width in in
 # postscript("colMap_bw.eps")
@@ -104,16 +104,16 @@ mapCountryData(sPDF, nameColumnToPlot="colCode", mapTitle=NA,
 #mapTitle=bquote(Global~range~of~italic(Centaurea)~italic(diffusa)) 
 
 
-points(sPointsDF, pch=pop$pch, cex=1, lwd=2)
+points(sPointsDF, pch=pop$pch, cex=1.2, lwd=2)
 
 llgridlines(sPDF, easts=c(-90,-180,0,90,180), norths=seq(0,90,by=15), 
             plotLabels=FALSE, ndiscr=1000) #ndiscr=num points in lines
 text(sPointsDFmark, labels = sPointsDFmark$name, cex=1) #pch2 for triangles
 
 legend("topright", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe", "Experimental field"), 
-       pch=c(1,17,0,8),  bg="white", title = "Sampled populations", cex=1.2)
+       pch=c(1,17,0,8),  bg="white", title = "Sampled populations", cex=1)
 legend("bottomleft", c("Invasive", "Native","Naturalized"), fill=colourPalette,
-       title="Ranges of C. diffusa", bg="white", cex=1.2)
+       title="Ranges of C. diffusa", bg="white", cex=1)
 box(lty="solid", col = "black")
 # #shameless plug !
 # mtext("map made using rworldmap", line=-1, side=1, adj=1, cex=0.6)

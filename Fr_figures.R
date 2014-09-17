@@ -161,15 +161,27 @@ pMass.2<- ggplot(grd2,aes(PC1, popMass,color=Origin))+geom_point() + #facet_grid
 pMass.2
 # position=position_jitter(width=1,height=.5)
 
+####Shoot mass box####
+pShoot <- ggplot(grdat_d,aes(Origin, Shoot.mass.gH, fill=Origin))+ #facet_grid(. ~ Treatment)+
+  geom_boxplot()+
+  xlab("Origin")+ylab("Shoot mass at harvest [g])")+ 
+  scale_x_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+  theme_bw() +  theme(legend.position="none")
+#   theme(legend.justification=c(1,1), legend.position=c(1,1),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
+pShoot
+
+
 ####Shoot mass int pop means (not log)####
-pShoot.2<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point() + #facet_grid(. ~ Trt)
+pShoot.2<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   coord_cartesian(ylim = c(0, 120)) +
   xlab("PC1")+ylab("Shoot mass at harvest [g]")+ 
-  theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+  theme_bw() +theme(legend.position="none")
+#   theme(legend.justification=c(1,0), legend.position=c(1,0),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
 pShoot.2
 
 ####Mass.log int data####
@@ -338,15 +350,17 @@ grBatHStd[grBatHStd$RevStackymin<0,]$RevStackymin <- 0
 
 pBolt <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xmin, xmax=xmax, fill=factor(col))) +
   geom_rect(colour = I("white"))+
-  scale_x_continuous(breaks=c(10,30,50),labels=c("Invasive C. diffusa", "Native C. diffusa", "Native C. stoebe"), name="Origin") +
-  scale_y_continuous(name="Percent Bolted at Harvest") + theme_bw()+cscale
-pBolt
+  scale_x_continuous(breaks=c(10,30,50),labels=c("Invasive", "Native", "C. stoebe"), name="Origin") +
+  scale_y_continuous(name="Bolting Probability (%)") + theme_bw()+cscale
+# pBolt
 # annotate 
 pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())+
-  #annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=105, label=grBatHStd$Origin, size=4) +
-  #annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=grBatHStd$ymin+2, label=grBatHStd$BoltedatH, size=4)+ 
-  theme(legend.position="none", axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
-        axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 )) #+ 
+  theme(legend.position="none")
+#         , axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
+#         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 )) #+
+
+#annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=105, label=grBatHStd$Origin, size=4) +
+#annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=grBatHStd$ymin+2, label=grBatHStd$BoltedatH, size=4)+ 
 #   annotate('point',x = 20, y = 50, pch=8, color="red",parse=T, size=4)+
 #   annotate('point',x = 20, y = 54, pch=8, color="red",parse=T, size=4)+
 #   annotate('point',x = 20, y = 50, pch=0, color="red",parse=T, size=6)+
@@ -360,7 +374,17 @@ pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=el
 #   annotate('point',x = 60, y = 58, pch=0, color="red",parse=T,size=6)+
 #   
 #   annotate(geom="text", x=2.5, y=98, label="(c)",fontface="bold", size=5)
+pBolt
 
+
+
+
+
+
+# origincol <- c("#F8766D", "#00BA38", "#619CFF")
+# 
+# legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
+#        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
 ####bolt.bin, scatterplot popmean include PC1####
 #sk included in plot 
 moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popbolt=mean(bolt.bin, na.rm=TRUE))
@@ -373,9 +397,11 @@ levels(moddata$Origin)[levels(moddata$Origin)=="sk"] <- "Native C. stoebe"
 #       xlab="PC1", 
 #       ylab="Population mean Mass.log", main="", ymax=1, ymin=0) +geom_smooth(method=glm, se=TRUE)
 
-pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point()+
+pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3)+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   coord_cartesian(ylim = c(0, 1.02)) +
+#   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+#   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
   xlab("PC1")+ylab("Bolting probability")+ 
   theme_bw() + theme(legend.position="none")
 #   theme(legend.justification=c(1,1), legend.position=c(1,1),
@@ -462,8 +488,19 @@ pLfc.2
 dev.off()
 
 ####make multi figs####
-png("Fr_mass_bolt_popmean.png",width=1000, height = 600, pointsize = 16)
-multiplot(pShoot.2, pBolt.3, cols=2)
+origincol <- c("#F8766D", "#00BA38", "#619CFF")
+
+# png("Fr_mass_bolt_popmean.png",width=1000, height = 600, pointsize = 16)
+pdf("KTurnerFig3_legend.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
+multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
+# legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
+#        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
+dev.off()
+
+pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
+multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
+# legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
+#        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
 dev.off()
 
 
