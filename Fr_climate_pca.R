@@ -1,6 +1,10 @@
 ##France CG - climate and lat/long PCA###
 
-#add lat/long
+library("ggplot2")
+library("grid") 
+library("gridBase")
+
+####add lat/long####
 #get population coordinates
 # allpop <- read.table("Popcoord.txt", header=T, sep="\t") #Popcoord.txt !not wordlclim approximations
 Frdes <- read.table("Frdes.txt", header=T, sep="\t")
@@ -19,7 +23,7 @@ Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE) #climate table with 
 
 
 
-#PCA fun times
+####PCA fun times####
 #Origin and longitude artificially separates groups...
 Frclim.pca <- prcomp(Frclimdat[2:22], center=TRUE, scale=TRUE)
 summary(Frclim.pca)
@@ -30,7 +34,7 @@ summary(Frclim.pca)
 # Cumulative Proportion  0.2963 0.5657 0.7552 0.8632 0.9150 0.95644 0.98227
 
 #visualize components
-plot(Frclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
+plot(Frclim.pca, main="(a) Screeplot, Montpellier Experiment", xlab="Principal component", ylim=c(0,7))
 # screeplot(Frclim.pca, type="lines")
 # biplot(Frclim.pca)
 #see bottom for figure
@@ -189,7 +193,7 @@ Frdes[Frdes$Origin %in% "sk",]$colCode <- "619CFF"
 #                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 # plot
 
-###PC1 vs PC2
+####PC1 vs PC2 fig####
 #pts instead of labels for pops
 # library("ggplot2")
 library("grid") 
@@ -236,18 +240,20 @@ plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2),
 plot
 dev.off()
 
-####PC1 vs PC3####
+####PC1 vs PC3 fig####
 png("FrClimatePCA1v3.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-plot <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
-  geom_point(aes(shape=Origin, color=Origin), size=5) +
+pPC3 <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
   #   scale_x_continuous(expand = c(0,1)) #+
-  theme(legend.justification=c(1,0), legend.position=c(1,0))
+  theme_bw()+
+  theme(legend.position="bottom")
+#   theme(legend.justification=c(1,0), legend.position=c(1,0))
 
 # plot
 
-plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+pPC3 <- pPC3 + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 
 datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
 mult <- min(
@@ -259,81 +265,72 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC3"))
 )
 
-plot <- plot  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+pPC3 <- pPC3  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
                                          size = 6, vjust=1, color="gray47", alpha=0.75)
 
-plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
-plot
+pPC3 <- pPC3 + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold"))
+pPC3
+
 dev.off()
 
 
-##component variances supp. fig####
-# pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=13.38)
-png("FrClimatePCA_var.png",width=800, height = 600, pointsize = 16)
+####supp. fig####
+library(gridBase) #necessary to plot ggplots and base plots together
+
+# pdf("KTurnerSup_MontPCA.pdf", useDingbats=FALSE, width=13.38)
+png("KTurnerSup_MontPCA.png",width=800, height = 500, pointsize = 12)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-plot(Frclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
+par(mfcol=c(1,2))
+
+plot(Frclim.pca, main="(a)", xlab="Principal component", ylim=c(0,7), cex.main=1.3)
+plot.new()
+vps <- baseViewports()
+pushViewport(vps$figure)
+vp1 <- plotViewport(c(0,0,0,0))
+print(pPC3, vp=vp1)
+
+
+
 dev.off()
 
-################
-#remove PC1....?
-# #Problem 3
-# 
-# #make eSet from imputed data
-# #Relevel factors
-# hw2des$TumorType <- factor(hw2des$TumorType, c("GIST", "LEIO", "LIPO","MFH", "Schwannoma","Synovial"))
-# hw2des$ArrayType <- relevel(hw2des$ArrayType, "22K")
-# #Make both files have the same ordering
-# hw2datImp <- hw2datImp[,row.names(hw2des)]
-# all(colnames(hw2datImp)==row.names(hw2des))
-# # make eSet
-# hw2esetImp <- new("ExpressionSet", phenoData = as(hw2des, "AnnotatedDataFrame"),exprs = as.matrix(hw2datImp))
-# #order eSet by array and tumor type
-# hw2esetImp<-hw2esetImp[,order( hw2des$ArrayType, hw2des$TumorType )]
-# 
-# #PCA
-# hw2pcs<-prcomp(exprs(hw2esetImp), center=F, scale=F)
-# 
-# # append the rotations for the first 10 PCs to the phenodata
-# pData(hw2esetImp)<- cbind(pData(hw2esetImp), hw2pcs$rotation[sampleNames(hw2esetImp),1:10])
-# 
-# 
-# # plot data on first two PCs, colored by array type
-# plot(pData(hw2esetImp)[,c("PC1","PC2")], bg=pData(hw2esetImp)$ArrayType, pch=21, cex=2, main= "PC1 and PC2 by Array Type" )
-# legend(  list(x=0.2,y=0.3), as.character(levels(pData(hw2esetImp)$ArrayType)), x="topright", pch =21, pt.bg=c(1,2,3,4,5))
-# 
-# #Remove PC1
-# #Remove the first component as described in lecture. use the svd command. 
-# hw2svd<-svd(hw2datImp)
-# summary(hw2svd)
-# hw2svdD <- diag(hw2svd$d)
-# hw2svdcorr<-hw2svd$u[,-1] %*% hw2svd$d[-1,-1] %*% t(hw2svd$v[,-1])
-# dim(hw2svdcorr)
-# dim(hw2datImp)
-# 
-# #change column names
-# colnames(hw2svdcorr)<-row.names(hw2des)
-# #change rownames
-# rownames(hw2svdcorr)<-row.names(hw2datImp)
-# 
-# #replace NAs
-# hw2svdcorrNA<-hw2svdcorr
-# namatrix<-is.na(hw2dat)
-# class(namatrix)
-# dim(namatrix)
-# head(namatrix)
-# hw2svdcorrNA[namatrix==TRUE]<-NA
-# 
-# sum(is.na(hw2dat))
-# sum(is.na(hw2svdcorrNA))
-# 
-# #filter probes
-# #retain only if at least two values of log2(3)=1.584962500721156 or more in the row. How many probes are left? (2 points)
-# hw2corrF<-as.data.frame(hw2svdcorrNA)
-# #hw2corrF<-hw2corrF[-which(rowSums(hw2corrF>=log2(3))>=2),]
-# hw2corrF<-hw2corrF[which(rowSums(abs(hw2corrF)>=log2(3), na.rm=TRUE)>=2),]
-# 
-# dim(hw2corrF)
-# hw2corrF <- hw2corrF[,row.names(hw2des)]
-# all(colnames(hw2corrF)==row.names(hw2des))
+
+
+####multiplot####
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}

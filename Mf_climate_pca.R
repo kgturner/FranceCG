@@ -6,10 +6,12 @@
 library(plyr)
 library(lme4)
 library(lsmeans)
-library(ggplot2)
+library("ggplot2")
+library("grid") 
+library("gridBase")
 
 
-
+####getting climate data####
 #for just B3 (Mf)
 #BG3 42.1153  23.3203
 BG3<-SpatialPoints(as.matrix(t(c(23.3203,42.1153)))) #long, lat
@@ -51,7 +53,9 @@ Mfbioclim <- droplevels(Mfbioclim)
 
 ##Mf - climate and lat/long PCA###
 
-#PCA fun times
+####PCA fun times####
+Mfclim <- read.table("MfbioclimPCAdat.txt", header=TRUE)
+
 #Origin and longitude artificially separates groups...
 # Mfclim.pca <- prcomp(Mfbioclim[c(2:22)], center=TRUE, scale=TRUE)
 Mfclim.pca <- prcomp(Mfclim[c(2:22)], center=TRUE, scale=TRUE)
@@ -173,12 +177,13 @@ write.table(Mfclim, file="MfbioclimPCAdat.txt")
 # 
 Mfclim <- read.table("MfbioclimPCAdat.txt", header=TRUE)
 
-##########figure#######
+##########figures#######
 #nat and inv and sk colors:"#F8766D","#00BFC4"
 library("ggplot2")
 library("grid") 
+library(gridBase)
 
-###PC1 vs PC2
+###PC1 vs PC2####
 #pts instead of labels for pops
 data <- data.frame(obsnames=row.names(Mfclim.pca$x), Mfclim.pca$x)
 data <- merge(data, Mfclim[c(1,24)],by.x="obsnames", by.y="Pop")
@@ -190,14 +195,15 @@ levels(data$Origin)[levels(data$Origin)=="sk"] <- "Native C. stoebe"
 png("MfClimatePC1vPC2.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
-  geom_point(aes(shape=Origin, color=Origin), size=5) +
+pPC2 <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
   #   scale_x_continuous(expand = c(0,1)) #+
+  theme_bw()+
   theme(legend.justification=c(1,0), legend.position=c(1,0))
 
 # plot
 
-plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+pPC2 <- pPC2 + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 datapc <- data.frame(varnames=rownames(Mfclim.pca$rotation), Mfclim.pca$rotation)
 mult <- min(
   (max(data[,"PC2"]) - min(data[,"PC2"])/(max(datapc[,"PC2"])-min(datapc[,"PC2"]))),
@@ -208,25 +214,28 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC2"))
 )
 
-plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+pPC2 <- pPC2 + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
                                          size = 6, vjust=1, color="gray47", alpha=0.75)
-plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
-plot
+pPC2 <- pPC2 + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold"))
+pPC2
 dev.off()
 
-##PC1 vs PC3
+####PC1 vs PC3####
 png("MfClimatePCA1v3.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-plot <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
-  geom_point(aes(shape=Origin, color=Origin), size=5) +
+pPC3 <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
   #   scale_x_continuous(expand = c(0,1)) #+
-  theme(legend.justification=c(1,0), legend.position=c(1,0))
+  theme_bw()+
+  theme(legend.position="none")
+#   theme(legend.justification=c(1,0), legend.position=c(1,0))
 
 # plot
 
-plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+pPC3 <- pPC3 + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 
 datapc <- data.frame(varnames=rownames(Mfclim.pca$rotation), Mfclim.pca$rotation)
 mult <- min(
@@ -238,19 +247,42 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC3"))
 )
 
-plot <- plot  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+pPC3 <- pPC3  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
                                                    size = 6, vjust=1, color="gray47", alpha=0.75)
 
-plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
-plot
+pPC3 <- pPC3 + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold"))
+pPC3
 dev.off()
 
 
-##component variances supp. fig####
+####supp. fig multiplot####
 # pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=13.38)
-png("MfClimatePCA_var.png",width=800, height = 600, pointsize = 16)
+png("KTurnerSup_VanPCA.png",width=800, height = 800, pointsize = 12)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-plot(Mfclim.pca, main="Variances of each principle component of climate", xlab="Principal component", ylim=c(0,7))
+gl <- grid.layout(2, 2)
+#                   widths=unit(c(4, 4), "inches"),
+#                   heights=unit(c(4, 4), "inches"))
+pushViewport(viewport(layout=gl))
+
+par(mfcol=c(2,2))
+pushViewport(viewport(layout.pos.row=1, layout.pos.col=1))
+plot(Mfclim.pca, main="(a)", 
+     xlab="Principal component", ylim=c(0,8), cex.main=1.3)
+popViewport()
+
+plot.new()
+pushViewport(viewport(layout.pos.row=1, layout.pos.col=2))
+vp1 <- plotViewport(c(0,0,0,0))
+print(pPC2, vp=vp1)
+popViewport()
+
+plot.new()
+pushViewport(viewport(layout.pos.row=2, layout.pos.col=1))
+vp1 <- plotViewport(c(0,0,0,0))
+print(pPC3, vp=vp1)
+
+
 dev.off()
