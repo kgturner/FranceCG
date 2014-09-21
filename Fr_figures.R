@@ -15,7 +15,7 @@ library(plyr)
 #for multiplot function, see bottom
 
 #####crown.log and RoseAh.log####
-grdat_cr <- FrdatSK[, c(1:7,53:55, 48,45)]
+grdat_cr <- FrdatSK[, c(1:7,22, 25, 53:55, 48,45)]
 levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="inv"] <- "Invasive C. diffusa"
 levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="nat"] <- "Native C. diffusa"
 levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="sk"] <- "Native C. stoebe"
@@ -36,15 +36,18 @@ pCrown
 
 ####crown.log interaction pop mean####
 #for plots of pop means
-grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE))
+grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
+               popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE),
+               popCrownDiam=mean(CrownDiam.mm, na.rm=TRUE), popRose.Area=mean(Rose.AreaH.m2, na.rm=TRUE))
 
 # pCrown.2 <- qplot(data=grd_c,  PC1,popCrown, color=Origin)+geom_smooth(method=glm, se=TRUE)
 # pCrown.2
 
-pCrown.2 <- ggplot(grd_c,aes(PC1, popCrown,color=Origin))+geom_point() + #facet_grid(. ~ Trt)
+pCrown.2 <- ggplot(grd_c,aes(PC1, popCrown,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Root crown diameter at harvest [mm](log)")+ 
+  
   theme_bw() +
   theme(legend.justification=c(1,0), legend.position=c(1,0),
         legend.title = element_text(size=14, face="bold"),
@@ -63,6 +66,17 @@ pCrown.3 <- ggplot(grdat_cr,aes(PC1, Crown.log,color=Origin))+geom_point(positio
         legend.text = element_text(size = 13))
 pCrown.3
 
+####CrownDiam int####
+pCrown.4 <- ggplot(grd_c,aes(PC1, popCrownDiam,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
+  #   coord_cartesian(ylim = c(0, 1.02)) +
+  xlab("PC1")+ylab("Root crown diameter at harvest [mm]")+
+  annotate(geom="text", x=-5, y=35, label="(a)",fontface="bold", size=5)+
+  theme_bw() +
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13))
+pCrown.4
 ####roseAh.log box####
 pRose <- ggplot(grdat_cr,aes(Treatment, RoseAh.log, fill=Origin))+
   geom_boxplot()+
@@ -107,7 +121,7 @@ pRose.2 <- ggplot(grd_r,aes(PC1, popRose, color=Origin))+ facet_grid(. ~ Treatme
         legend.text = element_text(size = 13))
 pRose.2
 
-####Rose w/ int data####
+####RoseAh.log w/ int data####
 pRose.3 <- ggplot(grdat_cr,aes(PC1, RoseAh.log,color=Origin))+geom_point(position=position_jitter(width=1,height=.5)) + facet_grid(. ~ Treatment)+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
@@ -117,6 +131,23 @@ pRose.3 <- ggplot(grdat_cr,aes(PC1, RoseAh.log,color=Origin))+geom_point(positio
         legend.title = element_text(size=14, face="bold"),
         legend.text = element_text(size = 13))
 pRose.3
+
+####Rose.Area int####
+# grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
+#                popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE),
+#                popCrownDiam=mean(CrownDiam.mm, na.rm=TRUE), popRose.Area=mean(Rose.AreaH.m2, na.rm=TRUE))
+
+pRose.4 <- ggplot(grd_c,aes(PC1, popRose.Area, color=Origin))+ #facet_grid(. ~ Treatment)+
+  geom_point(aes(shape=Origin, color=Origin), size=3)+
+  geom_smooth(method=glm, se=TRUE)+
+  xlab("PC1")+ylab("Rosette area at harvest [m2]")+ 
+  #title("Performance in drought vs. control treatments")+
+  annotate(geom="text", x=-5, y=0.38, label="(b)",fontface="bold", size=5)+
+  theme_bw()+theme(legend.position="none")
+#   theme(legend.justification=c(0,0), legend.position=c(0,0),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
+pRose.4
 
 ####Mass, bolt, harvest, wilt, yellow, death.date####
 grdat_d <- frend[, c(1:7,8,10,12,13,15,17,21,24,31,33:35)]
@@ -213,15 +244,18 @@ pHarvest
 # pHarvest.2 <- qplot(data=grd2trt, PC1, popHarvest,  color=Origin)+geom_smooth(method=glm, se=TRUE)+ facet_grid(. ~ Treatment)
 # pHarvest.2
 
-pHarvest.2<- ggplot(grd2trt,aes(PC1, popHarvest,color=Origin))+geom_point() + 
-  facet_grid(. ~ Treatment)+
+ann_text <- data.frame(Origin=factor("Invasive C. diffusa", levels=c("Invasive C. diffusa", "Native C. diffusa",   "Native C. stoebe")), popHarvest=125, lab="(d)", PC1=-4.5,Trt="control" )
+
+pHarvest.2<- ggplot(grd2trt,aes(PC1, popHarvest,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + 
+  facet_grid(. ~ Trt)+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Population mean harvest date")+ 
-  theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+  geom_text(data = ann_text,label = "(d)", fontface="bold", size=5, color="black")+
+  theme_bw() + theme(legend.position="none")
+#   theme(legend.justification=c(1,0), legend.position=c(1,0),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
 pHarvest.2
 
 ####harvest int data####
@@ -466,6 +500,27 @@ pLfc.2
 # #         legend.text = element_text(size = 13))
 # pLfc.2
 
+####lfw box####
+grdat_l <- subset(Frdatsk.l, subset=lfc<200&m.date<80,select=c(1:7,22:28))
+levels(grdat_l$Origin)[levels(grdat_l$Origin)=="inv"] <- "Invasive"
+levels(grdat_l$Origin)[levels(grdat_l$Origin)=="nat"] <- "Native"
+levels(grdat_l$Origin)[levels(grdat_l$Origin)=="sk"] <- "C. stoebe"
+
+ann_text <- data.frame(Origin=factor("Invasive", levels=c("Invasive","Native", "C. stoebe")), lfw=8.8, lab="(c)", time=1 )
+
+plfwMont <- ggplot(subset(grdat_l, lfw<10),aes(Origin, lfw, fill=Origin))+
+  geom_boxplot()+
+  facet_grid(. ~ time,scales="free_y")+
+  xlab("Origin")+ylab("Width of longest leaf [cm]")+
+  geom_text(data = ann_text,label = "(c)", fontface="bold", size=5)+
+  theme_bw() +
+  theme(legend.position="none")
+#   theme(legend.justification=c(1,0), legend.position=c(1,1),
+#         legend.title = element_text(size=14, face="bold"),
+#         legend.text = element_text(size = 13))
+
+plfwMont
+
 ####make sngl figs####
 png("FrCrown_popmean.png",width=800, height = 600, pointsize = 16)
 pCrown.2
@@ -494,19 +549,15 @@ dev.off()
 ####make multi figs####
 origincol <- c("#F8766D", "#00BA38", "#619CFF")
 
-# # png("Fr_mass_bolt_popmean.png",width=1000, height = 600, pointsize = 16)
-# pdf("KTurnerFig3_legend.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
-# multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
-# # legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
-# #        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
-# dev.off()
-
 pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
 multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
 # legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
 #        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
 dev.off()
 
+png("Fr_Supp_DKtraits.png",width=800, height = 800, pointsize = 12)
+multiplot(pCrown.4 ,plfwMont , pRose.4, pHarvest.2, cols=2)
+dev.off()
 
 ####DEMO####
 ####export####
