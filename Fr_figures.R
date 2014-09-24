@@ -70,7 +70,7 @@ pCrown.3
 pCrown.4 <- ggplot(grd_c,aes(PC1, popCrownDiam,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC1")+ylab("Root crown diameter at harvest [mm]")+
+  xlab("Environmental cline")+ylab("Root crown diameter at harvest [mm]")+
   annotate(geom="text", x=-5, y=35, label="(a)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.justification=c(1,0), legend.position=c(1,0),
@@ -140,7 +140,7 @@ pRose.3
 pRose.4 <- ggplot(grd_c,aes(PC1, popRose.Area, color=Origin))+ #facet_grid(. ~ Treatment)+
   geom_point(aes(shape=Origin, color=Origin), size=3)+
   geom_smooth(method=glm, se=TRUE)+
-  xlab("PC1")+ylab("Rosette area at harvest [m2]")+ 
+  xlab("Environmental cline")+ylab("Rosette area at harvest [m2]")+ 
   #title("Performance in drought vs. control treatments")+
   annotate(geom="text", x=-5, y=0.38, label="(b)",fontface="bold", size=5)+
   theme_bw()+theme(legend.position="none")
@@ -209,7 +209,7 @@ pShoot
 pShoot.2<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   coord_cartesian(ylim = c(0, 120)) +
-  xlab("PC1")+ylab("Shoot mass at harvest [g]")+
+  xlab("Environmental cline")+ylab("Shoot mass at harvest [g]")+
   annotate(geom="text", x=-5.1, y=110, label="(b)",fontface="bold", size=5)+
   theme_bw() +theme(legend.position="none")
 #   theme(legend.justification=c(1,0), legend.position=c(1,0),
@@ -439,7 +439,7 @@ pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=O
   coord_cartesian(ylim = c(0, 1.02)) +
 #   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
 #   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
-  xlab("PC1")+ylab("Bolting probability")+
+  xlab("Environmental cline")+ylab("Bolting probability")+
   annotate(geom="text", x=-5.1, y=0.95, label="(d)",fontface="bold", size=5)+
   theme_bw() + theme(legend.position="none")
 #   theme(legend.justification=c(1,1), legend.position=c(1,1),
@@ -556,7 +556,7 @@ multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
 dev.off()
 
 png("Fr_Supp_DKtraits.png",width=800, height = 800, pointsize = 12)
-multiplot(pCrown.4 ,plfwMont , pRose.4, pHarvest.2, cols=2)
+multiplot(pCrown.4 ,plfwMont , pRose.4,  cols=2)
 dev.off()
 
 ####DEMO####

@@ -91,7 +91,7 @@ qplot(data=moddata,CtrlPopShoot, popTotWiltDay, color = Origin,
       main="Performance in drought vs. control treatments") +geom_smooth(method=glm,se=TRUE)
 dev.off()
 
-####CtrlPOpMass.log####
+####full dataset usingCtrlPOpMass.log####
 ####death.date####
 modeldata<-subset(Mf,Origin%in%c("inv", "nat")&Trt%in%"drought"&!is.na(Mf$DeathDay))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -174,7 +174,11 @@ anova(modelg2, modelg1, test="LRT")
 
 modelg3 <- glm(TotWiltDay ~ Origin, family=poisson,data=modeldata)
 
-####ctrlshootmass(not log)####
+modelg4 <- glm(TotWiltDay ~ Origin * CtrlPopMass.log, family=poisson,data=modeldata)
+modelg5 <- glm(TotWiltDay ~ Origin + CtrlPopMass.log, family=poisson,data=modeldata)
+anova(modelg5, modelg4, test="LRT")
+
+####full dataset using ctrlshootmass(not log) from full dataset and PC1####
 ####TotWiltDay####
 modeldata<-subset(Mf,Origin%in%c("inv", "nat")&Trt%in%"drought"&!is.na(Mf$TotWiltDay))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -208,7 +212,7 @@ anova(modelg4, modelg2, test="LRT")
 
 summary(modelg4)
 
-#######using comeans, and PC2####
+#######full dataset using comeans from balanced dataset, and PC2####
 ####TotWiltDay####
 modeldata<-subset(Mf,Origin%in%c("inv", "nat")&Trt%in%"drought"&!is.na(Mf$TotWiltDay))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
@@ -242,6 +246,16 @@ modelg4 <- glm(TotWiltDay ~ Origin * CtrlPopShoot, family=poisson,data=modeldata
 anova(modelg4, modelg3, test="LRT")
 
 summary(modelg4)
+
+qplot(data=modeldata,CtrlPopShoot, TotWiltDay, color = Origin)+geom_point(position="jitter")
+moddata <- ddply(modeldata, .(PopID, Origin, PC2, CtrlPopShoot), summarize, popCount=length(PopID), popTotWiltDay=mean(TotWiltDay))
+
+# png("MF_performance_totwilt_shoot.png", height = 600, width = 600, pointsize = 16)
+qplot(data=moddata,CtrlPopShoot, popTotWiltDay, color = Origin, 
+      xlab="Population mean shoot mass in control treatment", 
+      ylab="Population mean days to TotWiltDay in drought treatment",
+      main="Performance in drought vs. control treatments") +geom_smooth(method=glm,se=TRUE)
+# dev.off()
 
 ####WiltDay####
 modeldata<-subset(Mf,Origin%in%c("inv", "nat")&Trt%in%"drought"&!is.na(Mf$WiltDay))

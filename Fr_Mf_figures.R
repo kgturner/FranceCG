@@ -46,7 +46,7 @@ pMf_Mass.2
 pMf_Shoot.2<- ggplot(grdmf,aes(PC2, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC2")+ylab("Shoot mass at harvest [g]")+ 
+  xlab("Environmental cline")+ylab("Shoot mass at harvest [g]")+ 
   annotate(geom="text", x=-6, y=5.2, label="(a)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.justification=c(0,0), legend.position=c(0,0),
@@ -69,7 +69,7 @@ levels(moddata$Origin)[levels(moddata$Origin)=="sk"] <- "Native C. stoebe"
 pMf_Bolt.3 <- ggplot(moddata,aes(PC2, popbolt,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3)+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   coord_cartesian(ylim = c(-0.02, 1.02)) +
-  xlab("PC2")+ylab("Bolting probability")+ 
+  xlab("Environmental cline")+ylab("Bolting probability")+ 
   annotate(geom="text", x=-6, y=0.7, label="(a)",fontface="bold", size=5)+
   theme_bw() + #theme(legend.position="none")
   theme(legend.justification=c(0,1), legend.position=c(0,1),
@@ -151,7 +151,7 @@ pBolt
 pMf_Crown.2<- ggplot(grdmf,aes(PC2, popCrownDiam,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC2")+ylab("Root crown diameter at harvest [mm]")+
+  xlab("Environmental cline")+ylab("Root crown diameter at harvest [mm]")+
   annotate(geom="text", x=-6, y=1.14, label="(b)",fontface="bold", size=5)+
   theme_bw() + theme(legend.position="none")
 #   theme(legend.justification=c(0,1), legend.position=c(0,1),
@@ -216,7 +216,7 @@ plfw.2<- ggplot(grdmf.l,aes(PC2, poplfw,color=Origin))+geom_point(aes(shape=Orig
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
 #   facet_grid(. ~ time,scales="free_y")+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC2")+ylab("Width of longest leaf [cm]")+ 
+  xlab("Environmental cline")+ylab("Width of longest leaf [cm]")+ 
   annotate(geom="text", x=-6, y=7.25, label="(d)",fontface="bold", size=5)+
   theme_bw() + theme(legend.position="none")
 #   theme(legend.justification=c(0,1), legend.position=c(0,1),
@@ -233,7 +233,7 @@ plfl.2<- ggplot(grdmf.l,aes(PC2, poplfl,color=Origin))+geom_point(aes(shape=Orig
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
 #   facet_grid(. ~ time,scales="free_y")+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC2")+ylab("Length of longest leaf [cm]")+ 
+  xlab("Environmental cline")+ylab("Length of longest leaf [cm]")+ 
   annotate(geom="text", x=-6, y=38, label="(c)",fontface="bold", size=5)+
   theme_bw() +theme(legend.position="none")
 #   theme(legend.justification=c(0,1), legend.position=c(0,1),
@@ -276,9 +276,9 @@ plfc
 
 
 ####make multi figs####
-png("Fr_Mf_Supp_DKtraits.png",width=800, height = 1200, pointsize = 12)
-multiplot(pMf_Shoot.2,plfl ,pBoltD , pCrown ,plfw , pBolt, cols=2)
-dev.off()
+# png("Fr_Mf_Supp_DKtraits.png",width=800, height = 1200, pointsize = 12)
+# multiplot(pMf_Shoot.2,plfl ,pBoltD , pCrown ,plfw , pBolt, cols=2)
+# dev.off()
 
 png("Fr_Mf_Supp_DKSKtraits_size.png",width=800, height = 1200, pointsize = 12)
 multiplot(pMf_Shoot.2, plfl.2, plfc, pMf_Crown.2 ,plfw.2, cols=2)
