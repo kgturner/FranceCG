@@ -387,7 +387,7 @@ grBatHStd[grBatHStd$RevStackymin<0,]$RevStackymin <- 0
 pBolt <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xmin, xmax=xmax, fill=factor(col))) +
   geom_rect(colour = I("white"))+
   scale_x_continuous(breaks=c(10,30,50),labels=c("Invasive", "Native", "C. stoebe"), name="Origin") +
-  scale_y_continuous(name="Bolting Probability (%)") + theme_bw()+cscale
+  scale_y_continuous(name="Bolting probability (%)") + theme_bw()+cscale
 # pBolt
 # annotate 
 pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())+
