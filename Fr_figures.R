@@ -549,7 +549,8 @@ dev.off()
 ####make multi figs####
 origincol <- c("#F8766D", "#00BA38", "#619CFF")
 
-pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
+# pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
+png("KTurnerFig3.png",width=800, height = 800, pointsize = 12)
 multiplot(pShoot, pBolt, pShoot.2, pBolt.3, cols=2)
 # legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
 #        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
