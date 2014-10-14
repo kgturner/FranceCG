@@ -217,6 +217,46 @@ pShoot.2<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point(aes(shape
 #         legend.text = element_text(size = 13))
 pShoot.2
 
+####shoot mass int pop means for ppt####
+#with SK
+png("Fr_shootint_forppt.png",width=600, height = 600, pointsize = 26)
+pShoot.ppt<- ggplot(grd2,aes(PC1, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5) + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  coord_cartesian(ylim = c(0, 120)) +
+  xlab("Environmental cline")+ylab("Shoot mass at harvest [g]")+
+#   annotate(geom="text", x=-5.1, y=110, label="(b)",fontface="bold", size=5)+
+  theme_bw() + #theme(legend.position="none")
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pShoot.ppt
+dev.off()
+
+#w/o SK
+# n <- 3 #number of variables or colors
+# hcl(h=seq(15, 375-360/n, length=n)%%360, c=100, l=65)
+# # "#F8766D" "#00BA38" "#619CFF"
+# grd2$color <- "#F8766D"
+# grd2[grd2$Origin=="Native C. diffusa",]$color <- "#00BA38"
+# grd2[grd2$Origin=="Native C. stoebe",]$color <- "#619CFF"
+dat <- subset(grd2, Origin%in%c("Invasive C. diffusa", "Native C. diffusa"))
+tricolors <- c("#F8766D", "#00BA38")
+
+png("Fr_shootint_DK_forppt.png",width=600, height = 600, pointsize = 26)
+pShootDK.ppt<- ggplot(dat,aes(PC1, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5) + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  scale_colour_manual(values=tricolors)+
+  coord_cartesian(ylim = c(0, 120)) +
+  xlab("Environmental cline")+ylab("Shoot mass at harvest [g]")+
+  #   annotate(geom="text", x=-5.1, y=110, label="(b)",fontface="bold", size=5)+
+  theme_bw() + theme(axis.title = element_text(face="bold", size=16))+
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13))
+pShootDK.ppt
+dev.off()
+
 ####Mass.log int data####
 pMass.3 <- ggplot(grdat_d,aes(PC1, Mass.log,color=Origin))+geom_point(position=position_jitter(width=1,height=.5)) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
@@ -446,6 +486,50 @@ pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=O
 #         legend.title = element_text(size=14, face="bold"),
 #         legend.text = element_text(size = 13))
 pBolt.3
+
+####bolt.bin scatterplot for ppt####
+#sk included in plot 
+moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popbolt=mean(bolt.bin, na.rm=TRUE))
+levels(moddata$Origin)[levels(moddata$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(moddata$Origin)[levels(moddata$Origin)=="nat"] <- "Native C. diffusa"
+levels(moddata$Origin)[levels(moddata$Origin)=="sk"] <- "Native C. stoebe"
+
+png("Fr_boltint_forppt.png", height = 600, width = 600, pointsize = 26)
+pBolt.ppt <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5)+
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  coord_cartesian(ylim = c(0, 1.02)) +
+  #   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+  #   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+  xlab("Environmental cline")+ylab("Bolting probability")+
+#   annotate(geom="text", x=-5.1, y=0.95, label="(d)",fontface="bold", size=5)+
+  theme_bw() + #theme(legend.position="none")
+  theme(legend.justification=c(1,1), legend.position=c(1,1),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pBolt.ppt
+dev.off()
+
+#W/o sk
+dat <- subset(moddata, Origin%in%c("Invasive C. diffusa", "Native C. diffusa"))
+tricolors <- c("#F8766D", "#00BA38")
+
+png("Fr_boltint_DK_forppt.png", height = 600, width = 600, pointsize = 26)
+pBoltDK.ppt <- ggplot(dat,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5)+
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  scale_colour_manual(values=tricolors)+
+  coord_cartesian(ylim = c(0, 1.02)) +
+  #   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+  #   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
+  xlab("Environmental cline")+ylab("Bolting probability")+
+  #   annotate(geom="text", x=-5.1, y=0.95, label="(d)",fontface="bold", size=5)+
+  theme_bw() + #theme(legend.position="none")
+  theme(legend.justification=c(1,1), legend.position=c(1,1),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pBoltDK.ppt
+dev.off()
 
 ####lfc scatterplot####
 grdat_l <- subset(Frdatsk.l, subset=lfc<200&m.date<80,select=c(1:7,22,23,26,28))

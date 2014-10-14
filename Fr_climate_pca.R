@@ -36,7 +36,7 @@ summary(Frclim.pca)
 #visualize components
 plot(Frclim.pca, main="(a) Screeplot, Montpellier Experiment", xlab="Principal component", ylim=c(0,7))
 # screeplot(Frclim.pca, type="lines")
-# biplot(Frclim.pca)
+biplot(Frclim.pca)
 #see bottom for figure
 
 # variances of the principal components:
@@ -236,6 +236,39 @@ datapc <- transform(datapc,
 plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
                                          size = 4, vjust=1, color="gray47", alpha=0.75)
 plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
+plot
+dev.off()
+
+####PC1 vs PC3 fig for ppt####
+png("FrClimatePCA_forppt.png",width=800, height = 600, pointsize = 26)
+
+plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=7) +
+  #   scale_x_continuous(expand = c(0,1)) #+
+  theme_bw() +
+  theme(legend.justification=c(1,0), legend.position=c(1,0), 
+        legend.title = element_text(size=12, face="bold"), 
+        legend.text = element_text(size = 12),
+        axis.title = element_text( size=18),
+        axis.text  = element_text(size=12), axis.text.y= element_text(angle=0))
+
+# plot
+
+plot <- plot + geom_hline(aes(0), size=1) + geom_vline(aes(0), size=1)
+datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
+mult <- min(
+  (max(data[,"PC2"]) - min(data[,"PC2"])/(max(datapc[,"PC2"])-min(datapc[,"PC2"]))),
+  (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
+)
+datapc <- transform(datapc,
+                    v1 = .7 * mult * (get("PC1")),
+                    v2 = .7 * mult * (get("PC2"))
+)
+
+plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                         size = 8, vjust=1, color="gray47", alpha=0.75)
+plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), size=2,
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot
 dev.off()

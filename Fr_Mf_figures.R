@@ -54,6 +54,40 @@ pMf_Shoot.2<- ggplot(grdmf,aes(PC2, popShootMass,color=Origin))+geom_point(aes(s
         legend.text = element_text(size = 13))
 pMf_Shoot.2
 
+####shoot mass int for ppt####
+png("FrMF_shootint_forppt.png", height = 600, width = 600, pointsize = 26)
+pMf_Shoot.ppt<- ggplot(grdmf,aes(PC2, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5) + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  #   coord_cartesian(ylim = c(0, 1.02)) +
+  xlab("Environmental cline")+ylab("Shoot mass at harvest [g]")+ 
+#   annotate(geom="text", x=-6, y=5.2, label="(a)",fontface="bold", size=5)+
+  theme_bw() +
+  theme(legend.justification=c(0,0), legend.position=c(0,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pMf_Shoot.ppt
+dev.off()
+
+#w/o SK
+dat <- subset(grdmf, Origin%in%c("Invasive C. diffusa", "Native C. diffusa"))
+tricolors <- c("#F8766D", "#00BA38")
+
+png("FrMF_shootint_DK_forppt.png", height = 600, width = 600, pointsize = 26)
+pMf_ShootDK.ppt<- ggplot(dat,aes(PC2, popShootMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5) + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  scale_colour_manual(values=tricolors)+
+  #   coord_cartesian(ylim = c(0, 1.02)) +
+  xlab("Environmental cline")+ylab("Shoot mass at harvest [g]")+ 
+  #   annotate(geom="text", x=-6, y=5.2, label="(a)",fontface="bold", size=5)+
+  theme_bw() +
+  theme(legend.justification=c(0,0), legend.position=c(0,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pMf_ShootDK.ppt
+dev.off()
+
 ####bolt.bin, scatterplot popmean include PC2####
 #sk included in plot 
 moddata <- ddply(Mf, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popbolt=mean(bolt.bin, na.rm=TRUE))
@@ -76,6 +110,46 @@ pMf_Bolt.3 <- ggplot(moddata,aes(PC2, popbolt,color=Origin))+geom_point(aes(shap
         legend.title = element_text(size=14, face="bold"),
         legend.text = element_text(size = 13))
 pMf_Bolt.3
+
+####bolt.bin scatterplot for ppt####
+#sk included in plot 
+moddata <- ddply(Mf, .(Pop, Origin, PC2), summarize, popCount=length(Pop), popbolt=mean(bolt.bin, na.rm=TRUE))
+levels(moddata$Origin)[levels(moddata$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(moddata$Origin)[levels(moddata$Origin)=="nat"] <- "Native C. diffusa"
+levels(moddata$Origin)[levels(moddata$Origin)=="sk"] <- "Native C. stoebe"
+
+png("FrMF_bolt_forppt.png", height = 600, width = 600, pointsize = 16)
+pMf_Bolt.ppt <- ggplot(moddata,aes(PC2, popbolt,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5)+
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  coord_cartesian(ylim = c(-0.02, 1.02)) +
+  xlab("Environmental cline")+ylab("Bolting probability")+ 
+#   annotate(geom="text", x=-6, y=0.7, label="(a)",fontface="bold", size=5)+
+  theme_bw() + #theme(legend.position="none")
+  theme(legend.justification=c(0,1), legend.position=c(0,1),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pMf_Bolt.ppt
+dev.off()
+
+#w/o SK
+dat <- subset(moddata, Origin%in%c("Invasive C. diffusa", "Native C. diffusa"))
+tricolors <- c("#F8766D", "#00BA38")
+
+png("FrMF_bolt_DK_forppt.png", height = 600, width = 600, pointsize = 16)
+pMf_BoltDK.ppt <- ggplot(dat,aes(PC2, popbolt,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=5)+
+  geom_smooth(method=glm, se=TRUE, size=2)+ #ylim(0,1)+
+  scale_colour_manual(values=tricolors)+
+  coord_cartesian(ylim = c(-0.02, 1.02)) +
+  xlab("Environmental cline")+ylab("Bolting probability")+ 
+  #   annotate(geom="text", x=-6, y=0.7, label="(a)",fontface="bold", size=5)+
+  theme_bw() + #theme(legend.position="none")
+  theme(legend.justification=c(0,1), legend.position=c(0,1),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13),
+        axis.title = element_text(face="bold", size=16))
+pMf_BoltDK.ppt
+dev.off()
 
 ####bolt.bin mosaic without trt####
 grdat_B <- subset(grdat_mf, !is.na(BoltedatH))
