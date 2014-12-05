@@ -8,6 +8,7 @@ Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE) #climate table with 
 #DK only
 Frclimdat.dk <- droplevels(subset(Frclimdat, Origin%in%c("inv", "nat"), select=1:24))
 
+####PCA fun times####
 #Origin and longitude artificially separates groups...
 FrclimDK.pca <- prcomp(Frclimdat.dk[2:22], center=TRUE, retx=T, scale.=TRUE)
 summary(FrclimDK.pca)
@@ -97,11 +98,24 @@ sweep(abs(FrclimDK.pca$rotation),2, colSums(abs(FrclimDK.pca$rotation)),"/")
 # bio9     0.0798326463 0.020714912 0.011509224 0.0545300906 0.0216367020 0.0171288165 0.097346339 0.239017090
 # Latitude 0.0552523962 0.054717025 0.020937658 0.0473827031 0.1104698515 0.1360869460 0.015727953 0.068859880
 
+#get top 4 PCs
+PC1 <- as.matrix(FrclimDK.pca$x[,1])
+PC2 <- as.matrix(FrclimDK.pca$x[,2])
+PC3 <- as.matrix(FrclimDK.pca$x[,3])
+# PC4 <- as.matrix(Frclim.pca$x[,4])
+Frclimdat.dk2 <- cbind(Frclimdat.dk, PC1, PC2, PC3)
+
+#write table
+write.table(Frclimdat.dk2, file="FrbioclimPCA_DKdat.txt")
+# 
+Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
+
+
 ####95% conf limits of clusters####
 scores <- FrclimDK.pca$x[,1:3]                        # scores for first three PC's
 
 # k-means clustering [assume 2 clusters]
-km     <- kmeans(scores, centers=2, nstart=5)
+km     <- kmeans(scores, centers=2, nstart=10)
 ggdata <- data.frame(scores, Cluster=km$cluster, Origin=Frclimdat.dk$Origin, alt=Frclimdat.dk$alt,Pop=Frclimdat.dk$Pop,Latitude=Frclimdat.dk$Latitude)
 
 # stat_ellipse is not part of the base ggplot package
@@ -143,16 +157,6 @@ plot
 # plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
 #                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 # plot
-
-
-
-
-
-
-
-
-
-
 
 #PC1 vs PC3
 plot <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
