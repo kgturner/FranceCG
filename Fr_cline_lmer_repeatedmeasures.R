@@ -14,7 +14,7 @@ Frdatcline.l<- read.table("FrTraitClimDat_cline_long.txt", header=T, sep="\t",qu
 
 ####models with (m.date|tagged)####
 ###lfc##############
-modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")))
+modeldata <- Frdatcline.l
 modeldata<-modeldata[!is.na(modeldata$lfc),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -25,41 +25,62 @@ summary(modeldata$Pop)
 # modeldata$PopMom <- as.factor(paste0(modeldata$Pop,"_",modeldata$Mom))
 
 #pc1
-# # partial colinearity between mom and trt?
-# xtabs(lfc~Trt+ Pop + Mom, data=modeldata)
-# count(modeldata, vars=c("Pop","Mom","Trt"))
-# summary(glm(lfc  ~ Origin * PC1 + Trt+m.date, family=poisson, data=modeldata))
+# partial colinearity between mom and trt?
+xtabs(lfc~Trt+ Pop + Mom, data=modeldata)
+count(modeldata, vars=c("Pop","Mom","Trt","m.date"))
+summary(glm(lfc  ~ Origin * PC1 + Trt+m.date, family=poisson, data=modeldata))
+#or not???
+library(caret)
+modmatrix <- subset(modeldata, select=c("Pop","Origin","Mom","Trt","tagged","m.date","lfc","PC1"))
+modmatrix$Pop <- as.numeric(modmatrix$Pop)
+modmatrix$Origin <- as.numeric(modmatrix$Origin)
+modmatrix$Mom <- as.numeric(modmatrix$Mom)
+modmatrix$Trt <- as.numeric(modmatrix$Trt)
+modmatrix$tagged <- as.numeric(modmatrix$tagged)
+modmatrix <- as.matrix(modmatrix)
+findLinearCombos(modmatrix) #none
+#test findLinearCombos
+modmatrix$Ortest <- modmatrix$Origin
+modmatrix <- as.matrix(modmatrix)
+findLinearCombos(modmatrix)
 
 modelOr <- lmer(lfc  ~ Origin * PC1 + Trt+(m.date|tagged)+(Origin|Pop/Mom), family=poisson,data=modeldata)
 model1<-lmer(lfc  ~ Origin * PC1 + Trt+(m.date|tagged)+(1|Pop/Mom), family=poisson,data=modeldata)
 anova(model1,modelOr)
-model2<-lmer(lfc  ~ Origin * PC1 + Trt+(m.date|tagged)+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(lfc  ~ Origin * PC1 + Trt+(m.date|tagged)+(1|blank), family=poisson,data=modeldata) # Test population effect
-momAov <- anova(model2,model1) # mom is sig!
+model2<-lmer(lfc  ~ Origin * PC1 + Trt+(m.date|tagged)+(Origin|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(lfc  ~ Origin * PC1 + Trt+(m.date|tagged)+(Origin|blank), family=poisson,data=modeldata) # Test population effect
+momAov <- anova(model2,modelOr) # mom is sig!
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 momAov
 popAov
 1-pchisq(2.2837,1)
-modelmdate <- lmer(lfc  ~ Origin * PC1 + Trt+(1|Pop/Mom), family=poisson,data=modeldata)
-anova(modelmdate, model1)
+modelmdate <- lmer(lfc  ~ Origin * PC1 + Trt+(Origin|Pop), family=poisson,data=modeldata)
+anova(modelmdate, model2)
 
-modelT <- lmer(lfc ~ Origin*PC1+(m.date|tagged)+(1|Pop/Mom), family=poisson,data=modeldata)
-trtAov <- anova(model1, modelT)
+#w/just mdate rando
+modelTm <- lmer(lfc ~ Origin*PC1+Trt+(m.date|tagged), family=poisson,data=modeldata)
+modelT <- lmer(lfc ~ Origin*PC1+(m.date|tagged), family=poisson,data=modeldata)
+trtAov <- anova(modelT, modelTm)
 trtAov
 
-modelint<-lmer(lfc  ~ Origin +PC1 + (m.date|tagged)+(1|Pop/Mom), family=poisson,data=modeldata)
-intAov <- anova(modelT, modelint)
+modelint<-lmer(lfc  ~ Origin +PC1 + Trt+(m.date|tagged), family=poisson,data=modeldata)
+intAov <- anova(modelTm, modelint)
 intAov
 
-modelcov <- lmer(lfc  ~ Origin +(m.date|tagged)+(1|Pop/Mom), family=poisson,data=modeldata)
+modelcov <- lmer(lfc  ~ Origin +Trt+(m.date|tagged), family=poisson,data=modeldata)
 covAov <- anova(modelint, modelcov)
 covAov
 
-modelO<-lmer(lfc ~ (m.date|tagged)+(1|Pop/Mom), family=poisson,data=modeldata)
+modelO<-lmer(lfc ~ PC1+Trt+(m.date|tagged), family=poisson,data=modeldata)
 originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
 originAov
 
 modelO
+
+
+
+
+
 
 # #lsmeans, ctrl only
 # modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"control"))
@@ -81,19 +102,24 @@ modelO
 # summary(modeldata$Origin)
 # summary(modeldata$Pop)
 
-# # #try glm
-# # modelg <- glm(lfc ~ Origin*Latitude+Trt+m.date, family=poisson,data=modeldata)
-# # modelg1 <- glm(lfc ~ Origin+Latitude+Trt+m.date, family=poisson,data=modeldata)
-# # anova(modelg1, modelg, test="LRT") 
-# # # qchisq(0.0964,1,lower=FALSE)#chisq value
-# # 
-# # modelg3<- glm(sla.log ~ Origin, family=gaussian,data=modeldata)
-# # anova(modelg3,modelg1, test="LRT")
-# # qchisq(0.9672,1,lower=FALSE)#chisq value
-# # anova(modelg3, test="LRT")
-# # # modelg2<- glm(sla.log ~ Latitude, family=gaussian,data=modeldata)
-# # # anova(modelg2,modelg1)
-# # qchisq(0.5399,1,lower=FALSE)#chisq value
+#try glm
+modelg <- glm(lfc ~ Origin*PC1+Trt+m.date, family=poisson,data=modeldata)
+modelg1 <- glm(lfc ~ Origin+PC1+Trt+m.date, family=poisson,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+# qchisq(0.0964,1,lower=FALSE)#chisq value
+modelg4 <- glm(lfc ~ Origin*PC1+m.date, family=poisson,data=modeldata)
+anova(modelg4, modelg, test="LRT") 
+
+modelgm <- glm(lfc ~ Origin*PC1+Trt, family=poisson,data=modeldata)
+anova(modelgm, modelg, test="LRT") 
+
+# modelg3<- glm(lfc ~ Origin, family=poisson,data=modeldata)
+# anova(modelg3,modelg1, test="LRT")
+# qchisq(0.9672,1,lower=FALSE)#chisq value
+# anova(modelg3, test="LRT")
+# modelg2<- glm(lfc ~ PC1, family=poisson,data=modeldata)
+# anova(modelg2,modelg1)
+# qchisq(0.5399,1,lower=FALSE)#chisq value
 ####lfc~origin*trt####
 modelOr <- lmer(lfc  ~ Origin * Trt+PC1+(m.date|tagged)+(Origin|Pop/Mom), family=poisson,data=modeldata)
 model1<-lmer(lfc  ~ Origin * Trt+PC1+ (m.date|tagged)+(1|Pop/Mom), family=poisson,data=modeldata)

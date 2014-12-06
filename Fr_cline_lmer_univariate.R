@@ -411,7 +411,7 @@ modelo
 modelcov
 
 ###Yellow####################
-modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
+modeldata <-frendcline
 modeldata<-modeldata[!is.na(modeldata$Yellow),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -428,7 +428,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(22.405,1)
+1-pchisq(4.8686,1)
 
 modelT <- lmer(Yellow  ~ Origin * PC1 +(1|Pop), family=poisson,data=modeldata)
 anova(modelT, model2)
@@ -450,6 +450,7 @@ originAov
 # ocAov
 
 modelO
+modelcov
 
 CI.LS.poisson(modelint)
 summary(modeldata$Origin)
@@ -458,35 +459,39 @@ summary(modeldata$Pop)
 modelOr <- lmer(Yellow  ~ Origin * Trt+PC1+(Origin|Pop/Mom), family=poisson,data=modeldata)
 model1<-lmer(Yellow  ~ Origin * Trt+PC1+(1|Pop/Mom), family=poisson,data=modeldata)
 anova(model1, modelOr)
-model2<-lmer(Yellow  ~ Origin * Trt +PC1+(1|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(Yellow  ~ Origin * Trt +PC1+(1|blank), family=poisson,data=modeldata) # Test population effect
-momAov <- anova(model2,model1) # mom is sig!
+model2<-lmer(Yellow  ~ Origin * Trt +PC1+(Origin|Pop), family=poisson,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(Yellow  ~ Origin * Trt +PC1+(Origin|blank), family=poisson,data=modeldata) # Test population effect
+momAov <- anova(model2,modelOr) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(26.226,1)
+1-pchisq(9.0481,1)
 
-modelP <- lmer(Yellow  ~ Origin * Trt +(1|Pop), family=poisson,data=modeldata)
+modelP <- lmer(Yellow  ~ Origin * Trt +(Origin|Pop), family=poisson,data=modeldata)
 anova(modelP, model2)
 
-modelint<-lmer(Yellow  ~ Origin +Trt +(1|Pop), family=poisson,data=modeldata)
-intAov <- anova(modelP, modelint)
+modelint<-lmer(Yellow  ~ Origin +Trt +PC1+(Origin|Pop), family=poisson,data=modeldata)
+intAov <- anova(model2, modelint)
 intAov
 
-modelcov <- lmer(Yellow  ~ Origin +(1|Pop), family=poisson,data=modeldata)
+modelcov <- lmer(Yellow  ~ Origin +PC1+(Origin|Pop), family=poisson,data=modeldata)
 covAov <- anova(modelint, modelcov)
 covAov
 
-modelO<-lmer(Yellow ~ (1|Pop), family=poisson,data=modeldata)
+modelO<-lmer(Yellow ~ PC1+(Origin|Pop), family=poisson,data=modeldata)
 originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
 originAov
 
-modelOC <- lmer(Yellow  ~ Trt +(1|Pop), family=poisson,data=modeldata)
-ocAov <- anova(modelint, modelOC)
-ocAov
+modelcov
+
+#why rando origin make things so crazy?
+modelOrT <- lmer(Yellow  ~ Origin * Trt+PC1+(Origin|Pop/Mom), family=poisson,data=modeldata)
+modelOrP <- lmer(Yellow  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=poisson,data=modeldata)
+anova(modelOrT, modelOrP)
+
 
 #####Mass.log#####
-modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
+modeldata <- frendcline
 modeldata<-modeldata[!is.na(modeldata$Mass.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -504,12 +509,13 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.2993,1)
+1-pchisq(1.2993 ,1)
 
 modelT <- lmer(Mass.log  ~ Origin * PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelT, model1)
 
 modelint<- lmer(Mass.log  ~ Origin + PC1 + (1|Pop/Mom), family=gaussian,data=modeldata)
+anova(modelint, modelT)
 
 modelT
 modelg <- glm(Mass.log ~ Origin*PC1, family=gaussian,data=modeldata)
@@ -522,8 +528,7 @@ modelT.rg1 = ref.grid(modelT)
 
 qplot(data=modeldata,PC1, Mass.log, color = Origin)+geom_point(position="jitter")
 
-#sk included in plot 
-moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMass.log=mean(Mass.log, na.rm=TRUE))
+moddata <- ddply(frendcline, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popMass.log=mean(Mass.log, na.rm=TRUE))
 
 #png("MF_    .png", height = 600, width = 600, pointsize = 16)
 qplot(data=moddata,PC1, popMass.log, color = Origin, 
@@ -555,9 +560,10 @@ modelO <- lmer(Mass.log  ~ PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelO, modelcov)
 
 modelcov
+modelg <- 
 
 ######bolt.bin####
-modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
+modeldata <- frendcline
 modeldata<-modeldata[!is.na(modeldata$bolt.bin),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -576,13 +582,31 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(2.9127 ,1)
 
-modelT <- lmer(bolt.bin  ~ Origin * PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelT, model1)
+# modelT <- lmer(bolt.bin  ~ Origin * PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
+# anova(modelT, model1)
+# 
+# modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
+# anova(modelint, modelT)
+# 
+# modelT
+#try glm
+modelg <- glm(bolt.bin ~ Origin*PC1+Trt, family=binomial,data=modeldata)
+modelg1 <- glm(bolt.bin ~ Origin*PC1, family=binomial,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.8097,1,lower=FALSE)#for gaussian put in pval to get chisq value
 
-modelint<-lmer(bolt.bin  ~ Origin +PC1  +(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelint, modelT)
+modelg3<- glm(bolt.bin ~ Origin+PC1, family=binomial,data=modeldata)
+anova(modelg3,modelg1, test="LRT")
+qchisq(0.9672,1,lower=FALSE)#chisq value
 
-modelT
+# modelg2<- glm(bolt.bin ~ Trt, family=binomial,data=modeldata)
+# anova(modelg2,modelg1)
+qchisq(0.5399,1,lower=FALSE)#chisq value
+
+summary(modelg1)
+# # modelg3
+# # summary(modelg3)
+
 
 CI.LS.binomial(modelint)
 
@@ -608,25 +632,48 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 popAov
 1-pchisq(28.398,1)
 
-modelP <- lmer(bolt.bin  ~ Origin *Trt+(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelP, model1)
+# modelP <- lmer(bolt.bin  ~ Origin *Trt+(1|Pop/Mom), family=binomial,data=modeldata)
+# anova(modelP, model1)
+# 
+# modelint<-lmer(bolt.bin  ~ Origin +Trt +PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
+# anova(modelint, model1)
+# 
+# modelcov <- lmer(bolt.bin  ~ Origin +PC1+(1|Pop/Mom), family=binomial,data=modeldata)
+# anova(modelcov, modelint)
+# 
+# modelO <- lmer(bolt.bin  ~ PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
+# anova(modelO, modelcov)
+# 
+# modelcov
 
-modelint<-lmer(bolt.bin  ~ Origin +Trt +PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelint, model1)
+#try glm
+modelg <- glm(bolt.bin ~ Origin*Trt+PC1, family=binomial,data=modeldata)
+modelg1 <- glm(bolt.bin ~ Origin*Trt, family=binomial,data=modeldata)
+anova(modelg1, modelg, test="LRT") 
+qchisq(0.8097,1,lower=FALSE)#for gaussian put in pval to get chisq value
 
-modelcov <- lmer(bolt.bin  ~ Origin +PC1+(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelcov, modelint)
+modelg3<- glm(bolt.bin ~ Origin+Trt+PC1, family=binomial,data=modeldata)
+anova(modelg3,modelg, test="LRT")
+qchisq(0.9672,1,lower=FALSE)#chisq value
 
-modelO <- lmer(bolt.bin  ~ PC1 +(1|Pop/Mom), family=binomial,data=modeldata)
-anova(modelO, modelcov)
+modelg2<- glm(bolt.bin ~ Origin + PC1, family=binomial,data=modeldata)
+anova(modelg2,modelg3, test="LRT")
+qchisq(0.5399,1,lower=FALSE)#chisq value
 
-modelcov
+modelg4<- glm(bolt.bin ~ PC1, family=binomial,data=modeldata)
+anova(modelg4,modelg2, test="LRT")
+
+summary(modelg2)
+# # modelg3
+# # summary(modelg3)
 
 ######end.bin####
-modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
+modeldata <- frendcline
 modeldata<-modeldata[!is.na(modeldata$end.bin),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 #PC1
 modelOr <- lmer(end.bin  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=binomial,data=modeldata)
@@ -676,7 +723,7 @@ anova(modelg3, test="LRT")
 
 
 modelg
-summary(modelg)
+summary(modelg3)
 
 CI.LS.binomial(modelg1)
 
@@ -734,11 +781,15 @@ modelgr<- glm(end.bin ~ Longitude, family=binomial,data=modeldata)
 anova(modelgr, test="LRT")
 # qchisq(5.0702,1,lower=FALSE)#chisq value
 
+summary(modelg3)
+
 ########sla.log#####
-modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
+modeldata <- frendcline
 modeldata<-modeldata[!is.na(modeldata$sla.log),]
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
 
 #PC1
 modelOr <- lmer(sla.log  ~ Origin * PC1 +Trt +(Origin|Pop/Mom), family=gaussian,data=modeldata)
@@ -750,21 +801,21 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.2984,1)
+1-pchisq(1.3021,1)
 # 
 #try glm
 modelg <- glm(sla.log ~ Origin*PC1+Trt, family=gaussian,data=modeldata)
 modelgT <- glm(sla.log ~ Origin*PC1, family=gaussian,data=modeldata)
 anova(modelgT, modelg, test="LRT")
-qchisq(0.9338,1,lower=FALSE)#put in pval to get chisq value
+qchisq(0.9359,1,lower=FALSE)#put in pval to get chisq value
 
 modelg1 <- glm(sla.log ~ Origin+PC1, family=gaussian,data=modeldata)
 anova(modelg1, modelgT, test="LRT") 
-qchisq(0.3571,1,lower=FALSE)#put in pval to get chisq value
+qchisq(0.3572,1,lower=FALSE)#put in pval to get chisq value
 
 modelg3<- glm(sla.log ~ Origin, family=gaussian,data=modeldata)
 anova(modelg3,modelg1, test="LRT")
-qchisq(0.1803,1,lower=FALSE)#chisq value
+qchisq(0.176,1,lower=FALSE)#chisq value
 
 anova(modelg3, test="LRT")
 # modelg2<- glm(sla.log ~ PC1, family=gaussian,data=modeldata)
@@ -787,7 +838,7 @@ popAov
 modelgP <- glm(sla.log ~ Origin*Trt+PC1, family=gaussian,data=modeldata)
 modelg <- glm(sla.log ~ Origin*Trt, family=gaussian,data=modeldata)
 anova(modelg, modelgP, test="LRT")
-qchisq(0.1694,1,lower=FALSE)
+qchisq(0.167,1,lower=FALSE)
 
 modelg1 <- glm(sla.log ~ Origin+Trt, family=gaussian,data=modeldata)
 anova(modelg1, modelg, test="LRT") 
@@ -801,7 +852,9 @@ anova(modelg3, test="LRT")
 # anova(modelg2,modelg1, test="LRT")
 qchisq(0.2667,1,lower=FALSE)#chisq value
 
-###removed####
+summary(modelg3)
+
+###unneccessary####
 ###Harvest.date####
 modeldata <- droplevels(subset(frend, Origin%in%c("inv", "nat")))
 modeldata<-modeldata[!is.na(modeldata$Harvest.date),]
