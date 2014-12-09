@@ -675,12 +675,15 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
-#PC1
-modelOr <- lmer(end.bin  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=binomial,data=modeldata)
-model1<-lmer(end.bin  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=binomial,data=modeldata)
+#need to scale to test random effects
+modeldata$end.scale <-as.vector(scale(modeldata$end.bin, center=FALSE, scale=TRUE))
+modeldata$end.sc <- as.vector(scale(modeldata$end.bin, center=TRUE, scale=TRUE))
+
+modelOr <- lmer(end.scale  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=gaussian,data=modeldata)
+model1<-lmer(end.scale  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
-model2<-lmer(end.bin  ~ Origin * PC1 +Trt+(1|Pop), family=binomial,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
-model3<-lmer(end.bin  ~ Origin * PC1 +Trt+(1|blank), family=binomial,data=modeldata) # Test population effect
+model2<-lmer(end.scale  ~ Origin * PC1 +Trt+(1|Pop), family=gaussian,data=modeldata) # Removes maternal family variance to test if it is a significant random effect
+model3<-lmer(end.scale  ~ Origin * PC1 +Trt+(1|blank), family=gaussian,data=modeldata) # Test population effect
 momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
@@ -739,14 +742,14 @@ pchisq(d_2,df=dfr,lower.tail=FALSE)
 # # # 
 # # interaction.plot(response = modeldata$end.bin, x.factor = modeldata$PC1, trace.factor = modeldata$Origin)
 # # plot(modeldata$PC1, modeldata$Origin)
-# qplot(data=modeldata, PC1, end.bin, color=Origin, geom = "jitter")
+qplot(data=modeldata, PC1, end.bin, color=Origin, geom = "jitter")
 # 
-# moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popend.bin=mean(end.bin, na.rm=TRUE))
+moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popend.bin=mean(end.bin, na.rm=TRUE))
 # 
 # #png("MF_    .png", height = 600, width = 600, pointsize = 16)
-# qplot(data=moddata,PC1, popend.bin, color = Origin, 
-#       xlab="PC1", 
-#       ylab="Population mean end.bin", main="") +geom_smooth(method=glm, se=TRUE)
+qplot(data=moddata,PC1, popend.bin, color = Origin, 
+      xlab="PC1", 
+      ylab="Population mean end.bin", main="") +geom_smooth(method=glm, se=TRUE)
 # # dev.off()
 ####end.bin~origin*trt####
 modelOr <- lmer(end.bin  ~ Origin * Trt+PC1+(Origin|Pop/Mom), family=binomial,data=modeldata)
