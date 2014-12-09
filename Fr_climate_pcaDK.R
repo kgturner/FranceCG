@@ -110,7 +110,6 @@ write.table(Frclimdat.dk2, file="FrbioclimPCA_DKdat.txt")
 # 
 Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
 
-
 ####95% conf limits of clusters####
 scores <- FrclimDK.pca$x[,1:3]                        # scores for first three PC's
 
@@ -181,6 +180,26 @@ plot <- ggplot(ggdata, aes_string(x="PC1", y="Latitude")) +
                geom="polygon", level=0.95, alpha=0.2) +
   guides(color=guide_legend("Cluster"),fill=guide_legend("Cluster"))
 plot
+
+####exploratory clustering####
+library(devtools)
+install_github("dgrtwo/broom")
+library(broom)
+
+library(dplyr)
+
+kclusts <- data.frame(k=1:9) %>% group_by(k) %>% do(km=kmeans(scores, .$k))
+clusters <- kclusts %>% group_by(k) %>% do(tidy(.$km[[1]]))
+assignments <- kclusts %>% group_by(k) %>% do(augment(.$km[[1]], scores))
+clusterings <- kclusts %>% group_by(k) %>% do(glance(.$km[[1]]))
+
+p1 <- ggplot(assignments, aes(PC1, PC2)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+p1
+p2 <- ggplot(assignments, aes(PC1, PC3)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+p2
+p3 <- p1 + geom_point(data=clusters, size=10, shape="x")
+p3
+
 
 # ##########figure#######
 # #nat and inv and sk colors:"#F8766D","#00BFC4"

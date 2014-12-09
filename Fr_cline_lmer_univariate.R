@@ -12,9 +12,9 @@ library(lme4.0)
 library(ggplot2)
 library(plyr)
 
-# library(devtools)
-# install_github("dgrtwo/broom")
-# library(broom)
+library(devtools)
+install_github("dgrtwo/broom")
+library(broom)
 
 ####gaussian models####
 #read
