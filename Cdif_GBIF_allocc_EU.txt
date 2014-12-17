@@ -1,0 +1,267 @@
+gbifID	species	basisOfRecord	year	eventDate	countryCode	decimalLongitude	decimalLatitude	locality	genus	specificEpithet	collectionCode	institutionCode	datasetKey
+1038571715	Centaurea diffusa	HUMAN_OBSERVATION	2014	2014-08-23T22:00:00.000+0000	RO	28.62956	43.91919	Küstenabschnitt südlich von Costinesti	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+920996089	Centaurea diffusa	HUMAN_OBSERVATION	2013	2013-07-29T22:00:00.000+0000	RO	28.642	44.05009	Lac Techirghiol Ost	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+859763858	Centaurea diffusa	HUMAN_OBSERVATION	2013	2013-09-29T22:00:00.000+0000	SE	12.3058	58.2993	Trollhättan (Stallbacka)	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+921023893	Centaurea diffusa	HUMAN_OBSERVATION	2013	2013-10-02T22:00:00.000+0000	DE	8.64301	49.34568	Friedhof Sandhausen - Wiese	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+615431358	Centaurea diffusa	HUMAN_OBSERVATION	2012	2012-03-17T23:00:00.000+0000	FR	5.33798	43.39161	Grande Colle	Centaurea	diffusa	cel	http://www.tela-botanica.org	baa86fb2-7346-4507-a34f-44e4c1bd0d57
+920994819	Centaurea diffusa	HUMAN_OBSERVATION	2012	2012-07-08T22:00:00.000+0000	RO	28.58582	43.90179	Fischteiche Olimp / 23August	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921008197	Centaurea diffusa	HUMAN_OBSERVATION	2012	2012-07-10T22:00:00.000+0000	RO	28.5175	43.81359	Lac Limanu/Lac Mangalia	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921004399	Centaurea diffusa	HUMAN_OBSERVATION	2012	2012-08-16T22:00:00.000+0000	DE	8.64301	49.34568	Friedhof Sandhausen - Wiese	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921019569	Centaurea diffusa	HUMAN_OBSERVATION	2012	2012-08-12T22:00:00.000+0000	DE	8.64301	49.34568	Friedhof Sandhausen - Wiese	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+411859956	Centaurea diffusa	HUMAN_OBSERVATION	2011	2011-06-19T22:00:00.000+0000	FR	5.33575	43.39292	NA	Centaurea	diffusa	cel	http://www.tela-botanica.org	baa86fb2-7346-4507-a34f-44e4c1bd0d57
+921013562	Centaurea diffusa	HUMAN_OBSERVATION	2011	2011-06-01T22:00:00.000+0000	DE	12.69565	48.2672	"Kaisersberg, Eisenfelden (Winhöring)"	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921022746	Centaurea diffusa	HUMAN_OBSERVATION	2011	2011-06-03T22:00:00.000+0000	DE	8.68797	49.39665	Heidelberg	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+895225083	Centaurea diffusa	PRESERVED_SPECIMEN	2011	2011-07-30T22:00:00.000+0000	ES	-1.83837	39.39319	"Jarafuel (Vall de Cofrents), Muela del Juey"	Centaurea	diffusa	VAL	VAL	834a4794-f762-11e1-a439-00145eb45e9a
+920994041	Centaurea diffusa	HUMAN_OBSERVATION	2010	2010-06-11T22:00:00.000+0000	DE	8.68877	49.39746	Rohrbacherstrasse	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921001378	Centaurea diffusa	HUMAN_OBSERVATION	2010	2010-07-14T22:00:00.000+0000	RO	28.57956	44.02146	Lac Techirghiol West	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921010928	Centaurea diffusa	HUMAN_OBSERVATION	2010	2010-07-12T22:00:00.000+0000	RO	28.57956	44.02146	Lac Techirghiol West	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921020901	Centaurea diffusa	HUMAN_OBSERVATION	2010	2010-07-02T22:00:00.000+0000	HU	20.44412	46.8891	Lacke an der 44 kurz vor Szarvas	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+367026492	Centaurea diffusa	UNKNOWN	2010	2010-07-19T22:00:00.000+0000	AT	16.39556	48.18222	"Wien III., Arsenal, beim Objekt 12"	Centaurea	diffusa	Herbarium W	W	7f5260c2-f762-11e1-a439-00145eb45e9a
+921011246	Centaurea diffusa	HUMAN_OBSERVATION	2010	2010-09-01T22:00:00.000+0000	DE	8.50136	49.5509	Käfertaler Wald	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921011975	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-05-25T22:00:00.000+0000	FR	3.1354	43.13851	Sandige Pferdeweide	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+921018849	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-06-26T22:00:00.000+0000	DE	8.56779	49.83898	Griesheimer Düne u. Eichwäldchen	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+852031079	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-08-11T22:00:00.000+0000	SE	12.3074	58.3015	"Trollhättan, Stallbackaområdet"	Centaurea	diffusa	Anders	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+788621230	Centaurea diffusa	PRESERVED_SPECIMEN	2009	2009-08-07T22:00:00.000+0000	SE	12.27909	58.27884	No locality information available	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+788630655	Centaurea diffusa	PRESERVED_SPECIMEN	2009	2009-08-07T22:00:00.000+0000	SE	12.27909	58.27884	No locality information available	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+852325946	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-08-18T22:00:00.000+0000	SE	12.3074	58.3015	Stallbacka industriområde	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+852306577	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-09-25T22:00:00.000+0000	SE	12.3061	58.2989	Stallbacka	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+852324546	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-10-02T22:00:00.000+0000	SE	12.3074	58.3015	"Trollhättan, Stallbacka industriområde"	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+852311815	Centaurea diffusa	HUMAN_OBSERVATION	2009	2009-10-03T22:00:00.000+0000	SE	12.3079	58.3016	Stallbacka	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+332160836	Centaurea diffusa	HUMAN_OBSERVATION	2008	2008-06-25T22:00:00.000+0000	FR	5.32403	43.39912	La Grande Colle	Centaurea	diffusa	cel	http://www.tela-botanica.org	baa86fb2-7346-4507-a34f-44e4c1bd0d57
+727819192	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-23T22:00:00.000+0000	BG	28.45767	43.38222	"north of Varna, along road leading to Cape Kaliakra"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965857	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-22T22:00:00.000+0000	TR	27.24788	41.75123	"surroundings of Kirklarelì, towards Bulgarian border"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965852	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-23T22:00:00.000+0000	BG	28.45767	43.38222	"north of Varna, along road leading to Cape Kaliakra"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+727819196	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-19T22:00:00.000+0000	GR	23.07868	40.62162	"north of Thessaloniki, Chortiatis"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+1038569168	Centaurea diffusa	HUMAN_OBSERVATION	2008	2008-08-02T22:00:00.000+0000	DE	8.56779	49.83898	Griesheimer Düne u. Eichwäldchen	Centaurea	diffusa	naturgucker	naturgucker	6ac3f774-d9fb-4796-b3e9-92bf6c81c084
+727819194	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-18T22:00:00.000+0000	GR	22.54818	40.15677	"south of Katerini, beach of Litochoron"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+727819202	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-22T22:00:00.000+0000	TR	27.24788	41.75123	"surroundings of Kirklarelì, towards Bulgarian border"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965864	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-19T22:00:00.000+0000	GR	23.07868	40.62162	"north of Thessaloniki, Chortiatis"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965851	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-21T22:00:00.000+0000	GR	25.79317	40.85102	between Makri and Alexandrupolis	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965849	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-18T22:00:00.000+0000	GR	22.54818	40.15677	"south of Katerini, beach of Litochoron"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965870	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-24T22:00:00.000+0000	RO	28.63703	44.11052	near harbour of Constanta	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+727819197	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-21T22:00:00.000+0000	GR	25.79317	40.85102	between Makri and Alexandrupolis	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+727819201	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-24T22:00:00.000+0000	RO	28.63703	44.11052	near harbour of Constanta	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+918965856	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-31T22:00:00.000+0000	HU	18.78257	47.642	"west of Budapest, between Tinnye and Pilisjászfalu, Gerecse Mountains"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+727819199	Centaurea diffusa	PRESERVED_SPECIMEN	2008	2008-08-31T22:00:00.000+0000	HU	18.78257	47.642	"west of Budapest, between Tinnye and Pilisjászfalu, Gerecse Mountains"	Centaurea	diffusa	UBC	University of British Columbia	07fd0d79-4883-435f-bba1-58fef110cd13
+833536911	Centaurea diffusa	OBSERVATION	2003	2003-10-14T22:00:00.000+0000	DE	12.29157	51.32496	Leipzig-Plagwitz	Centaurea	diffusa	MNHN-Feldbeobachtungsdaten Pflanzen	MNHM	6a122346-08b9-11e3-ab1f-00145eb45e9a
+788462754	Centaurea diffusa	PRESERVED_SPECIMEN	2002	2002-07-22T22:00:00.000+0000	GR	24.76667	41.08333	W side of Nestos river between Paradisos and Toxotes	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+767974977	Centaurea diffusa	PRESERVED_SPECIMEN	2002	2002-11-29T23:00:00.000+0000	FR	-1.45	43.57	Boucau	Centaurea	diffusa	ARAN-EH	ARAN	90ae13f0-288f-4108-b741-ac8a0f9e0878
+689546	Centaurea diffusa	PRESERVED_SPECIMEN	2000	2000-10-07T22:00:00.000+0000	GR	22.85	40.48333	"Near the village of Angolochori, SW of Thessaloniki"	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+689571	Centaurea diffusa	PRESERVED_SPECIMEN	2000	2000-10-04T22:00:00.000+0000	GR	23.85	40.83333	2 km NE of Amphipolis	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+1045038462	Centaurea diffusa	PRESERVED_SPECIMEN	1997	1997-09-06T22:00:00.000+0000	DE	6.96028	49.9775	"Rheinland-Pfalz, Wittlich-Wengerohr, Landkreis Bernkastel-Wittlich, NW-Rand der Bauschuttdeponie 1500 m ENE Bahnhof, TK 6007/2."	Centaurea	diffusa	Herbarium Berolinense	BGBM	85714c48-f762-11e1-a439-00145eb45e9a
+774372686	Centaurea diffusa	PRESERVED_SPECIMEN	1997	1997-09-06T22:00:00.000+0000	DE	6.96028	49.9775	"Rheinland-Pfalz, Wittlich-Wengerohr, Landkreis Bernkastel-Wittlich, NW-Rand der Bauschuttdeponie 1500 m ENE Bahnhof, TK 6007/2."	Centaurea	diffusa	Herbarium Berolinense	BGBM	85714c48-f762-11e1-a439-00145eb45e9a
+441987878	Centaurea diffusa	PRESERVED_SPECIMEN	1995	1995-07-19T22:00:00.000+0000	DE	13.04556	52.40333	"Grassau S, ehem. Flugplatz Lönnewitz, nahe Grassau, nahe ehem. Bahnhof, Ödland"	Centaurea	diffusa	GLMcoll	GLM	7a2660bc-f762-11e1-a439-00145eb45e9a
+833536910	Centaurea diffusa	OBSERVATION	1994	1993-12-31T23:00:00.000+0000	DE	8.29145	49.9749	Mainz-Laubenheim	Centaurea	diffusa	MNHN-Feldbeobachtungsdaten Pflanzen	MNHM	6a122346-08b9-11e3-ab1f-00145eb45e9a
+895314727	Centaurea diffusa	PRESERVED_SPECIMEN	1994	1994-08-04T22:00:00.000+0000	GR	25.92	40.9333	"1 km N of Avas (Thrace, Nomos Evrou, Eparchia Alexandroupoleos)"	Centaurea	diffusa	VAL	VAL	834a4794-f762-11e1-a439-00145eb45e9a
+833536909	Centaurea diffusa	OBSERVATION	1990	1989-12-31T23:00:00.000+0000	DE	8.04144	49.9749	Ingelheim	Centaurea	diffusa	MNHN-Feldbeobachtungsdaten Pflanzen	MNHM	6a122346-08b9-11e3-ab1f-00145eb45e9a
+296440620	Centaurea diffusa	PRESERVED_SPECIMEN	1988	1988-07-27T22:00:00.000+0000	TR	29.829	40.261	A2 (A) Bursa: Bilecik - Yenisehir 17 km E Yenisehir	Centaurea	diffusa	Tiroler Landesmuseum Ferdinandeum	TLMF	7b904404-f762-11e1-a439-00145eb45e9a
+217911776	Centaurea diffusa	HUMAN_OBSERVATION	1979	1979-09-14T23:00:00.000+0000	ES	-3.1	38.1	"Manzanares, ruderal en Sylibo-Urticion"	Centaurea	diffusa	ANTHOS	FUND. BIODIVERSIDAD	4cf3eec1-b902-40c9-b15b-05c5fe5928b6
+217911152	Centaurea diffusa	HUMAN_OBSERVATION	1979	1979-09-14T23:00:00.000+0000	ES	-3.1	38.1	"Manzanares, ruderal en Sylibo-Urticion"	Centaurea	diffusa	ANTHOS	FUND. BIODIVERSIDAD	4cf3eec1-b902-40c9-b15b-05c5fe5928b6
+833455563	Centaurea diffusa	PRESERVED_SPECIMEN	1975	1975-07-24T23:00:00.000+0000	DE	8.1	49.18333	Landau	Centaurea	diffusa	MNHN-HerbariumOesau	MNHM	69f0f5c2-08b9-11e3-ab1f-00145eb45e9a
+833455579	Centaurea diffusa	PRESERVED_SPECIMEN	1973	1973-07-06T23:00:00.000+0000	DE	8.46667	49.46667	Mannheim	Centaurea	diffusa	MNHN-HerbariumOesau	MNHM	69f0f5c2-08b9-11e3-ab1f-00145eb45e9a
+307501201	Centaurea diffusa	OBSERVATION	1969	NA	GB	-0.11009	53.61637	No site name available	Centaurea	diffusa	6342	Botanical Society of the British Isles	086a644d-6cbe-43b7-b7c7-d33d36028d7f
+725174968	Centaurea diffusa	PRESERVED_SPECIMEN	1961	1961-07-31T23:00:00.000+0000	FI	23.71066	61.49327	"Suomi, EH, Tampere"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174681	Centaurea diffusa	PRESERVED_SPECIMEN	1961	1961-08-31T23:00:00.000+0000	FI	23.71066	61.49327	"Suomi, EH, Tampere"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174680	Centaurea diffusa	PRESERVED_SPECIMEN	1960	1960-07-31T23:00:00.000+0000	FI	23.71066	61.49327	"Suomi, EH, Tampere"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174969	Centaurea diffusa	PRESERVED_SPECIMEN	1960	1960-09-30T23:00:00.000+0000	FI	23.71066	61.49327	"Suomi, EH, Tampere"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174671	Centaurea diffusa	PRESERVED_SPECIMEN	1959	1959-07-31T23:00:00.000+0000	FI	24.6948	60.88486	"Suomi, EH, Janakkala"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+855620108	Centaurea diffusa	HUMAN_OBSERVATION	1954	1954-04-30T23:00:00.000+0000	SE	16.3336	58.6307	Djurö kvarn	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+890523727	Centaurea diffusa	HUMAN_OBSERVATION	1954	1954-07-31T23:00:00.000+0000	SE	16.3353	58.6314	"Djurö kvarn, Djurön"	Centaurea	diffusa	Artport	ArtDatabanken	38b4c89f-584c-41bb-bd8f-cd1def33e92f
+325519769	Centaurea diffusa	PRESERVED_SPECIMEN	1951	1951-08-28T23:00:00.000+0000	LU	6.13	49.64	Luxembourg (Ville)	Centaurea	diffusa	Recorder database	MNHNL	962f59bc-f762-11e1-a439-00145eb45e9a
+325519755	Centaurea diffusa	PRESERVED_SPECIMEN	1949	1949-08-10T23:00:00.000+0000	LU	6.13	49.64	Luxembourg (Ville)	Centaurea	diffusa	Recorder database	MNHNL	962f59bc-f762-11e1-a439-00145eb45e9a
+325519760	Centaurea diffusa	PRESERVED_SPECIMEN	1949	1949-08-10T23:00:00.000+0000	LU	6.13	49.64	Luxembourg (Ville)	Centaurea	diffusa	Recorder database	MNHNL	962f59bc-f762-11e1-a439-00145eb45e9a
+199563808	Centaurea diffusa	HUMAN_OBSERVATION	1949	NA	LU	6.14	49.64	Dommeldange	Centaurea	diffusa	Recorder database	MNHNL	962f59bc-f762-11e1-a439-00145eb45e9a
+474263835	Centaurea diffusa	PRESERVED_SPECIMEN	1948	1948-07-31T22:00:00.000+0000	FI	25.40523	65.0231	"Suomi, OP, Oulu"	Centaurea	diffusa	Kastikka OULU	FMNH	82983b4e-f762-11e1-a439-00145eb45e9a
+474263714	Centaurea diffusa	PRESERVED_SPECIMEN	1948	1948-07-31T22:00:00.000+0000	FI	25.40523	65.0231	"Suomi, OP, Oulu"	Centaurea	diffusa	Kastikka OULU	FMNH	82983b4e-f762-11e1-a439-00145eb45e9a
+199563807	Centaurea diffusa	HUMAN_OBSERVATION	1948	NA	LU	6.14	49.64	Dommeldange	Centaurea	diffusa	Recorder database	MNHNL	962f59bc-f762-11e1-a439-00145eb45e9a
+474263712	Centaurea diffusa	PRESERVED_SPECIMEN	1947	1946-12-31T23:00:00.000+0000	FI	24.92524	60.17058	"Suomi, U, Helsinki"	Centaurea	diffusa	Kastikka OULU	FMNH	82983b4e-f762-11e1-a439-00145eb45e9a
+725174669	Centaurea diffusa	PRESERVED_SPECIMEN	1947	1947-07-31T22:00:00.000+0000	FI	21.54034	63.1326	"Suomi, EP, Vaasa"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174670	Centaurea diffusa	PRESERVED_SPECIMEN	1947	1947-07-31T22:00:00.000+0000	FI	21.54034	63.1326	"Suomi, EP, Vaasa"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174672	Centaurea diffusa	PRESERVED_SPECIMEN	1917	1917-07-31T23:00:00.000+0000	FI	23.71066	61.49327	"Suomi, EH, pirkkala"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+725174673	Centaurea diffusa	PRESERVED_SPECIMEN	1917	1917-07-31T23:00:00.000+0000	FI	23.71066	61.49327	"Suomi, EH, pirkkala"	Centaurea	diffusa	Kastikka H	FMNH	82c11e9c-f762-11e1-a439-00145eb45e9a
+441986212	Centaurea diffusa	PRESERVED_SPECIMEN	1914	1914-08-23T23:00:00.000+0000	RO	28.33333	44.33333	"Constantia, bei Constantia"	Centaurea	diffusa	GLMcoll	GLM	7a2660bc-f762-11e1-a439-00145eb45e9a
+616365983	Centaurea diffusa	PRESERVED_SPECIMEN	1912	1912-08-18T23:00:00.000+0000	NL	5.68989	50.87904	Borgharen	Centaurea	diffusa	Botanical collection	NHMM	4f72060d-2c72-4d5f-addc-8d1b1049c78a
+616365955	Centaurea diffusa	PRESERVED_SPECIMEN	1912	1912-08-14T23:00:00.000+0000	NL	5.44	50.54	Bunde	Centaurea	diffusa	Botanical collection	NHMM	4f72060d-2c72-4d5f-addc-8d1b1049c78a
+616365424	Centaurea diffusa	PRESERVED_SPECIMEN	1911	1911-07-09T23:00:00.000+0000	NL	5.72506	51.24649	Weert	Centaurea	diffusa	Botanical collection	NHMM	4f72060d-2c72-4d5f-addc-8d1b1049c78a
+788689225	Centaurea diffusa	PRESERVED_SPECIMEN	1907	1907-08-10T23:00:00.000+0000	SE	14.34889	55.55699	Simrishamn	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+788689105	Centaurea diffusa	PRESERVED_SPECIMEN	1907	NA	SE	12.84995	55.41965	SkanÃ¶r	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+788722930	Centaurea diffusa	PRESERVED_SPECIMEN	1907	NA	SE	12.84995	55.41965	SkanÃ¶r	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+788690359	Centaurea diffusa	PRESERVED_SPECIMEN	1906	NA	SE	17.35246	62.448	No locality information available	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+20713174	Centaurea diffusa	PRESERVED_SPECIMEN	1905	NA	NO	10.95151	59.18695	"Sme[?]. Øren, Fredrikstad"	Centaurea	diffusa	V	O	e45c7d91-81c6-4455-86e3-2965a5739b1f
+20713168	Centaurea diffusa	PRESERVED_SPECIMEN	1905	1905-07-18T23:00:00.000+0000	NO	10.95151	59.18695	Øren (paa ballast) Østre Fredrikstad	Centaurea	diffusa	V	O	e45c7d91-81c6-4455-86e3-2965a5739b1f
+1041738302	Centaurea diffusa	PRESERVED_SPECIMEN	1905	1905-07-18T23:00:00.000+0000	NO	10.87356	59.19856	"Smaalenenes amt, Østre Fredrikstad: Øren (paa ballast)"	Centaurea	diffusa	V	TROM	d0aa984e-c6d3-45ee-8fc0-df1df8f4126b
+1041738328	Centaurea diffusa	PRESERVED_SPECIMEN	1905	1905-09-23T23:00:00.000+0000	NO	8.05735	58.1286	Christiansand	Centaurea	diffusa	V	TROM	d0aa984e-c6d3-45ee-8fc0-df1df8f4126b
+788689165	Centaurea diffusa	PRESERVED_SPECIMEN	1904	NA	SE	17.63407	59.85815	No locality information available	Centaurea	diffusa	General	LD	aab0cf80-0c64-11dd-84d1-b8a03c50a862
+20713180	Centaurea diffusa	PRESERVED_SPECIMEN	1897	1897-07-01T23:00:00.000+0000	NO	7.95311	58.24846	Vennesla: Vigeland	Centaurea	diffusa	V	O	e45c7d91-81c6-4455-86e3-2965a5739b1f
+20713184	Centaurea diffusa	PRESERVED_SPECIMEN	1897	1897-07-01T23:00:00.000+0000	NO	7.95311	58.24846	"Vennesla: Vigeland, i en thimoteieng"	Centaurea	diffusa	V	O	e45c7d91-81c6-4455-86e3-2965a5739b1f
+684151447	Centaurea diffusa	PRESERVED_SPECIMEN	1897	1897-08-19T23:00:00.000+0000	IT	10.81278	45.57111	Rivoli Veronese	Centaurea	diffusa	Tiroler Landesmuseum Ferdinandeum	TLMF	7b904404-f762-11e1-a439-00145eb45e9a
+20713178	Centaurea diffusa	PRESERVED_SPECIMEN	1893	NA	NO	7.96796	58.14798	Grim ved Kr. sand	Centaurea	diffusa	V	O	e45c7d91-81c6-4455-86e3-2965a5739b1f
+20713176	Centaurea diffusa	PRESERVED_SPECIMEN	1893	1893-07-19T23:00:00.000+0000	NO	7.97459	58.15342	Grims øvre mølle Kristianssand	Centaurea	diffusa	V	O	e45c7d91-81c6-4455-86e3-2965a5739b1f
+306598310	Centaurea diffusa	OBSERVATION	1888	NA	GB	-5.5707	50.15948	Site name protected	Centaurea	diffusa	6340	Botanical Society of the British Isles	086a644d-6cbe-43b7-b7c7-d33d36028d7f
+695807179	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.25	51.56	MTB 4445: Übigau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807245	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.58	51.36	MTB 4629: Keula	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+620619000	Centaurea diffusa	PRESERVED_SPECIMEN	NA	NA	AM	44.51962	40.19195	"Eriwan, Antarain Straße westlich Handschriftenmuseum"	Centaurea	diffusa	Herbarium Senckenbergianum	FR	966426ce-f762-11e1-a439-00145eb45e9a
+695807189	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	51.36	MTB 4640: Leipzig (Ost)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807255	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.92	51.16	MTB 4855: Görlitz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807168	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.76	MTB 4239: Raguhn	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807234	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.42	51.76	MTB 4234: Aschersleben	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+617297318	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.46	39.02	"Manzanares, margen de la N-IV, Km 165"	Centaurea	diffusa	INV	SIVIM	d4aa2255-f927-4220-af22-2958298733b7
+695807135	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.75	51.06	MTB 4948: Dresden	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807201	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.92	50.96	MTB 5007: Köln	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807134	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	51.06	MTB 4932: Stotternheim	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807200	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.75	50.96	MTB 5006: Frechen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807124	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.75	51.46	MTB 4506: Duisburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807176	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.75	51.56	MTB 4436: Wettin	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807242	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.42	51.46	MTB 4528: Worbis	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807121	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.08	53.56	MTB 2426: Wandsbek	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807187	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.92	51.36	MTB 4637: Merseburg (West)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807253	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	51.16	MTB 4831: Gebesee	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807165	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	51.76	MTB 4235: Güsten	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807231	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.42	52.46	MTB 3546: Berlin (Süd)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+618293663	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.46	38.93	"Manzanares, carretera N-IV, Km 172. junto al cruce de Manzanares"	Centaurea	diffusa	INV	SIVIM	d4aa2255-f927-4220-af22-2958298733b7
+695807199	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	51.06	MTB 4932: Stotternheim	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807265	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.58	49.86	MTB 6117: Darmstadt West	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807178	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.56	MTB 4439: Brehna	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807244	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.75	51.46	MTB 4542: Thallwitz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807156	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.42	52.46	MTB 3546: Berlin (Süd)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807222	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.08	48.76	MTB 7220: Stuttgart-Südwest	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807257	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	51.06	MTB 4935: Apolda	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807120	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.92	53.56	MTB 2425: Hamburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807125	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	7.08	51.46	MTB 4508: Essen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807166	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.75	51.76	MTB 4236: Bernburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807232	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.92	52.16	MTB 3825: Hildesheim	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807256	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	51.06	MTB 4932: Stotternheim	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807155	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.25	52.46	MTB 3545: Berlin-Zehlendorf	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807221	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.25	48.86	MTB 7121: Stuttgart-Nordost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807195	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.92	51.26	MTB 4737: Weißenfels	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807261	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.58	50.86	MTB 5105: Nörvenich	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807273	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.06	MTB 6916: Karlsruhe-Nord	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807137	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.42	50.86	MTB 5134: Blankenhain	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807203	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	50.86	MTB 5131: Arnstadt	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807196	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	51.26	MTB 4740: Markkleeberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807262	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	50.86	MTB 5131: Arnstadt	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807227	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.75	48.56	MTB 7430: Wertingen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807239	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.66	MTB 4339: Bitterfeld (West)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807163	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.25	51.76	MTB 4233: Ballenstedt	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807169	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.58	51.66	MTB 4305: Wesel	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807235	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	51.76	MTB 4235: Güsten	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807236	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.75	51.76	MTB 4236: Bernburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807246	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.36	MTB 4639: Leipzig (West)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807136	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.58	50.86	MTB 5105: Nörvenich	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807202	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	50.96	MTB 5035: Jena	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807185	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.58	51.46	MTB 4541: Eilenburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807251	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	51.26	MTB 4740: Markkleeberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807154	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.75	52.56	MTB 3448: Altlandsberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807220	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	48.96	MTB 7016: Karlsruhe-Süd	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807143	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.25	49.06	MTB 6915: Wörth am Rhein	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807142	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.58	49.26	MTB 6729: Ansbach Süd	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807258	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.75	50.96	MTB 5006: Frechen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807152	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.25	52.56	MTB 3445: Berlin-Spandau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807186	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.08	51.46	MTB 4550: Hohenbocka	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807252	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.42	51.26	MTB 4752: Radibor	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807130	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.08	51.26	MTB 4750: Kamenz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807153	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.42	52.56	MTB 3446: Berlin (Nord)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807144	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.06	MTB 6916: Karlsruhe-Nord	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807210	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.46	MTB 6516: Mannheim-Südwest	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807164	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.42	51.76	MTB 4234: Aschersleben	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807230	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.25	52.46	MTB 3545: Berlin-Zehlendorf	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807266	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.42	49.76	MTB 6222: Stadtprozelten	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807159	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.25	51.86	MTB 4133: Wegeleben	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807225	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.08	48.66	MTB 7320: Böblingen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+217906593	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.1	38.1	Manzanares	Centaurea	diffusa	ANTHOS	FUND. BIODIVERSIDAD	4cf3eec1-b902-40c9-b15b-05c5fe5928b6
+695807131	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.25	51.16	MTB 4845: Lommatzsch	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807157	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.42	52.16	MTB 3846: Sperenberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807223	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.25	48.76	MTB 7221: Stuttgart-Südost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807184	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.08	51.46	MTB 4538: Dieskau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807250	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.92	51.26	MTB 4737: Weißenfels	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807138	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.08	50.76	MTB 5202: Aachen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807204	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	7.75	49.96	MTB 6012: Stromberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807248	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	7.08	51.26	MTB 4708: Wuppertal-Elberfeld	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807249	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.42	51.26	MTB 4728: Mühlhausen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807247	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	51.36	MTB 4640: Leipzig (Ost)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807193	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	7.08	51.26	MTB 4708: Wuppertal-Elberfeld	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807139	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	50.76	MTB 5240: Zwickau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807205	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.96	MTB 6016: Groß-Gerau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807182	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.75	51.46	MTB 4536: Schraplau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807209	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.25	49.46	MTB 6515: Bad Dürkheim-Ost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+684151446	Centaurea diffusa	PRESERVED_SPECIMEN	NA	NA	FR	4.68361	46.0275	Arnas	Centaurea	diffusa	Tiroler Landesmuseum Ferdinandeum	TLMF	7b904404-f762-11e1-a439-00145eb45e9a
+695807192	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.92	51.26	MTB 4707: Mettmann	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807219	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.06	MTB 6916: Karlsruhe-Nord	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807270	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	49.46	MTB 6532: Nürnberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807161	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.92	51.86	MTB 4149: Lübbenau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+325519741	Centaurea diffusa	PRESERVED_SPECIMEN	NA	NA	LU	6	49.99	Wilwerwiltz	Centaurea	diffusa	Recorder database	MNHNL	962f59bc-f762-11e1-a439-00145eb45e9a
+695807170	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.66	MTB 4339: Bitterfeld (West)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+214388591	Centaurea diffusa	PRESERVED_SPECIMEN	NA	NA	GR	25.92	40.93	1 km N of Avas	Centaurea	diffusa	SALA	SALA	834b7330-f762-11e1-a439-00145eb45e9a
+695807150	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	52.96	MTB 3040: Kyritz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807226	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	7.75	48.56	MTB 7412: Kehl	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807128	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.58	51.36	MTB 4605: Krefeld	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807229	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.08	52.56	MTB 3450: Müncheberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807180	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	51.46	MTB 4531: Heringen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807207	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.56	MTB 6416: Mannheim-Nordwest	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+617297299	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.46	39.02	"Manzanares, margen de la N-IV, Km 168"	Centaurea	diffusa	INV	SIVIM	d4aa2255-f927-4220-af22-2958298733b7
+695807181	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	51.46	MTB 4535: Erdeborn	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807208	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.58	49.56	MTB 6417: Mannheim-Nordost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+235127526	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	BE	4.36183	50.7836	NA	Centaurea	diffusa	IFBL	BR	940821c0-3269-11df-855a-b8a03c50a862
+695807149	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	48.16	MTB 7835: München	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807215	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.08	49.16	MTB 6814: Landau in der Pfalz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807197	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.42	51.16	MTB 4852: Bautzen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807263	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.92	50.86	MTB 5143: Chemnitz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807269	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.58	49.46	MTB 6517: Mannheim-Südost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807158	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.08	52.06	MTB 3950: Gr. Leuthen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807224	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.92	48.66	MTB 7319: Gärtringen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807126	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	51.46	MTB 4532: Kelbra	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807173	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.75	51.56	MTB 4430: Nordhausen Nord	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807259	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	50.96	MTB 5031: Neudietendorf	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807228	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.25	48.46	MTB 7521: Reutlingen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807162	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	51.76	MTB 4231: Blankenburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807183	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.92	51.46	MTB 4537: Halle/Saale (Süd)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807206	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.92	49.76	MTB 6225: Würzburg Süd	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807272	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.25	49.06	MTB 6915: Wörth am Rhein	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807160	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.86	MTB 4139: Dessau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807216	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.58	49.16	MTB 6817: Bruchsal	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807194	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.42	51.26	MTB 4728: Mühlhausen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807260	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	50.96	MTB 5032: Erfurt	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807237	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.58	51.66	MTB 4305: Wesel	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807238	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.75	51.66	MTB 4336: Könnern	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807151	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.42	52.66	MTB 3346: Schönerlinde	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+618293974	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.46	39.02	"Manzanares, campo de barbecho pr<U+FFFD>ximo al Km 166"	Centaurea	diffusa	INV	SIVIM	d4aa2255-f927-4220-af22-2958298733b7
+695807172	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.08	51.66	MTB 4350: Alt-Döbern	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807140	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.46	MTB 6516: Mannheim-Südwest	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807145	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.25	48.86	MTB 7121: Stuttgart-Nordost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807211	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.58	49.46	MTB 6517: Mannheim-Südost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807188	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.36	MTB 4639: Leipzig (West)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807254	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.42	51.16	MTB 4852: Bautzen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807167	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.92	51.76	MTB 4237: Köthen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807233	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	52.16	MTB 3835: Magdeburg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807123	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.08	51.86	MTB 4138: Aken	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807146	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.25	48.76	MTB 7221: Stuttgart-Südost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807212	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	49.46	MTB 6532: Nürnberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807177	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.92	51.56	MTB 4437: Halle/Saale (Nord)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807243	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.42	51.46	MTB 4540: Zschortau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807132	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.42	51.16	MTB 4852: Bautzen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807268	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.46	MTB 6516: Mannheim-Südwest	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807190	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.58	51.36	MTB 4641: Brandis	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807217	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.08	49.06	MTB 6914: Schaidt	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807127	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.75	51.46	MTB 4536: Schraplau	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807129	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	12.25	51.36	MTB 4639: Leipzig (West)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807271	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.25	49.36	MTB 6615: Haßloch	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807174	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	10.92	51.56	MTB 4431: Stollberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807240	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.25	51.56	MTB 4433: Wippra	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807191	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.75	51.26	MTB 4706: Düsseldorf	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807218	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.25	49.06	MTB 6915: Wörth am Rhein	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807171	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.92	51.66	MTB 4349: Göllnitz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+217911153	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.1	38.1	Manzanares	Centaurea	diffusa	ANTHOS	FUND. BIODIVERSIDAD	4cf3eec1-b902-40c9-b15b-05c5fe5928b6
+695807198	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.92	51.16	MTB 4855: Görlitz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807264	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.08	50.76	MTB 5202: Aachen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807175	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.58	51.56	MTB 4435: Eisleben	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807241	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	6.92	51.46	MTB 4507: Mülheim an der Ruhr	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807274	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	7.75	48.56	MTB 7412: Kehl	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807148	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.25	48.46	MTB 7521: Reutlingen	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807214	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.08	49.26	MTB 6714: Edenkoben	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807133	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	14.92	51.16	MTB 4855: Görlitz	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+217911777	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	ES	-3.1	38.1	Manzanares	Centaurea	diffusa	ANTHOS	FUND. BIODIVERSIDAD	4cf3eec1-b902-40c9-b15b-05c5fe5928b6
+695807267	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.42	49.56	MTB 6416: Mannheim-Nordwest	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807122	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	13.42	52.46	MTB 3546: Berlin (Süd)	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807141	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	11.08	49.46	MTB 6532: Nürnberg	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807147	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	9.92	48.66	MTB 7325: Geislingen an der Steige-Ost	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
+695807213	Centaurea diffusa	HUMAN_OBSERVATION	NA	NA	DE	8.25	49.36	MTB 6615: Haßloch	Centaurea	diffusa	FlorKart_BfN	BfN	36c6ba38-1387-11e2-bb2e-00145eb45e9a
