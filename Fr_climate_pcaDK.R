@@ -246,52 +246,52 @@ p3
 # #                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 # # plot
 # 
-# ####PC1 vs PC2 fig####
-# #pts instead of labels for pops
-# # library("ggplot2")
-# library("grid") 
-# data <- data.frame(obsnames=row.names(Frclim.pca$x), Frclim.pca$x)
-# data <- merge(data, unique(Frdes[,c(5,7,12)]),by.x="obsnames", by.y="Pop")
-# levels(data$Origin)[levels(data$Origin)=="inv"] <- "Invasive C. diffusa"
-# levels(data$Origin)[levels(data$Origin)=="nat"] <- "Native C. diffusa"
+####PC1 vs PC2 fig####
+#pts instead of labels for pops
+# library("ggplot2")
+library("grid") 
+data <- data.frame(obsnames=row.names(FrclimDK.pca$x), FrclimDK.pca$x)
+data <- merge(data, Frclimdat.dk[,c(1,24)],by.x="obsnames", by.y="Pop")
+levels(data$Origin)[levels(data$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(data$Origin)[levels(data$Origin)=="nat"] <- "Native C. diffusa"
 # levels(data$Origin)[levels(data$Origin)=="sk"] <- "Native C. stoebe"
-# # data$pch <- 15
-# # data[data$Origin %in% "nat",]$pch <- 16
-# # data[data$Origin %in% "sk",]$pch <- 17
-# 
-# pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
-# # png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
-# # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
-# 
-# plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
-#   geom_point(aes(shape=Origin, color=Origin), size=3) +
-#   #   scale_x_continuous(expand = c(0,1)) #+
-#   theme_bw() +
-#   theme(legend.justification=c(1,0), legend.position=c(1,0), 
-#         legend.title = element_text(size=7, face="bold"), 
-#         legend.text = element_text(size = 7),
-#         axis.title = element_text( size=7),
-#         axis.text  = element_text(size=5), axis.text.y= element_text(angle=0))
-# 
-# # plot
-# 
-# plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
-# datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
-# mult <- min(
-#   (max(data[,"PC2"]) - min(data[,"PC2"])/(max(datapc[,"PC2"])-min(datapc[,"PC2"]))),
-#   (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
-# )
-# datapc <- transform(datapc,
-#                     v1 = .7 * mult * (get("PC1")),
-#                     v2 = .7 * mult * (get("PC2"))
-# )
-# 
-# plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
-#                                          size = 4, vjust=1, color="gray47", alpha=0.75)
-# plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-#                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
+# data$pch <- 15
+# data[data$Origin %in% "nat",]$pch <- 16
+# data[data$Origin %in% "sk",]$pch <- 17
+
+pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
+# png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
+  #   scale_x_continuous(expand = c(0,1)) #+
+  theme_bw() +
+  theme(legend.justification=c(1,0), legend.position=c(1,0), 
+        legend.title = element_text(size=7, face="bold"), 
+        legend.text = element_text(size = 7),
+        axis.title = element_text( size=7),
+        axis.text  = element_text(size=5), axis.text.y= element_text(angle=0))
+
 # plot
-# dev.off()
+
+plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+datapc <- data.frame(varnames=rownames(FrclimDK.pca$rotation), FrclimDK.pca$rotation)
+mult <- min(
+  (max(data[,"PC2"]) - min(data[,"PC2"])/(max(datapc[,"PC2"])-min(datapc[,"PC2"]))),
+  (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
+)
+datapc <- transform(datapc,
+                    v1 = .7 * mult * (get("PC1")),
+                    v2 = .7 * mult * (get("PC2"))
+)
+
+plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                         size = 4, vjust=1, color="gray47", alpha=0.75)
+plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
+plot
+dev.off()
 # 
 # ####PC1 vs PC3 fig for ppt####
 # png("FrClimatePCA_forppt.png",width=800, height = 600, pointsize = 26)

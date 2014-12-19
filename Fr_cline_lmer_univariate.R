@@ -374,7 +374,7 @@ CI.LS.poisson(modelint)
 qplot(data=modeldata,PC1, Bolt.date, color = Origin)+geom_point(position="jitter")
 
 #sk included in plot 
-moddata <- ddply(frend, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
+moddata <- ddply(modeldata, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popBolt.date=mean(Bolt.date, na.rm=TRUE))
 
 #png("MF_    .png", height = 600, width = 600, pointsize = 16)
 qplot(data=moddata,PC1, popBolt.date, color = Origin, 

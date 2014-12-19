@@ -47,22 +47,26 @@ sPDF$colCode[ which(sPDF$ADMIN %in% c("Poland", "Belarus", "Italy", "Syria", "Cz
                                       "Spain", "United Kingdom", "Kazakhstan", "Turkmenistan", "China"))] <- 3
 
 #create a colour palette - note for each value not for each country
-colourPalette <- c("#F8766D","#00BA38", "palegreen","lightgray") #inv, nat, present/naturalized, extra countries
+colourPalette <- c("#F8766D","#00BFC4", "cadetblue","lightgray") #inv, nat, present/naturalized, extra countries
 
 # spName <- plotmath(italic("Centaurea diffusa"))
 
 #points
 pop <- read.table("Popcoord.txt", header=TRUE, stringsAsFactor=FALSE)
+
 frend<- read.table("FrEnd.txt", header=T, sep="\t",quote='"', row.names=1)
 
 pop <- merge(pop, unique(frend[,c(1,7)], all.y=TRUE))
+#remove SK
+pop <- subset(pop, !Pop%in%c("SERG","BG3","SAND"))
+pop$Origin <- as.character(pop$Origin)
 #add Montpellier lat:  43.638814°, long:   3.864083°
 #and add BG3  Latitude Longitude Pop
 #         64  42.1153   23.3203 BG3
-pop$Origin <- as.character(pop$Origin)
+
 cnrs <- c("CNRS",43.638814,3.864083, "CNRS")
-BG3 <- c("BG3", 42.1153, 23.3203, "sk")
-pop <- rbind(pop, cnrs, BG3) #blurgh, factors didn't transfer...
+# BG3 <- c("BG3", 42.1153, 23.3203, "sk")
+pop <- rbind(pop, cnrs) #blurgh, factors didn't transfer...
 pop$Pop <- as.factor(pop$Pop)
 pop$Origin <- as.factor(pop$Origin)
 pop$Latitude <- as.numeric(pop$Latitude)
@@ -70,7 +74,7 @@ pop$Longitude <- as.numeric(pop$Longitude)
 
 pop$pch <- 1 #for invasives
 pop[pop$Origin %in% "nat",]$pch <- 17
-pop[pop$Origin %in% "sk",]$pch <- 0
+# pop[pop$Origin %in% "sk",]$pch <- 0
 pop[pop$Origin %in% "CNRS",]$pch <- 8
 
 coordinates(pop) = c("Longitude", "Latitude")
@@ -110,7 +114,7 @@ llgridlines(sPDF, easts=c(-90,-180,0,90,180), norths=seq(0,90,by=15),
             plotLabels=FALSE, ndiscr=1000) #ndiscr=num points in lines
 text(sPointsDFmark, labels = sPointsDFmark$name, cex=1) #pch2 for triangles
 
-legend("topright", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe", "Experimental field"), 
+legend("topright", c("Invasive C. diffusa","Native C. diffusa", "Experimental field"), 
        pch=c(1,17,0,8),  bg="white", title = "Sampled populations", cex=1)
 legend("bottomleft", c("Invasive", "Native","Naturalized"), fill=colourPalette,
        title="Ranges of C. diffusa", bg="white", cex=1)

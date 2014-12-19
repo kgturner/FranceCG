@@ -296,6 +296,8 @@ scores <- allclim.pca$x[,1:3]                        # scores for first three PC
 # k-means clustering [assume 2 clusters]
 km     <- kmeans(scores, centers=2, nstart=5)
 ggdata <- data.frame(scores, Cluster=km$cluster, Origin=allclim$Origin, alt=allclim$alt,Pop=allclim$Pop)
+levels(ggdata$Origin)[levels(ggdata$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(ggdata$Origin)[levels(ggdata$Origin)=="nat"] <- "Native C. diffusa"
 
 # stat_ellipse is not part of the base ggplot package
 source("https://raw.github.com/low-decarie/FAAV/master/r/stat-ellipse.R") 
@@ -315,10 +317,15 @@ Oplot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
   guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
   stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
                geom="polygon", level=0.95, alpha=0.2) +
-  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)
+  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
+  coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.justification=c(-0.03,1.04), legend.position=c(-0.03,1.04),
+        legend.title = element_text(size=10, face="bold"),
+        legend.text = element_text(size = 10))
   
 Oplot
-ggsave("Cdiff_nicheoverlap_95.png")
+ggsave("KTurnerFig4.pdf", width=6.65, height = 5)
 
 #PC1 vs PC3
 plot <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +

@@ -6,7 +6,7 @@
 #Control and drought, REML, using lme4
 #mixed effect models 
 library(lme4.0)
-# library(lsmeans)
+library(lsmeans)
 library(ggplot2)
 library(plyr)
 #read
@@ -91,26 +91,21 @@ originAov <- anova(modelO,modelcov) #test for significance of origin - origin on
 originAov
 
 modelcov
+library(lsmeans)
+lsmeans(modelcov, "Origin")
+library(nlme)
+lmecov <- lme(lfc.sc  ~ Origin +PC1, data=modeldata, random=~ m.date | tagged)
 
-# #lsmeans, ctrl only
+#lsmeans, ctrl only
 # modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"control"))
 # modeldata<-modeldata[!is.na(modeldata$lfc),]
 # modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 # modeldata$Mom<-as.factor(modeldata$Mom)
 # modelint<-lmer(lfc  ~ Origin +PC1 + m.date+(1|Pop), family=poisson,data=modeldata)
-# CI.LS.poisson(modelint)
-# summary(modeldata$Origin)
-# summary(modeldata$Pop)
-# 
-# #lsmeans, dr only
-# modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"drought"))
-# modeldata<-modeldata[!is.na(modeldata$lfc),]
-# modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
-# modeldata$Mom<-as.factor(modeldata$Mom)
-# modelint<-lmer(lfc  ~ Origin +PC1 + m.date+(1|Pop), family=poisson,data=modeldata)
-# CI.LS.poisson(modelint)
-# summary(modeldata$Origin)
-# summary(modeldata$Pop)
+CI.LS.poisson(modelcov)
+summary(modeldata$Origin)
+summary(modeldata$Pop)
+
 
 #try glm
 modelg <- glm(lfc ~ Origin*PC1+Trt+m.date, family=poisson,data=modeldata)
