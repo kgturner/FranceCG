@@ -9,6 +9,7 @@ library("devtools")
 
 install_github("ropensci/rgbif")
 library("rgbif")
+citation(package = 'rgbif')
 
 Cdif_alloccNA <- occ_search(scientificName="Centaurea diffusa", country=c("US", "CA"),limit=999999,
                           fields=c("gbifID","species", "basisOfRecord","year","eventDate","countryCode",
@@ -61,14 +62,44 @@ Cdif_EUoccdf <-read.delim("Cdif_GBIF_allocc_EU.txt", sep="\t")
 # #+stat_bin(aes(y=cumsum(..count..)), geom="line", color="green")
 # dev.off()
 
-####get worldclim data for all occurences####
-Cdif_alloccdf <- rbind(Cdif_NAoccdf, Cdif_EUoccdf)
-#occurence locations
-pop <- subset(Cdif_alloccdf, select=c(decimalLatitude, decimalLongitude,gbifID))
-colnames(pop) <- c("Latitude","Longitude","Pop")
-row.names(pop) <- pop$Pop
-pop$Pop <- as.factor(pop$Pop)
+####fix up all occurences####
 
+Cdif_alloccdf <- rbind(Cdif_NAoccdf, Cdif_EUoccdf)
+write.table(Cdif_alloccdf, "Cdif_GBIF_allocc.txt", col.names=TRUE, sep="\t", quote=F)
+#get rid of NA lat/long, but double check eventDates, move col around
+Cdif_alloccdf <-read.delim("Cdif_GBIF_allocc.txt", sep="\t")
+#remove my greenhouse populations, add in my collection info
+ghouse <- as.numeric(as.vector(Cdif_alloccdf[225:348,"gbifID"]))
+test <- Cdif_alloccdf[-(225:348),]
+###ugh, they don't all have their remarks which say seed collection location???
+# occ_get(918957709, fields = c("recordNumber","occurrenceRemarks"))
+# 
+# library("plyr")
+# test2 <- occ_get(ghouse, fields = c("gbifID","species", "basisOfRecord","year","eventDate","countryCode",
+#                                     "decimalLatitude", "decimalLongitude", "genus","specificEpithet","collectionCode",
+#                                     "institutionCode","locality", "datasetKey","recordNumber","occurrenceRemarks"))
+# ghousedat <- rbind.fill(lapply(test2, "[[", "data"))
+# ghousedat$year <- as.integer(ghousedat$year)
+pop <- read.table("Popcoord_worldclim.txt", header=TRUE, stringsAsFactor=FALSE)
+alloc <- test[,c(1,4,6:8)]
+colnames(alloc) <- c("Pop", "year", "countryCode","Longitude","Latitude")
+alloc$Origin <- "nat"
+alloc[alloc$countryCode%in%c("US","CA"),]$Origin <- "inv"
+pop <- subset(pop, !Origin=="sk")
+pop$Pop <- as.factor(pop$Pop)
+pop$Origin <- as.factor(pop$Origin)
+pop$countryCode <- as.factor(as.character(pop$countryCode))
+alloc$Pop <- as.factor(alloc$Pop)
+alloc$Origin <- as.factor(alloc$Origin)
+pop <- rbind(pop,alloc)
+
+#occurence locations
+# pop <- subset(Cdif_alloccdf, select=c(decimalLatitude, decimalLongitude,gbifID))
+# colnames(pop) <- c("Latitude","Longitude","Pop")
+row.names(pop) <- pop$Pop
+# pop$Pop <- as.factor(pop$Pop)
+
+####get worldclim data for all occurences####
 #download and unzip all relevant WorldClim geoTIFF files into a single directory.
 #I used the highest resolution (~1km2), but should work for other resolutions too.
 
@@ -120,14 +151,14 @@ climate <- foreach(p=poplist, .combine='rbind') %:%
 popnames <- sort(as.character(pop$Pop))
 clim <- as.data.frame(climate, row.names=popnames)
 colnames(clim) <- filenames
-head(clim)
+# head(clim)
 
 #find rows that are all NAs, these are likely populations too close to large bodies of water
 movepops <- clim[rowSums(is.na(clim)) == ncol(clim),]
 #if time, adjust coordinates for these occurences (below is gbifID): 
-> row.names(movepops)
-[1] "1020763351" "224897636"  "466334255"  "466334257"  "695807221"  "695807222"  "695807231"  "695807232"  "695807234"  "695807259" 
-[11] "695807262"  "918939137"  "918939142"  "918957675"  "918957703"  "921023893" 
+row.names(movepops)
+[1] "1022548282" "164347431"  "466089620"  "695807120"  "695807121"  "725174681"  "725174968"  "727819202"  "767974977"  "788462754"  "918835735" 
+[12] "918836019"  "918965870"  "920994041"  "920994819"  "921023893"  "US023"
 
 #write table
 write.table(clim, file="bioclimdata_withNAs.txt")
@@ -170,13 +201,13 @@ test1$Pop <- row.names(test1)
 head(test1)
 
 test2 <- merge(pop, test1)
-test3 <- merge(test2, subset(Cdif_alloccdf, select=c(gbifID, basisOfRecord, year, countryCode)), by.x="Pop", by.y="gbifID")
-test3$Origin <- "nat"
-test3[test3$countryCode%in%c("CA","US"),]$Origin <- "inv"
-test3$Origin <- as.factor(test3$Origin)
+# test3 <- merge(test2, subset(Cdif_alloccdf, select=c(gbifID, basisOfRecord, year, countryCode)), by.x="Pop", by.y="gbifID")
+# test3$Origin <- "nat"
+# test3[test3$countryCode%in%c("CA","US"),]$Origin <- "inv"
+# test3$Origin <- as.factor(test3$Origin)
 
 #write table
-write.table(test3, file="Cdif_allocc_bioclimdata.txt")
+write.table(test2, file="Cdif_allocc_bioclimdata.txt")
 #load table
 allclim <- read.table("Cdif_allocc_bioclimdata.txt", header=TRUE)
 
@@ -186,16 +217,16 @@ library("ggplot2")
 library("grid") 
 library("gridBase")
 
-allclim$Pop <- as.factor(allclim$Pop)
+# allclim$Pop <- as.factor(allclim$Pop)
 row.names(allclim) <- allclim$Pop
 
-allclim.pca <- prcomp(allclim[c(2,4:23)], center=TRUE, retx=T, scale.=TRUE)
+allclim.pca <- prcomp(allclim[c(2,7:26)], center=TRUE, retx=T, scale.=TRUE)
 summary(allclim.pca)
 # Importance of components:
 #                           PC1    PC2    PC3     PC4     PC5     PC6
-# Standard deviation     2.7963 2.4232 1.8006 1.11633 0.97366 0.92571
-# Proportion of Variance 0.3724 0.2796 0.1544 0.05934 0.04514 0.04081
-# Cumulative Proportion  0.3724 0.6520 0.8064 0.86571 0.91086 0.95166
+# Standard deviation     2.6024 2.3915 1.9350 1.18925 1.12557 0.90419
+# Proportion of Variance 0.3225 0.2723 0.1783 0.06735 0.06033 0.03893
+# Cumulative Proportion  0.3225 0.5948 0.7731 0.84048 0.90081 0.93974
 
 #visualize components
 plot(allclim.pca, main="(a) Screeplot, All Occurrences", xlab="Principal component", ylim=c(0,7))
@@ -206,47 +237,60 @@ biplot(allclim.pca,  main="PCA analysis of climate data", choices=c(1,3))
 # 
 # variances of the principal components:
 apply(allclim.pca$x, 2, var)
-PC1          PC2          PC3          PC4          PC5          PC6          PC7          PC8 
-7.819447e+00 5.872006e+00 3.242318e+00 1.246197e+00 9.480185e-01 8.569455e-01 5.354649e-01 1.520626e-01 
-
+# PC1          PC2          PC3          PC4          PC5 
+# 6.772413e+00 5.719035e+00 3.744403e+00 1.414322e+00 1.266905e+00 
 #find top loadings (for PC1)
 loadings <- allclim.pca$rotation[,1]
 sort(abs(loadings), decreasing=TRUE)
-#       bio7       bio12        bio4       bio16        bio6        bio2       bio13       bio19         alt 
-# 0.333013763 0.313259146 0.302423974 0.282839578 0.279421534 0.279381445 0.279073669 0.267543783 0.236690156 
-#       bio5       bio17       bio11       bio14        bio1       bio18        bio3        bio9       bio10 
-# 0.233364876 0.231512205 0.216454494 0.205944599 0.109898642 0.105642888 0.104492940 0.096468877 0.082710925 
-#   Latitude       bio15        bio8 
-# 0.081558293 0.060131929 0.001734011 # BIO11 = Mean Temperature of Coldest Quarter
-# BIO7 = Temperature Annual Range (BIO5-BIO6)
-# BIO12 = Annual Precipitation
-# BIO4 = Temperature Seasonality (standard deviation *100)
+# bio14       bio17        bio2       bio18        bio5 
+# 0.347298326 0.343228829 0.342040022 0.323926157 0.308432772 
+# bio7        bio3       bio15         alt        bio9 
+# 0.285987897 0.267371590 0.261377921 0.238453382 0.201530618 
+# bio8       bio12    Latitude       bio10        bio4 
+# 0.165092836 0.155354105 0.152930754 0.135872777 0.119721198 
+# bio6        bio1       bio16       bio19       bio13 
+# 0.118325615 0.050999850 0.024876511 0.019259366 0.016668068 
+# bio11 
+# 0.003925539 
+# BIO14 = Precipitation of driest month
+# BIO17 = Precipitation of driest quarter
+# BIO2 = Mean diurnal temperature range (mean of monthly (max temp – min temp))
+# BIO18 = Precipitation of Warmest Quarter
 
 #find top loadings (for PC2)
 loadings2 <- allclim.pca$rotation[,2]
 sort(abs(loadings2), decreasing=TRUE)
-#     bio15      bio18       bio9       bio3      bio14      bio17       bio5      bio11      bio19       bio2 
-# 0.35879856 0.33916451 0.32639274 0.31506113 0.29478421 0.26127598 0.22570740 0.21321138 0.20666012 0.20503080 
-#     bio1       bio8      bio13      bio16      bio10       bio4        alt       bio6   Latitude      bio12 
-# 0.19571145 0.18684775 0.17673752 0.17281110 0.14933267 0.11779438 0.11583033 0.10884562 0.09764864 0.07810987 
-#     bio7 
-# 0.05227214 
-BIO15 = Precipitation Seasonality (Coefficient of Variation)
-BIO18 = Precipitation of Warmest Quarter
-BIO9 = Mean Temperature of Driest Quarter
+# bio19      bio16      bio11      bio13       bio4       bio6 
+# 0.33691495 0.33227594 0.33045004 0.32990607 0.31819519 0.31369450 
+# bio12       bio1       bio9      bio15       bio7       bio3 
+# 0.28758970 0.24161538 0.23271834 0.22874350 0.22423715 0.17648558 
+# alt      bio18      bio10   Latitude      bio14       bio2 
+# 0.08512152 0.08129508 0.07755311 0.06949428 0.04346493 0.03793890 
+# bio5       bio8      bio17 
+# 0.02490082 0.02483200 0.01152842
+# BIO19 = Precipitation of coldest quarter
+# BIO16 = Precipitation of wettest quarter
+# BIO11 = Mean Temperature of Coldest Quarter
+# BIO13 = Precipitation of wettest month
 
 #find top loadings (for PC3)
 loadings3 <- allclim.pca$rotation[,3]
 sort(abs(loadings3), decreasing=TRUE)
-#     bio10        bio1        bio8       bio11        bio6         alt        bio5       bio19       bio16 
-# 0.453763544 0.450578366 0.323889620 0.315207218 0.291956045 0.255917994 0.224572921 0.207207559 0.195297598 
-#     bio13       bio12       bio15        bio2        bio7       bio18        bio3       bio17        bio4 
-# 0.194191189 0.173388156 0.123884676 0.079183800 0.078704498 0.062663009 0.055750157 0.033023212 0.019684845 
-#   Latitude       bio14        bio9 
-# 0.016414918 0.014159582 0.002824124  
+# bio10        bio1       bio11        bio6       bio16 
+# 0.408911696 0.401713289 0.295389012 0.283648214 0.270833931 
+# bio13         alt       bio19       bio12        bio8 
+# 0.268965132 0.264317525 0.263442986 0.253582585 0.238366569 
+# bio5       bio15        bio2        bio3        bio7 
+# 0.230121421 0.109256223 0.086360295 0.083438209 0.071199778 
+# bio9       bio17    Latitude       bio14       bio18 
+# 0.063846637 0.061261925 0.059453823 0.041433727 0.012519515 
+# bio4 
+# 0.002193259  
 # BIO10 = Mean Temperature of Warmest Quarter
 # BIO1 = Annual Mean Temperature
-# BIO8 = Mean Temperature of Wettest Quarter
+# BIO11 = Mean Temperature of Coldest Quarter
+# BIO6 = Min temperature of coldest month
+
 
 #proportional contributions of each bioclim to each PC
 #If you want this as a relative contribution then sum up the loadings per column and 
@@ -254,35 +298,35 @@ sort(abs(loadings3), decreasing=TRUE)
 #the absolute values to account for negative loadings.
 
 sweep(abs(allclim.pca$rotation),2, colSums(abs(allclim.pca$rotation)),"/")
-#                   PC1        PC2         PC3          PC4        PC5        PC6         PC7          PC8
-# Latitude 0.0198750009 0.02326060 0.004595103 0.0928603504 0.13647532 0.21998023 0.055075602 0.0003892476
-# alt      0.0576791997 0.02759160 0.071640300 0.0960223575 0.01097815 0.02913851 0.057996807 0.3287888506
-# bio1     0.0267812816 0.04661985 0.126132472 0.0089436802 0.02551324 0.01947541 0.012511727 0.0438266787
-# bio10    0.0201558868 0.03557210 0.127024113 0.0193258506 0.08028150 0.05846026 0.028734589 0.0706972086
-# bio11    0.0527479561 0.05078846 0.088237404 0.0353177493 0.02047941 0.01841027 0.035614747 0.0608397995
-# bio12    0.0763383536 0.01860632 0.048537343 0.0349685892 0.06302813 0.04120384 0.009684897 0.0046485507
-# bio13    0.0680076694 0.04210013 0.054360832 0.0330436342 0.05522977 0.01642622 0.048008590 0.0007676209
-# bio14    0.0501867921 0.07021968 0.003963757 0.0078187612 0.04432909 0.07647134 0.086232392 0.0053654336
-# bio15    0.0146535944 0.08546835 0.034679606 0.0323716679 0.02017214 0.02974585 0.092543183 0.0096026780
-# bio16    0.0689253866 0.04116482 0.054670554 0.0307635454 0.05262426 0.01619288 0.044866624 0.0047433316
-# bio17    0.0564173808 0.06223778 0.009244340 0.0096787724 0.04846335 0.08508695 0.088418561 0.0056608208
-# bio18    0.0257441937 0.08079138 0.017541544 0.0999272394 0.04397413 0.02476781 0.009158929 0.0031243504
-# bio19    0.0651979428 0.04922790 0.058004564 0.0045428849 0.04220270 0.02169049 0.014469567 0.0347610935
-# bio2     0.0680826714 0.04883978 0.022166285 0.0632130696 0.04005674 0.01080221 0.061588411 0.0807202641
-# bio3     0.0254639619 0.07504979 0.015606398 0.1093595272 0.01119659 0.03728527 0.112056588 0.1793179983
-# bio4     0.0736979224 0.02805945 0.005510469 0.0501634420 0.08059253 0.06202635 0.061622276 0.0005039894
-# bio5     0.0568688597 0.05376510 0.062865729 0.0077161978 0.06929826 0.05354481 0.023477684 0.0383435754
-# bio6     0.0680924408 0.02592780 0.081728597 0.0049151001 0.04378742 0.02152253 0.020583543 0.0192795657
-# bio7     0.0811523708 0.01245159 0.022032112 0.0009371949 0.07099848 0.04609662 0.001154480 0.0357623125
-# bio8     0.0004225624 0.04450845 0.090667909 0.1492244264 0.02671340 0.05761720 0.067350860 0.0283080180
-# bio9     0.0235085723 0.07774906 0.000790570 0.1088859593 0.01360537 0.05405494 0.068849945 0.0445486119
+PC1         PC2         PC3          PC4
+Latitude 0.039387996 0.018244970 0.015769175 0.0067675740
+alt      0.061414730 0.022347734 0.070105993 0.0403786867
+bio1     0.013135238 0.063433501 0.106548021 0.0345007764
+bio10    0.034994638 0.020360728 0.108457283 0.0662081098
+bio11    0.001011040 0.086756081 0.078347208 0.0061599040
+bio12    0.040012141 0.075503562 0.067258722 0.0575750894
+bio13    0.004292935 0.086613267 0.071338697 0.0555834369
+bio14    0.089448229 0.011411246 0.010989633 0.0211196194
+bio15    0.067319047 0.060054129 0.028978465 0.0315497057
+bio16    0.006407056 0.087235451 0.071834366 0.0505290536
+bio17    0.088400112 0.003026661 0.016248745 0.0225592271
+bio18    0.083428623 0.021343144 0.003320601 0.0935433763
+bio19    0.004960335 0.088453371 0.069874036 0.0004091416
+bio2     0.088093930 0.009960447 0.022905686 0.0551875364
+bio3     0.068862743 0.046334378 0.022130650 0.0274802250
+bio4     0.030834727 0.083538701 0.000581727 0.0511553631
+bio5     0.079438233 0.006537440 0.061036024 0.0527116242
+bio6     0.030475289 0.082357096 0.075233149 0.0327692075
+bio7     0.073657455 0.058871037 0.018884602 0.0584759748
+bio8     0.042520394 0.006519373 0.063222918 0.1384791165
+bio9     0.051905107 0.061097682 0.016934299 0.0968572516
 
 # #get top 4 PCs
-# PC1 <- as.matrix(allclim.pca$x[,1])
-# PC2 <- as.matrix(allclim.pca$x[,2])
-# PC3 <- as.matrix(allclim.pca$x[,3])
+PC1 <- as.matrix(allclim.pca$x[,1])
+PC2 <- as.matrix(allclim.pca$x[,2])
+PC3 <- as.matrix(allclim.pca$x[,3])
 # # PC4 <- as.matrix(Frclim.pca$x[,4])
-# allclim2 <- cbind(allclim, PC1, PC2, PC3)
+allclim2 <- cbind(allclim, PC1, PC2, PC3)
 # 
 # #write table
 # write.table(allclim2, file="Cdif_allocc_bioclimPCA.txt")
@@ -290,6 +334,7 @@ sweep(abs(allclim.pca$rotation),2, colSums(abs(allclim.pca$rotation)),"/")
 # allclim <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
 
 ####95% conf limits of clusters####
+http://stackoverflow.com/questions/20260434/test-significance-of-clusters-on-a-pca-plot
 # draw 95% confidence ellipses around clusters. Note that stat_ellipse(...) uses the bivariate t-distribution.
 scores <- allclim.pca$x[,1:3]                        # scores for first three PC's
 
@@ -320,7 +365,7 @@ Oplot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
   geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
   coord_cartesian(ylim = c(-6.5, 8.5)) +
   theme_bw() + 
-  theme(legend.justification=c(-0.03,1.04), legend.position=c(-0.03,1.04),
+  theme(legend.justification=c(0,1), legend.position=c(0,1),
         legend.title = element_text(size=10, face="bold"),
         legend.text = element_text(size = 10))
   
@@ -334,6 +379,13 @@ plot <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
                geom="polygon", level=0.95, alpha=0.2) +
   guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))
 plot
+
+#orienting
+head(subset(allclim2, PC1< -4))
+head(subset(allclim2, PC1> 4))
+
+head(subset(allclim2, PC2< -4))
+head(subset(allclim2, PC2> 4))
 
 ####exploratory clustering####
 # library(devtools)
@@ -354,20 +406,21 @@ plot
 # p3 <- p1 + geom_point(data=clusters, size=10, shape="x")
 # p3
 
-####trying ade4####
+####ade4 to quantify centroid shift####
 library(ade4)
 
-allclim.dudi <- dudi.pca(allclim[c(2,4:23)], center = TRUE, scale = TRUE,scannf = TRUE, nf = 2)
+allclim.dudi <- dudi.pca(allclim[c(2,7:26)], center = TRUE, scale = TRUE,scannf = TRUE, nf = 2)
+2
 allclim.bca <- bca(allclim.dudi, fac=allclim$Origin, scannf=TRUE, nf=2) #p36
-
+2
 summary(allclim.bca)
 print(allclim.bca)
 allclim.bca$ratio
-[1] 0.05677683
+[1] 0.0684579
 randtest(allclim.bca, nrept=999)
 plot(randtest(allclim.bca, nrept=999))
 
-####PC1 vs PC2 fig####
+####Perhaps unneccessary PC1 vs PC2 fig####
 #pts instead of labels for pops
 # library("ggplot2")
 # library("grid") 
