@@ -18,7 +18,16 @@ library(broom)
 
 ####gaussian models####
 #read
-Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T, sep="\t",quote='"', row.names=1)
+Frdatcline<- read.table("FrTraitClimDat_cline.txt")
+
+#argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
+#load climate table
+Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
+Frdatcline<- subset(Frdatcline, select=c(1:21))
+
+Frdatcline<- merge(Frdatcline,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
+#write table
+write.table(Frdatcline, file="FrTraitClimDat_cline.txt")
 
 ###Crown.log####
 modeldata <- Frdatcline
@@ -30,6 +39,35 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
+# #need to scale to test random effects?
+# modeldata$cwnlog.scale <-as.vector(scale(modeldata$Crown.log, center=FALSE, scale=TRUE))
+# modeldata$cwnlog.sc <- as.vector(scale(modeldata$Crown.log, center=TRUE, scale=TRUE))
+# modeldata$cwn.scale <-as.vector(scale(modeldata$CrownDiam.mm, center=FALSE, scale=TRUE))
+# modeldata$cwn.sc <- as.vector(scale(modeldata$CrownDiam.mm, center=TRUE, scale=TRUE))
+
+# #need to model with new lme4?
+# detach(package:lme4.0)
+# library(lme4)
+# 
+# # modelOr <- lmer(Crown.log  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), data=modeldata)
+# # modelOr <- lmer(cwnlog.scale  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), data=modeldata)
+# modelOr <- lmer(cwnlog.sc  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), data=modeldata)
+# # modelOr <- lmer(CrownDiam.mm  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), data=modeldata)
+# # modelOr <- lmer(cwn.scale  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), data=modeldata)
+# # modelOr <- lmer(cwn.sc  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), data=modeldata)
+# 
+# model1<-lmer(cwnlog.sc  ~ Origin * PC1 +Trt+(1|Pop/Mom), data=modeldata)
+# anova(model1, modelOr)
+# model2<-lmer(cwnlog.sc  ~ Origin * PC1 +Trt+(1|Pop), data=modeldata, REML=FALSE) # Removes maternal family variance to test if it is a significant random effect
+# # model3<-lmer(cwnlog.sc  ~ Origin * PC1 +Trt, data=modeldata) # Test population effect
+# momAov <- anova(model2,model1) # mom is sig!
+# momAov
+# anova(model2, test="LRT")
+# summary(model2)
+# 
+# modelg <- glm(cwnlog.sc ~ Origin*PC1+Trt, family=gaussian,data=modeldata)
+# summary(modelg)
+
 #PC1
 modelOr <- lmer(Crown.log  ~ Origin * PC1 +Trt+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(Crown.log  ~ Origin * PC1 +Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
@@ -40,7 +78,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(1.2993,1)
+1-pchisq(14.894,1)
 
 modelT <- lmer(Crown.log  ~ Origin * PC1 +(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelT, model1)
@@ -52,8 +90,8 @@ modelT
 modelg <- glm(Crown.log ~ Origin*PC1, family=gaussian,data=modeldata)
 summary(modelg)
 
-CI.LS.gaussian.log(modelint)
-CI.LS.gaussian.log(model1)
+# CI.LS.gaussian.log(modelint)
+# CI.LS.gaussian.log(model1)
 
 qplot(data=modeldata,PC1, Crown.log, color = Origin)+geom_point(position="jitter")
  
@@ -70,6 +108,7 @@ qplot(data=moddata,PC1, popCrown.log, color = Origin,
 # anova(modelg1, modelg, test="LRT") 
 # qchisq(0.8596,1,lower=FALSE)#chisq value
 ####Crown~Origin*trt####
+#not run; Trt not sig in range differentiation models
 modelOr <- lmer(Crown.log  ~ Origin * Trt +PC1+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(Crown.log  ~ Origin * Trt +PC1+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
@@ -122,7 +161,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(6.0966,1)
+1-pchisq(24.229,1)
 
 modelT <- lmer(RoseAh.log  ~ Origin * PC1 +(1|Pop), family=gaussian,data=modeldata)
 trtAov <- anova(model2, modelT)
@@ -157,6 +196,7 @@ summary(modelg)
 # modelint<-lmer(RoseAh.log  ~ Origin +PC1  +(1|Pop), family=gaussian,data=modeldata)
 # CI.LS.gaussian.log(modelint)
 ####Rose~Origin*trt####
+#not run
 modelOr <- lmer(RoseAh.log  ~ Origin * Trt +PC1+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(RoseAh.log  ~ Origin * Trt +PC1+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
@@ -228,6 +268,15 @@ summary(modelg1)
 #read
 frendcline<- read.table("FrEnd_cline.txt", header=T, sep="\t",quote='"', row.names=1)
 
+#argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
+#load climate table
+Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
+frendcline<- subset(frendcline, select=c(1:28))
+
+frendcline<- merge(frendcline,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
+#write table
+write.table(frendcline, file="FrEnd_cline.txt")
+
 ###wilt####
 modeldata <- frendcline
 modeldata<-modeldata[!is.na(modeldata$Wilt),]
@@ -246,7 +295,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(8.5324,1)
+1-pchisq(4.7559,1)
 
 modelT <- lmer(Wilt  ~ Origin *PC1  +(1|Pop), family=poisson,data=modeldata)
 anova(model2, modelT)
@@ -255,32 +304,33 @@ modelint<-lmer(Wilt  ~ Origin +PC1 +Trt +(1|Pop), family=poisson,data=modeldata)
 intAov <- anova(model2, modelint)
 intAov
 
-modelcov<-lmer(Wilt  ~ Origin +Trt +(1|Pop), family=poisson,data=modeldata)
-covAov <- anova(modelint, modelcov)
-covAov
+# modelcov<-lmer(Wilt  ~ Origin +Trt +(1|Pop), family=poisson,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(Wilt  ~ Trt +(1|Pop), family=poisson,data=modeldata)
+# originAov <- anova(modelcov, modelO)
+# originAov
+# 
+# modelT <- lmer(Wilt  ~ (1|Pop), family=poisson,data=modeldata)
+# trtAov <- anova(modelO, modelT)
+# trtAov
 
-modelO<-lmer(Wilt  ~ Trt +(1|Pop), family=poisson,data=modeldata)
-originAov <- anova(modelcov, modelO)
-originAov
+modelT
 
-modelT <- lmer(Wilt  ~ (1|Pop), family=poisson,data=modeldata)
-trtAov <- anova(modelO, modelT)
-trtAov
-
-modelO
-
-lsmeans(modelO, ~Trt, conf=95)
-# $`Trt lsmeans`
-#     Trt   lsmean         SE df asymp.LCL asymp.UCL
-# control 3.811387 0.02010636 NA  3.771979  3.850795
-# drought 3.702058 0.02407447 NA  3.654873  3.749243
-intc<-3.811387#cont mean
-Bdr<-3.702058#dr mean
-pc<-exp(intc)
-pdr<-exp(Bdr)
-pc #45.21311
-pdr #40.53063
+# lsmeans(modelO, ~Trt, conf=95)
+# # $`Trt lsmeans`
+# #     Trt   lsmean         SE df asymp.LCL asymp.UCL
+# # control 3.811387 0.02010636 NA  3.771979  3.850795
+# # drought 3.702058 0.02407447 NA  3.654873  3.749243
+# intc<-3.811387#cont mean
+# Bdr<-3.702058#dr mean
+# pc<-exp(intc)
+# pdr<-exp(Bdr)
+# pc #45.21311
+# pdr #40.53063
 ####wilt~origin*trt####
+#not run
 modelOr <- lmer(Wilt  ~ Origin * Trt +PC1 +(Origin|Pop/Mom), family=poisson,data=modeldata)
 model1<-lmer(Wilt  ~ Origin * Trt +PC1+(1|Pop/Mom), family=poisson,data=modeldata)
 anova(model1, modelOr)

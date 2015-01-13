@@ -13,14 +13,16 @@ library(plyr)
 #for multiplot function, see bottom
 
 # #####crown.log and RoseAh.log####
-# grdat_cr <- FrdatSK[, c(1:7,22, 25, 53:55, 48,45)]
-# levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="inv"] <- "Invasive C. diffusa"
-# levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="nat"] <- "Native C. diffusa"
+grdat_cr <- Frdatcline
+levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="nat"] <- "Native C. diffusa"
 # levels(grdat_cr$Origin)[levels(grdat_cr$Origin)=="sk"] <- "Native C. stoebe"
-# #change order? but then have to change colors...
-# # grdat$Origin <- factor(grdat$Origin, c("Native C. diffusa", "Invasive C. diffusa", "Native C. stoebe"))
-# colnames(grdat_cr)[4] <- "Treatment"
-# 
+#change order? but then have to change colors...
+# grdat$Origin <- factor(grdat$Origin, c("Native C. diffusa", "Invasive C. diffusa", "Native C. stoebe"))
+colnames(grdat_cr)[7] <- "Treatment"
+grdat_cr$Crown.log <- log(grdat_cr$CrownDiam.mm)
+grdat_cr$RoseAh.log <- log(grdat_cr$Rose.AreaH.m2)
+
 # ####crown.log box#####
 # pCrown <- ggplot(grdat_cr,aes(Origin, Crown.log, fill=Origin))+
 #   geom_boxplot()+
@@ -32,27 +34,27 @@ library(plyr)
 # 
 # pCrown
 # 
-# ####crown.log interaction pop mean####
-# #for plots of pop means
-# grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
-#                popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE),
-#                popCrownDiam=mean(CrownDiam.mm, na.rm=TRUE), popRose.Area=mean(Rose.AreaH.m2, na.rm=TRUE))
-# 
-# # pCrown.2 <- qplot(data=grd_c,  PC1,popCrown, color=Origin)+geom_smooth(method=glm, se=TRUE)
-# # pCrown.2
-# 
-# pCrown.2 <- ggplot(grd_c,aes(PC1, popCrown,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
-#   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
-#   #   coord_cartesian(ylim = c(0, 1.02)) +
-#   xlab("PC1")+ylab("Root crown diameter at harvest [mm](log)")+ 
-#   
-#   theme_bw() +
-#   theme(legend.justification=c(1,0), legend.position=c(1,0),
-#         legend.title = element_text(size=14, face="bold"),
-#         legend.text = element_text(size = 13))
+####crown.log interaction pop mean####
+#for plots of pop means
+grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
+               popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE),
+               popCrownDiam=mean(CrownDiam.mm, na.rm=TRUE), popRose.Area=mean(Rose.AreaH.m2, na.rm=TRUE))
+
+# pCrown.2 <- qplot(data=grd_c,  PC1,popCrown, color=Origin)+geom_smooth(method=glm, se=TRUE)
 # pCrown.2
-# # position=position_jitter(width=0.25,height=0.25)
-# 
+
+pCrown.2 <- ggplot(grd_c,aes(PC1, popCrown,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
+  geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
+  #   coord_cartesian(ylim = c(0, 1.02)) +
+  xlab("PC1")+ylab("Root crown diameter at harvest [mm](log)")+ 
+  
+  theme_bw() +
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=14, face="bold"),
+        legend.text = element_text(size = 13))
+pCrown.2
+# position=position_jitter(width=0.25,height=0.25)
+
 # ####crown.log int data####
 # pCrown.3 <- ggplot(grdat_cr,aes(PC1, Crown.log,color=Origin))+geom_point(position=position_jitter(width=1,height=.5)) + #facet_grid(. ~ Trt)
 #   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+

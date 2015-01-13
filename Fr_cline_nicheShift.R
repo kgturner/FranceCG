@@ -80,7 +80,7 @@ test <- Cdif_alloccdf[-(225:348),]
 #                                     "institutionCode","locality", "datasetKey","recordNumber","occurrenceRemarks"))
 # ghousedat <- rbind.fill(lapply(test2, "[[", "data"))
 # ghousedat$year <- as.integer(ghousedat$year)
-pop <- read.table("Popcoord_worldclim.txt", header=TRUE, stringsAsFactor=FALSE)
+pop <- read.table("Popcoord_worldclim.txt", header=TRUE, stringsAsFactor=FALSE) #some population coordinates adjusted to compensate for worldclim structure
 alloc <- test[,c(1,4,6:8)]
 colnames(alloc) <- c("Pop", "year", "countryCode","Longitude","Latitude")
 alloc$Origin <- "nat"
@@ -205,6 +205,8 @@ test2 <- merge(pop, test1)
 # test3$Origin <- "nat"
 # test3[test3$countryCode%in%c("CA","US"),]$Origin <- "inv"
 # test3$Origin <- as.factor(test3$Origin)
+
+#####replace worldclim adjusted coordinates with real ones!######
 
 #write table
 write.table(test2, file="Cdif_allocc_bioclimdata.txt")

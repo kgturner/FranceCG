@@ -1,5 +1,5 @@
 #France cline, drought, DK only
-# for traits with sig trt effect?
+# for traits with sig trt effect in range differentiation models?
 
 #REML, using lme4
 #mixed effect models 

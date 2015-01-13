@@ -1,4 +1,5 @@
 ##France CG - climate and lat/long PCA###
+#DK only
 
 library("ggplot2")
 library("grid") 
@@ -8,16 +9,27 @@ Frclimdat <- read.table("FrbioclimPCAdat.txt", header=TRUE) #climate table with 
 #DK only
 Frclimdat.dk <- droplevels(subset(Frclimdat, Origin%in%c("inv", "nat"), select=1:24))
 
+#OH GOD DAMN IT. REMOVE EXTRANEOUS POPS WITH INSUFFICIENT GERMINATION
+# #subset from larger occurrence dataset
+# #load table
+# allclim <- read.table("Cdif_allocc_bioclimdata.txt", header=TRUE)
+
+#match to pops used in trait data
+#read
+Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T, sep="\t",quote='"', row.names=1)
+expops <- levels(Frdatcline$Pop)
+Frclimdat.dk <- droplevels(subset(Frclimdat.dk, Pop%in%expops))
+
+
 ####PCA fun times####
 #Origin and longitude artificially separates groups...
-FrclimDK.pca <- prcomp(Frclimdat.dk[2:22], center=TRUE, retx=T, scale.=TRUE)
+FrclimDK.pca <- prcomp(Frclimdat.dk[c(2:22)], center=TRUE, retx=T, scale.=TRUE)
 summary(FrclimDK.pca)
 # Importance of components:
-#                           PC1    PC2    PC3    PC4     PC5     PC6     PC7     PC8 
-# Standard deviation     2.5324 2.3291 2.0339 1.5321 1.04559 0.85042 0.73721 0.44243 
-# Proportion of Variance 0.3054 0.2583 0.1970 0.1118 0.05206 0.03444 0.02588 0.00932
-# Cumulative Proportion  0.3054 0.5637 0.7607 0.8725 0.92452 0.95896 0.98484 0.99416
-
+#                           PC1    PC2    PC3     PC4     PC5     PC6
+# Standard deviation     2.6436 2.4092 2.2165 1.34140 0.98280 0.60484
+# Proportion of Variance 0.3328 0.2764 0.2339 0.08568 0.04599 0.01742
+# Cumulative Proportion  0.3328 0.6092 0.8431 0.92880 0.97479 0.99221
 
 #visualize components
 plot(FrclimDK.pca, main="(a) Screeplot, Montpellier Experiment", xlab="Principal component", ylim=c(0,7))
@@ -28,46 +40,44 @@ biplot(FrclimDK.pca,  main="PCA analysis of climate data", choices=c(1,3))
 
 # variances of the principal components:
 apply(FrclimDK.pca$x, 2, var)
-PC1          PC2          PC3          PC4          PC5          PC6          PC7          PC8          
-6.413035e+00 5.424698e+00 4.136683e+00 2.347227e+00 1.093252e+00 7.232118e-01 5.434783e-01 1.957406e-01
-
+# PC1          PC2          PC3          PC4          PC5          PC6          
+# 6.988432e+00 5.804037e+00 4.912901e+00 1.799352e+00 9.658928e-01 3.658346e-01
 
 #find top loadings (for PC1)
 loadings <- FrclimDK.pca$rotation[,1]
 sort(abs(loadings), decreasing=TRUE)
-# bio11         bio4         bio6         bio9         bio1         bio7        bio19         bio3     Latitude        bio18        bio16        bio13 
-# 0.3477634412 0.3415443495 0.3396753681 0.3227947573 0.2734575490 0.2646601273 0.2622142510 0.2372984061 0.2234071480 0.2026011484 0.1928539203 0.1808279853 
-# bio12        bio15         bio8        bio14        bio10         bio5        bio17          alt         bio2 
-# 0.1681997984 0.1627035834 0.1618949110 0.1077019953 0.0858056376 0.0852779938 0.0686258731 0.0131679736 0.0009167083 
-BIO11 = Mean Temperature of Coldest Quarter
-BIO4 = Temperature Seasonality (standard deviation *100)
-BIO6 = Min Temperature of Coldest Month
-BIO9 = Mean Temperature of Driest Quarter
+# bio5      bio12      bio13      bio16      bio17      bio14      bio10      bio19       bio7   Latitude      bio18 
+# 0.34715140 0.33894826 0.31602877 0.30443769 0.29706295 0.27626843 0.27582810 0.26788752 0.22105836 0.21433073 0.20231115 
+# bio1       bio2       bio4       bio9      bio11       bio6        alt       bio3      bio15       bio8 
+# 0.18573689 0.17691133 0.16815355 0.13576150 0.09138876 0.04103954 0.02731012 0.01983365 0.01398861 0.00447920 
+BIO5 = Max Temperature of Warmest Month
+BIO12 = Annual precipitation
+BIO13 = Precipitation of wettest month
+BIO16 = Precipitation of wettest quarter
 
 #find top loadings (for PC2)
 loadings2 <- FrclimDK.pca$rotation[,2]
 sort(abs(loadings2), decreasing=TRUE)
-# bio5       bio17       bio14       bio12        bio2       bio10        bio7       bio19       bio13    Latitude       bio16       bio18       bio15 
-# 0.374747216 0.371415358 0.354202953 0.306940244 0.268473933 0.246119137 0.241468103 0.234550843 0.222581033 0.217225448 0.211710814 0.182753097 0.151095453 
-# bio4        bio3        bio1        bio9         alt        bio6       bio11        bio8 
-# 0.133955131 0.113901566 0.112861695 0.082237770 0.073618541 0.043044836 0.021681001 0.005394978 
-BIO5 = Max Temperature of Warmest Month
-BIO17 = Precipitation of Driest Quarter
-BIO14 = Precipitation of Driest Month
-BIO12 = Annual Precipitation
+# bio6      bio11       bio1       bio4       bio7        alt   Latitude      bio19      bio18      bio10       bio9 
+# 0.40641183 0.39805675 0.32475260 0.31860577 0.30349130 0.30058036 0.20786868 0.20192831 0.18392141 0.18123486 0.17107571 
+# bio16       bio2      bio13      bio12      bio15       bio3      bio14       bio8       bio5      bio17 
+# 0.15336282 0.13948588 0.13433600 0.12627875 0.09409075 0.08752913 0.06974677 0.06082398 0.05495018 0.04426379 
+BIO6 = Min Temperature of Coldest Month
+BIO11 = Mean Temperature of Coldest Quarter
+BIO1 = Annual Mean Temperature
+BIO4 = Temperature seasonality (standard deviation*100)
 
 #find top loadings (for PC3)
 loadings3 <- FrclimDK.pca$rotation[,3]
 sort(abs(loadings3), decreasing=TRUE)
-# alt      bio10       bio1       bio2      bio15       bio3       bio8       bio6      bio16      bio13      bio11       bio7      bio19      bio12      bio14 
-# 0.36654119 0.31909538 0.31237598 0.30242551 0.28402020 0.26738636 0.25362066 0.23730987 0.23315531 0.22609464 0.21886604 0.18635341 0.17574859 0.17461695 0.13646132 
-# bio17   Latitude       bio5      bio18       bio9       bio4 
-# 0.13181951 0.08586004 0.05688603 0.04774380 0.04719642 0.03717003 
-altitude
-BIO10 = Mean Temperature of Warmest Quarter
-BIO1 = Annual Mean Temperature
-BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))
-
+# bio3       bio2       bio8       bio9      bio15      bio18      bio19      bio10      bio14        alt   Latitude 
+# 0.43297960 0.34960493 0.33207007 0.30599987 0.28300816 0.25050285 0.21843834 0.21439030 0.20783338 0.19816714 0.18500539 
+# bio4      bio17       bio1      bio16      bio13       bio7       bio5       bio6      bio12      bio11 
+# 0.17083761 0.16936803 0.16119704 0.13246742 0.10038198 0.09605245 0.06812094 0.05418166 0.05274364 0.04603406 
+BIO3 = Isothermality (BIO2/BIO7)*100
+BIO2 = Mean diurnal temperature range (mean of monthly (max temp – min temp))
+BIO8 = Mean temperature of wettest quarter
+BIO9 = Mean Temperature of Driest Quarter
 
 #proportional contributions of each bioclim to each PC
 #If you want this as a relative contribution then sum up the loadings per column and 
@@ -75,28 +85,28 @@ BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))
 #the absolute values to account for negative loadings.
 
 sweep(abs(FrclimDK.pca$rotation),2, colSums(abs(FrclimDK.pca$rotation)),"/")
-#                   PC1         PC2         PC3          PC4          PC5          PC6         PC7         PC8
-# alt      0.0032566644 0.018543810 0.089384000 0.0261236303 0.1286202616 0.1476962282 0.001339065 0.007880284
-# bio1     0.0676307136 0.028428788 0.076175380 0.0329832587 0.0206778537 0.0209867327 0.002501644 0.034834596
-# bio10    0.0212211969 0.061995070 0.077813960 0.0692460164 0.0146350015 0.0184793263 0.070201954 0.018238789
-# bio11    0.0860078275 0.005461238 0.053372234 0.0010476343 0.0170430995 0.0237253067 0.041776025 0.018488781
-# bio12    0.0415986775 0.077315329 0.042581740 0.0631192418 0.0008009791 0.0308461161 0.066495498 0.056198119
-# bio13    0.0447218434 0.056066046 0.055134985 0.0969637622 0.0085305767 0.0041111848 0.021444919 0.003847089
-# bio14    0.0266365395 0.089220356 0.033277183 0.0264133058 0.0678903701 0.0944978549 0.023560609 0.029487890
-# bio15    0.0402393698 0.038059508 0.069260597 0.0892038234 0.0205142125 0.0568640256 0.078725826 0.115892881
-# bio16    0.0476960622 0.053327941 0.056856787 0.0940081743 0.0123244071 0.0139913270 0.018431924 0.022226168
-# bio17    0.0169723483 0.093555997 0.032145242 0.0243751323 0.0745874706 0.0712373798 0.040905168 0.041961413
-# bio18    0.0501067178 0.046033767 0.011642706 0.0969667142 0.0744412245 0.1115038556 0.076334608 0.110965426
-# bio19    0.0648500543 0.059081127 0.042857698 0.0119836294 0.0019638103 0.0756627558 0.093926989 0.058351348
-# bio2     0.0002267176 0.067626031 0.073748879 0.0006043175 0.1311551819 0.0475902659 0.022167858 0.041619008
-# bio3     0.0586879412 0.028690722 0.065204303 0.0276584304 0.1329923384 0.0083256916 0.053221605 0.080601063
-# bio4     0.0844697401 0.033742024 0.009064208 0.0440401998 0.0153923275 0.0203901213 0.098172604 0.010249894
-# bio5     0.0210907016 0.094395261 0.013872113 0.0274640281 0.0938031222 0.0321406072 0.068906774 0.001264315
-# bio6     0.0840075091 0.010842585 0.057869908 0.0130125094 0.0016049478 0.0001208292 0.032739910 0.018816482
-# bio7     0.0654549612 0.060823519 0.045443770 0.0267119752 0.0491202696 0.0172229432 0.067103794 0.016526795
-# bio8     0.0400393714 0.001358944 0.061847426 0.1261614229 0.0017959918 0.0513916858 0.008968933 0.004672688
-# bio9     0.0798326463 0.020714912 0.011509224 0.0545300906 0.0216367020 0.0171288165 0.097346339 0.239017090
-# Latitude 0.0552523962 0.054717025 0.020937658 0.0473827031 0.1104698515 0.1360869460 0.015727953 0.068859880
+#                 PC1        PC2        PC3         PC4         PC5
+# alt      0.006956369 0.07585058 0.04918049 0.050342676 0.088122132
+# bio1     0.047310453 0.08195038 0.04000537 0.005967265 0.029940322
+# bio10    0.070258270 0.04573409 0.05320671 0.004423015 0.053536304
+# bio11    0.023278324 0.10044847 0.01142459 0.020211745 0.005678002
+# bio12    0.086336085 0.03186608 0.01308975 0.009611622 0.072143592
+# bio13    0.080498088 0.03389930 0.02491248 0.068362865 0.055263973
+# bio14    0.070370429 0.01760040 0.05157943 0.096718855 0.032714681
+# bio15    0.003563146 0.02374353 0.07023607 0.159624616 0.015387999
+# bio16    0.077545635 0.03870066 0.03287534 0.062928207 0.053257458
+# bio17    0.075667159 0.01116984 0.04203322 0.092322963 0.049331928
+# bio18    0.051532210 0.04641204 0.06216901 0.071521823 0.078905133
+# bio19    0.068235663 0.05095602 0.05421134 0.026158372 0.017089107
+# bio2     0.045062428 0.03519886 0.08676385 0.012919352 0.046033689
+# bio3     0.005051980 0.02208772 0.10745551 0.013383919 0.022076871
+# bio4     0.042831666 0.08039924 0.04239794 0.032880890 0.047404794
+# bio5     0.088425568 0.01386652 0.01690604 0.006133363 0.073819010
+# bio6     0.010453492 0.10255685 0.01344663 0.022583372 0.005542243
+# bio7     0.056307452 0.07658515 0.02383799 0.014594928 0.059083355
+# bio8     0.001140931 0.01534875 0.08241210 0.134011517 0.036352873
+# bio9     0.034580843 0.04317046 0.07594208 0.089586187 0.063218344
+# Latitude 0.054593808 0.05245506 0.04591405 0.005712448 0.095098190
 
 #get top 4 PCs
 PC1 <- as.matrix(FrclimDK.pca$x[,1])
@@ -104,6 +114,13 @@ PC2 <- as.matrix(FrclimDK.pca$x[,2])
 PC3 <- as.matrix(FrclimDK.pca$x[,3])
 # PC4 <- as.matrix(Frclim.pca$x[,4])
 Frclimdat.dk2 <- cbind(Frclimdat.dk, PC1, PC2, PC3)
+
+#orienting
+head(subset(Frclimdat.dk2, PC1< -2))
+head(subset(Frclimdat.dk2, PC1> 2))
+
+head(subset(Frclimdat.dk2, PC2< 2))
+head(subset(Frclimdat.dk2, PC2> 2))
 
 #write table
 write.table(Frclimdat.dk2, file="FrbioclimPCA_DKdat.txt")
@@ -259,7 +276,7 @@ levels(data$Origin)[levels(data$Origin)=="nat"] <- "Native C. diffusa"
 # data[data$Origin %in% "nat",]$pch <- 16
 # data[data$Origin %in% "sk",]$pch <- 17
 
-pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
+# pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
 # png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
@@ -267,11 +284,11 @@ plot <- ggplot(data, aes_string(x="PC1", y="PC2")) +
   geom_point(aes(shape=Origin, color=Origin), size=3) +
   #   scale_x_continuous(expand = c(0,1)) #+
   theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0), 
-        legend.title = element_text(size=7, face="bold"), 
-        legend.text = element_text(size = 7),
-        axis.title = element_text( size=7),
-        axis.text  = element_text(size=5), axis.text.y= element_text(angle=0))
+  theme(legend.justification=c(1.05,0), legend.position=c(1.05,0), 
+        legend.title = element_text(size=9, face="bold"), 
+        legend.text = element_text(size = 9),
+        axis.title = element_text( size=9),
+        axis.text  = element_text(size=7), axis.text.y= element_text(angle=0))
 
 # plot
 
@@ -291,7 +308,8 @@ plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varn
 plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot
-dev.off()
+# dev.off()
+ggsave("KTurnerFig2.pdf", width=4.4, height=4.8, pointsize = 12)
 # 
 # ####PC1 vs PC3 fig for ppt####
 # png("FrClimatePCA_forppt.png",width=800, height = 600, pointsize = 26)
@@ -326,64 +344,68 @@ dev.off()
 # plot
 # dev.off()
 # 
-# ####PC1 vs PC3 fig####
+####PC1 vs PC3 fig####
 # png("FrClimatePCA1v3.png",width=800, height = 600, pointsize = 16)
-# # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
-# 
-# pPC3 <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
-#   geom_point(aes(shape=Origin, color=Origin), size=3) +
-#   #   scale_x_continuous(expand = c(0,1)) #+
-#   theme_bw()+
-#   theme(legend.position="bottom")
-# #   theme(legend.justification=c(1,0), legend.position=c(1,0))
-# 
-# # plot
-# 
-# pPC3 <- pPC3 + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
-# 
-# datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
-# mult <- min(
-#   (max(data[,"PC3"]) - min(data[,"PC3"])/(max(datapc[,"PC3"])-min(datapc[,"PC3"]))),
-#   (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
-# )
-# datapc <- transform(datapc,
-#                     v1 = .7 * mult * (get("PC1")),
-#                     v2 = .7 * mult * (get("PC3"))
-# )
-# 
-# pPC3 <- pPC3  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
-#                                                    size = 6, vjust=1, color="gray47", alpha=0.75)
-# 
-# pPC3 <- pPC3 + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-#                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
-#   ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold"))
-# pPC3
-# 
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+pPC3 <- ggplot(data, aes_string(x="PC1", y="PC3")) + 
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
+  #   scale_x_continuous(expand = c(0,1)) #+
+  theme_bw()+
+  theme(legend.justification=c(1,0), legend.position=c(1,0), 
+        legend.title = element_text(size=9, face="bold"), 
+        legend.text = element_text(size = 9),
+        axis.title = element_text( size=9),
+        axis.text  = element_text(size=7), axis.text.y= element_text(angle=0))
+#   theme(legend.justification=c(1,0), legend.position=c(1,0))
+
+# plot
+
+pPC3 <- pPC3 + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+
+datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
+mult <- min(
+  (max(data[,"PC3"]) - min(data[,"PC3"])/(max(datapc[,"PC3"])-min(datapc[,"PC3"]))),
+  (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
+)
+datapc <- transform(datapc,
+                    v1 = .7 * mult * (get("PC1")),
+                    v2 = .7 * mult * (get("PC3"))
+)
+
+pPC3 <- pPC3  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                                   size = 6, vjust=1, color="gray47", alpha=0.75)
+
+pPC3 <- pPC3 + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+pPC3
+
 # dev.off()
-# 
-# 
-# ####supp. fig####
-# library(gridBase) #necessary to plot ggplots and base plots together
-# 
-# # pdf("KTurnerSup_MontPCA.pdf", useDingbats=FALSE, width=13.38)
-# png("KTurnerSup_MontPCA.png",width=800, height = 500, pointsize = 12)
-# # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
-# 
-# par(mfcol=c(1,2))
-# 
-# plot(Frclim.pca, main="(a)", xlab="Principal component", ylim=c(0,7), cex.main=1.3)
-# plot.new()
-# vps <- baseViewports()
-# pushViewport(vps$figure)
-# vp1 <- plotViewport(c(0,0,0,0))
-# print(pPC3, vp=vp1)
-# 
-# 
-# 
-# dev.off()
-# 
-# 
-# 
+ggsave("FrClimatePCA1v3.png") #width=800, height = 600, pointsize = 16
+
+####supp. fig####
+library(gridBase) #necessary to plot ggplots and base plots together
+
+# pdf("KTurnerSup_MontPCA.pdf", useDingbats=FALSE, width=13.38)
+png("KTurnerSup_MontPCA.png",width=800, height = 500, pointsize = 12)
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+par(mfcol=c(1,2),adj=0)
+
+plot(FrclimDK.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.3)
+plot.new()
+vps <- baseViewports()
+pushViewport(vps$figure)
+vp1 <- plotViewport(c(0,0,0,0))
+print(pPC3, vp=vp1)
+
+
+
+dev.off()
+
+
+
 # ####multiplot####
 # multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #   require(grid)
