@@ -207,9 +207,29 @@ test2 <- merge(pop, test1)
 # test3$Origin <- as.factor(test3$Origin)
 
 #####replace worldclim adjusted coordinates with real ones!######
+#load table
+popcoord <- read.table("Popcoord.txt", header=TRUE, stringsAsFactor=FALSE) #true pop coordinates
+
+test <- subset(allclim, Pop%in%popcoord$Pop)
+setdiff(test$Latitude,popcoord$Latitude)
+test2 <- test[,-c(2:3)]
+test3 <- merge(test2, popcoord, all.x=TRUE)
+actest <- subset(allclim, !Pop%in%popcoord$Pop)
+actest2 <- rbind(actest, test3)
+
+count(is.na(actest2$Latitude))
+row.names(actest2) <- actest2$Pop
+setdiff(allclim,actest2)
+subset(allclim, Pop=="CA001")#longitude should be -122.8821
+subset(actest2, Pop=="CA001")
+subset(allclim, Pop=="GR003")#latitude shoudl be 40.85
+subset(actest2, Pop=="GR003")
+
+subset(actest2, Pop%in%popcoord$Pop, select=Latitude)
+subset(allclim, Pop%in%popcoord$Pop, select=Latitude)
 
 #write table
-write.table(test2, file="Cdif_allocc_bioclimdata.txt")
+write.table(actest2, file="Cdif_allocc_bioclimdata.txt")
 #load table
 allclim <- read.table("Cdif_allocc_bioclimdata.txt", header=TRUE)
 
@@ -235,25 +255,24 @@ plot(allclim.pca, main="(a) Screeplot, All Occurrences", xlab="Principal compone
 # screeplot(Frclim.pca, type="lines")
 biplot(allclim.pca)
 biplot(allclim.pca,  main="PCA analysis of climate data", choices=c(1,3))
+
 #see bottom for figure
 # 
 # variances of the principal components:
 apply(allclim.pca$x, 2, var)
-# PC1          PC2          PC3          PC4          PC5 
-# 6.772413e+00 5.719035e+00 3.744403e+00 1.414322e+00 1.266905e+00 
-#find top loadings (for PC1)
+#          PC1          PC2          PC3          PC4          PC5 
+# 6.772415e+00 5.719035e+00 3.744403e+00 1.414322e+00 1.266899e+00 #find top loadings (for PC1)
+
 loadings <- allclim.pca$rotation[,1]
 sort(abs(loadings), decreasing=TRUE)
-# bio14       bio17        bio2       bio18        bio5 
-# 0.347298326 0.343228829 0.342040022 0.323926157 0.308432772 
-# bio7        bio3       bio15         alt        bio9 
-# 0.285987897 0.267371590 0.261377921 0.238453382 0.201530618 
-# bio8       bio12    Latitude       bio10        bio4 
-# 0.165092836 0.155354105 0.152930754 0.135872777 0.119721198 
-# bio6        bio1       bio16       bio19       bio13 
-# 0.118325615 0.050999850 0.024876511 0.019259366 0.016668068 
-# bio11 
-# 0.003925539 
+# bio14       bio17        bio2       bio18        bio5        bio7 
+# 0.347298252 0.343228791 0.342039986 0.323926091 0.308432614 0.285987931 
+# bio3       bio15         alt        bio9        bio8       bio12 
+# 0.267371488 0.261377698 0.238453572 0.201530432 0.165092828 0.155354386 
+# Latitude       bio10        bio4        bio6        bio1       bio16 
+# 0.152931672 0.135872618 0.119721291 0.118325791 0.050999650 0.024876838 
+# bio19       bio13       bio11 
+# 0.019259059 0.016668389 0.003925343
 # BIO14 = Precipitation of driest month
 # BIO17 = Precipitation of driest quarter
 # BIO2 = Mean diurnal temperature range (mean of monthly (max temp – min temp))
@@ -263,13 +282,13 @@ sort(abs(loadings), decreasing=TRUE)
 loadings2 <- allclim.pca$rotation[,2]
 sort(abs(loadings2), decreasing=TRUE)
 # bio19      bio16      bio11      bio13       bio4       bio6 
-# 0.33691495 0.33227594 0.33045004 0.32990607 0.31819519 0.31369450 
+# 0.33691497 0.33227594 0.33045001 0.32990608 0.31819499 0.31369436 
 # bio12       bio1       bio9      bio15       bio7       bio3 
-# 0.28758970 0.24161538 0.23271834 0.22874350 0.22423715 0.17648558 
+# 0.28758959 0.24161543 0.23271851 0.22874373 0.22423683 0.17648578 
 # alt      bio18      bio10   Latitude      bio14       bio2 
-# 0.08512152 0.08129508 0.07755311 0.06949428 0.04346493 0.03793890 
+# 0.08512139 0.08129536 0.07755328 0.06949477 0.04346524 0.03793857 
 # bio5       bio8      bio17 
-# 0.02490082 0.02483200 0.01152842
+# 0.02490116 0.02483213 0.01152872 
 # BIO19 = Precipitation of coldest quarter
 # BIO16 = Precipitation of wettest quarter
 # BIO11 = Mean Temperature of Coldest Quarter
@@ -278,16 +297,14 @@ sort(abs(loadings2), decreasing=TRUE)
 #find top loadings (for PC3)
 loadings3 <- allclim.pca$rotation[,3]
 sort(abs(loadings3), decreasing=TRUE)
-# bio10        bio1       bio11        bio6       bio16 
-# 0.408911696 0.401713289 0.295389012 0.283648214 0.270833931 
-# bio13         alt       bio19       bio12        bio8 
-# 0.268965132 0.264317525 0.263442986 0.253582585 0.238366569 
-# bio5       bio15        bio2        bio3        bio7 
-# 0.230121421 0.109256223 0.086360295 0.083438209 0.071199778 
-# bio9       bio17    Latitude       bio14       bio18 
-# 0.063846637 0.061261925 0.059453823 0.041433727 0.012519515 
-# bio4 
-# 0.002193259  
+# bio10        bio1       bio11        bio6       bio16       bio13 
+# 0.408911794 0.401713309 0.295388960 0.283648170 0.270833872 0.268965076 
+# alt       bio19       bio12        bio8        bio5       bio15 
+# 0.264317664 0.263442954 0.253582517 0.238366600 0.230121509 0.109256221 
+# bio2        bio3        bio7        bio9       bio17    Latitude 
+# 0.086360297 0.083438299 0.071199688 0.063846616 0.061261903 0.059453406 
+# bio14       bio18        bio4 
+# 0.041433713 0.012519479 0.002193115   
 # BIO10 = Mean Temperature of Warmest Quarter
 # BIO1 = Annual Mean Temperature
 # BIO11 = Mean Temperature of Coldest Quarter
@@ -300,38 +317,39 @@ sort(abs(loadings3), decreasing=TRUE)
 #the absolute values to account for negative loadings.
 
 sweep(abs(allclim.pca$rotation),2, colSums(abs(allclim.pca$rotation)),"/")
-PC1         PC2         PC3          PC4
-Latitude 0.039387996 0.018244970 0.015769175 0.0067675740
-alt      0.061414730 0.022347734 0.070105993 0.0403786867
-bio1     0.013135238 0.063433501 0.106548021 0.0345007764
-bio10    0.034994638 0.020360728 0.108457283 0.0662081098
-bio11    0.001011040 0.086756081 0.078347208 0.0061599040
-bio12    0.040012141 0.075503562 0.067258722 0.0575750894
-bio13    0.004292935 0.086613267 0.071338697 0.0555834369
-bio14    0.089448229 0.011411246 0.010989633 0.0211196194
-bio15    0.067319047 0.060054129 0.028978465 0.0315497057
-bio16    0.006407056 0.087235451 0.071834366 0.0505290536
-bio17    0.088400112 0.003026661 0.016248745 0.0225592271
-bio18    0.083428623 0.021343144 0.003320601 0.0935433763
-bio19    0.004960335 0.088453371 0.069874036 0.0004091416
-bio2     0.088093930 0.009960447 0.022905686 0.0551875364
-bio3     0.068862743 0.046334378 0.022130650 0.0274802250
-bio4     0.030834727 0.083538701 0.000581727 0.0511553631
-bio5     0.079438233 0.006537440 0.061036024 0.0527116242
-bio6     0.030475289 0.082357096 0.075233149 0.0327692075
-bio7     0.073657455 0.058871037 0.018884602 0.0584759748
-bio8     0.042520394 0.006519373 0.063222918 0.1384791165
-bio9     0.051905107 0.061097682 0.016934299 0.0968572516
+#                  PC1         PC2          PC3          PC4        PC5
+# Latitude 0.039388227 0.018245091 0.0157690670 0.0067645986 0.06947236
+# alt      0.061414769 0.022347690 0.0701060414 0.0403798347 0.07822222
+# bio1     0.013135185 0.063433490 0.1065480429 0.0345006000 0.01844354
+# bio10    0.034994592 0.020360766 0.1084573262 0.0662075079 0.07185225
+# bio11    0.001010989 0.086756040 0.0783472066 0.0061601924 0.03518617
+# bio12    0.040012207 0.075503504 0.0672587150 0.0575747438 0.04343001
+# bio13    0.004293017 0.086613236 0.0713386931 0.0555832091 0.03270647
+# bio14    0.089448197 0.011411324 0.0109896310 0.0211192996 0.03369259
+# bio15    0.067318979 0.060054168 0.0289784687 0.0315499737 0.01332905
+# bio16    0.006407139 0.087235418 0.0718343614 0.0505288082 0.03261296
+# bio17    0.088400089 0.003026740 0.0162487420 0.0225588499 0.03950082
+# bio18    0.083428593 0.021343208 0.0033205919 0.0935437814 0.01920913
+# bio19    0.004960256 0.088453345 0.0698740383 0.0004096737 0.05056459
+# bio2     0.088093907 0.009960358 0.0229056902 0.0551883105 0.03615709
+# bio3     0.068862706 0.046334413 0.0221306771 0.0274814418 0.09103151
+# bio4     0.030834747 0.083538618 0.0005816888 0.0511544915 0.10466534
+# bio5     0.079438180 0.006537527 0.0610360571 0.0527114022 0.04782633
+# bio6     0.030475329 0.082357028 0.0752331493 0.0327692614 0.01794677
+# bio7     0.073657453 0.058870930 0.0188845807 0.0584758753 0.04403909
+# bio8     0.042520386 0.006519403 0.0632229358 0.1384801062 0.06550357
+# bio9     0.051905052 0.061097702 0.0169342957 0.0968580380 0.05460814
 
 # #get top 4 PCs
 PC1 <- as.matrix(allclim.pca$x[,1])
 PC2 <- as.matrix(allclim.pca$x[,2])
 PC3 <- as.matrix(allclim.pca$x[,3])
 # # PC4 <- as.matrix(Frclim.pca$x[,4])
+
 allclim2 <- cbind(allclim, PC1, PC2, PC3)
 # 
 # #write table
-# write.table(allclim2, file="Cdif_allocc_bioclimPCA.txt")
+write.table(allclim2, file="Cdif_allocc_bioclimPCA.txt")
 # # 
 # allclim <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
 
@@ -365,9 +383,9 @@ Oplot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
   stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
                geom="polygon", level=0.95, alpha=0.2) +
   geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
-  coord_cartesian(ylim = c(-6.5, 8.5)) +
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
   theme_bw() + 
-  theme(legend.justification=c(0,1), legend.position=c(0,1),
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
         legend.title = element_text(size=10, face="bold"),
         legend.text = element_text(size = 10))
   
@@ -427,7 +445,7 @@ plot(randtest(allclim.bca, nrept=999))
 # library("ggplot2")
 # library("grid") 
 data <- data.frame(obsnames=row.names(allclim.pca$x), allclim.pca$x)
-data <- merge(data, allclim[,c(1,24:27)],by.x="obsnames", by.y="Pop")
+data <- merge(data, allclim[,c(1,3:5)],by.x="obsnames", by.y="Pop")
 # levels(data$Origin)[levels(data$Origin)=="inv"] <- "Invasive C. diffusa"
 # levels(data$Origin)[levels(data$Origin)=="nat"] <- "Native C. diffusa"
 # levels(data$Origin)[levels(data$Origin)=="sk"] <- "Native C. stoebe"

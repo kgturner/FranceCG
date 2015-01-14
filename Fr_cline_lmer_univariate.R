@@ -330,7 +330,7 @@ intAov
 # trtAov <- anova(modelO, modelT)
 # trtAov
 
-modelT
+model2
 
 # lsmeans(modelO, ~Trt, conf=95)
 # # $`Trt lsmeans`
