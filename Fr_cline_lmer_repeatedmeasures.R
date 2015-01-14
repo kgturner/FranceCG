@@ -12,6 +12,15 @@ library(plyr)
 #read
 Frdatcline.l<- read.table("FrTraitClimDat_cline_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
+#argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
+#load climate table
+Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
+Frdatcline.l<- subset(Frdatcline.l, select=c(1:23))
+
+Frdatcline.l<- merge(Frdatcline.l,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
+#write table
+write.table(Frdatcline.l, file="FrTraitClimDat_cline_long.txt")
+
 ####models with (m.date|tagged)####
 ###lfc##############
 modeldata <- Frdatcline.l
@@ -28,27 +37,28 @@ summary(modeldata$Pop)
 # modeldata$PopMom <- as.factor(paste0(modeldata$Pop,"_",modeldata$Mom))
 
 #pc1
-# partial colinearity between mom and trt?
-xtabs(~Origin +Trt, data=modeldata)
-xtabs(~Origin +m.date, data=modeldata)
-xtabs(~Origin +m.date+time, data=modeldata)
-count(modeldata, vars=c("Pop","Mom","Trt","m.date"))
-summary(glm(lfc  ~ Origin * PC1 + Trt+m.date, family=poisson, data=modeldata))
-# #or not???
-# library(caret)
-# modmatrix <- subset(modeldata, select=c("Pop","Origin","Mom","Trt","tagged","m.date","lfc","PC1"))
-# modmatrix$Pop <- as.numeric(modmatrix$Pop)
-# modmatrix$Origin <- as.numeric(modmatrix$Origin)
-# modmatrix$Mom <- as.numeric(modmatrix$Mom)
-# modmatrix$Trt <- as.numeric(modmatrix$Trt)
-# modmatrix$tagged <- as.numeric(modmatrix$tagged)
-# modmatrix <- as.matrix(modmatrix)
-# findLinearCombos(modmatrix) #none
-# #test findLinearCombos
-# modmatrix$Ortest <- modmatrix$Origin
-# modmatrix <- as.matrix(modmatrix)
-# findLinearCombos(modmatrix)
-#try scale/center lfc?
+# # partial colinearity between mom and trt?
+# xtabs(~Origin +Trt, data=modeldata)
+# xtabs(~Origin +m.date, data=modeldata)
+# xtabs(~Origin +m.date+time, data=modeldata)
+# count(modeldata, vars=c("Pop","Mom","Trt","m.date"))
+# summary(glm(lfc  ~ Origin * PC1 + Trt+m.date, family=poisson, data=modeldata))
+# # #or not???
+# # library(caret)
+# # modmatrix <- subset(modeldata, select=c("Pop","Origin","Mom","Trt","tagged","m.date","lfc","PC1"))
+# # modmatrix$Pop <- as.numeric(modmatrix$Pop)
+# # modmatrix$Origin <- as.numeric(modmatrix$Origin)
+# # modmatrix$Mom <- as.numeric(modmatrix$Mom)
+# # modmatrix$Trt <- as.numeric(modmatrix$Trt)
+# # modmatrix$tagged <- as.numeric(modmatrix$tagged)
+# # modmatrix <- as.matrix(modmatrix)
+# # findLinearCombos(modmatrix) #none
+# # #test findLinearCombos
+# # modmatrix$Ortest <- modmatrix$Origin
+# # modmatrix <- as.matrix(modmatrix)
+# # findLinearCombos(modmatrix)
+
+#LRTs get crazy Chisq values, try scale/center lfc
 modeldata$lfc.scale <-as.vector(scale(modeldata$lfc, center=FALSE, scale=TRUE))
 modeldata$lfc.sc <- as.vector(scale(modeldata$lfc, center=TRUE, scale=TRUE))
 
@@ -62,7 +72,7 @@ popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then wh
 momAov
 popAov
 1-pchisq(2.2837,1)
-modelmdate <- lmer(lfc.scale  ~ Origin * PC1 + Trt+(1|blank), family=gaussian,data=modeldata,verbose=TRUE)
+modelmdate <- lmer(lfc.scale  ~ Origin * PC1 + Trt+(1|blank), family=gaussian,data=modeldata)
 anova(modelmdate, model3)
 
 # model4 <- lmer(lfc  ~ Origin * PC1 +(time|tagged), family=poisson,data=modeldata, verbose=TRUE)
@@ -73,6 +83,12 @@ anova(modelmdate, model3)
 # anova(model4, model5, model6)
 # anova(model5, model6)
 # anova(model7, model6)
+# #try count now, blech, chisq values still crazy
+# modelmdate2 <- lmer(lfc ~ Origin*PC1+Trt+(m.date|tagged), family=poisson,data=modeldata)
+# modelT <- lmer(lfc ~ Origin*PC1+(m.date|tagged), family=poisson,data=modeldata)
+# trtAov <- anova(modelT, modelmdate2)
+# trtAov
+#scaled again
 modelmdate2 <- lmer(lfc.scale ~ Origin*PC1+Trt+(m.date|tagged), family=gaussian,data=modeldata)
 modelT <- lmer(lfc.scale ~ Origin*PC1+(m.date|tagged), family=gaussian,data=modeldata)
 trtAov <- anova(modelT, modelmdate2)
@@ -87,14 +103,24 @@ covAov <- anova(modelint, modelcov)
 covAov
 
 modelO<-lmer(lfc.scale ~ (m.date|tagged), family=gaussian,data=modeldata)
-originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+originAov <- anova(modelO,modelcov) #test for significance of origin 
 originAov
 
+#to get a p value
 modelcov
-library(lsmeans)
-lsmeans(modelcov, "Origin")
-library(nlme)
-lmecov <- lme(lfc.sc  ~ Origin +PC1, data=modeldata, random=~ m.date | tagged)
+# library(lsmeans)
+# lsmeans(modelcov, "Origin")
+# library(nlme)
+# lmecov <- lme(lfc  ~ Origin, data=modeldata, random=~ m.date | tagged)
+# anova(lmecov)
+# library(RLRsim)
+# library("lme4")
+detach(package:lme4.0)
+library("lmerTest")
+library("lme4")
+modelcov <- lmer(lfc.scale  ~ Origin +(m.date|tagged), data=modeldata)
+summary(modelcov)
+
 
 #lsmeans, ctrl only
 # modeldata <- droplevels(subset(Frdatsk.l, Origin%in%c("inv", "nat")&Trt%in%"control"))
@@ -138,6 +164,7 @@ qplot(data=moddata,time, poplfc, color = Origin,
 # dev.off()
 
 ####lfc~origin*trt####
+#not run
 modelOr <- lmer(lfc.scale  ~ Origin * Trt+PC1+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(lfc.scale  ~ Origin * Trt+PC1+ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
@@ -214,7 +241,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(3.3987,1)
+1-pchisq(1.0242,1)
 
 modelmdate <- lmer(lfw  ~ Origin * PC1 + Trt+(1|blank), family=gaussian,data=modeldata)
 anova(model3, modelmdate)
@@ -222,7 +249,6 @@ anova(model3, modelmdate)
 model4 <- lmer(lfw  ~ Origin * PC1 + Trt+(m.date|tagged), family=gaussian,data=modeldata)
 # anova(model3, model4)
 # anova(model2, model4)
-
 modelT <- lmer(lfw  ~ Origin * PC1 + (m.date|tagged), family=gaussian,data=modeldata)
 anova(modelT, model4)
 
@@ -230,17 +256,23 @@ modelint<-lmer(lfw  ~ Origin +PC1 + (m.date|tagged), family=gaussian,data=modeld
 intAov <- anova(modelT, modelint)
 intAov
 
-modelcov <- lmer(lfw  ~ Origin + (m.date|tagged), family=gaussian,data=modeldata)
-covAov <- anova(modelint, modelcov)
-covAov
+# modelcov <- lmer(lfw  ~ Origin + (m.date|tagged), family=gaussian,data=modeldata)
+# covAov <- anova(modelint, modelcov)
+# covAov
+# 
+# modelO<-lmer(lfw ~ (m.date|tagged), family=gaussian,data=modeldata)
+# originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
+# originAov
 
-modelO<-lmer(lfw ~ (m.date|tagged), family=gaussian,data=modeldata)
-originAov <- anova(modelO,modelcov) #test for significance of origin - origin only marginally sig....!
-originAov
+modelT
+#to get pvalue
+detach(package:lme4.0)
+library("lmerTest")
+library("lme4")
+modelT <- lmer(lfw  ~ Origin * PC1 + (m.date|tagged), data=modeldata)
+summary(modelT)
 
-modelcov
-
-modelg <- glm(lfw~Origin, family=gaussian, data=modeldata)
+modelg <- glm(lfw~Origin*PC1 +m.date, family=gaussian, data=modeldata)
 summary(modelg)
 
 # # #means and CI #needs work
@@ -262,6 +294,7 @@ qplot(data=moddata,PC1, poplfw, color = Origin,
       ylab="Population mean lf width", main="") +geom_smooth(method=glm, se=TRUE)
 # dev.off()
 ####lfw~origin*trt####
+#not run
 modelOr <- lmer(lfw  ~ Origin * Trt+PC1+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(lfw  ~ Origin * Trt+PC1 + (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
@@ -341,7 +374,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(4.3431,1)
+1-pchisq(4.5766,1)
 modelmdate <- lmer(rd  ~ Origin * PC1 + Trt+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelmdate, model1)
 
@@ -362,6 +395,7 @@ modelcov
 modelg <- glm(rd~Origin, family=gaussian, data=modeldata)
 summary(modelg)
 ####rd~origin*trt####
+#not run
 modelOr <- lmer(rd  ~ Origin * Trt+PC1+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)
 model1<-lmer(rd  ~ Origin * Trt+PC1+ (m.date|tagged)+(1|Pop/Mom), family=gaussian,data=modeldata)
 anova(model1, modelOr)
@@ -417,7 +451,7 @@ momAov <- anova(model2,model1) # mom is sig!
 momAov
 popAov <- anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
 popAov
-1-pchisq(6.441,1)
+1-pchisq(7.0337,1)
 modelmdate <- lmer(lfl  ~ Origin * PC1 + Trt+ (1|Pop/Mom), family=gaussian,data=modeldata)
 anova(modelmdate, model1)
 
@@ -435,7 +469,7 @@ anova(modelO, modelcov)
 
 modelcov
 
-modelg <- glm(lfl~1, family=gaussian, data=modeldata)
+modelg <- glm(lfl~Origin + m.date, family=gaussian, data=modeldata)
 summary(modelg)
 ####lfl~origin*trt####
 modelOr <- lmer(lfl  ~ Origin *Trt+PC1+(m.date|tagged)+(Origin|Pop/Mom), family=gaussian,data=modeldata)

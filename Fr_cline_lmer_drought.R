@@ -28,7 +28,7 @@ ctrlmeans
 ######models w/Ctrlpopmass and PC1 drought only####
 ##traits which have both 
 #1) sig origin or origin*pc1 term in pc1 models
-#2) sig trt in either pc1 models or origin*trt models
+#2) sig trt in either pc1 models
 
 ###RoseAh.log####################
 modeldata<-Frdatcline
@@ -74,9 +74,9 @@ qplot(data=moddata,CtrlPopMass.log, popRoseAh.log, color = Origin,
 
 # dev.off()
 
-############other traits.....check file name######################
+
 ####Wilt####
-modeldata<-frend[!is.na(frend$Wilt),]
+modeldata<-frendcline[!is.na(frendcline$Wilt),]
 modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
 modeldata$blank <- as.factor(rep("A",times=nrow(modeldata)))
 modeldata$Mom<-as.factor(modeldata$Mom)
@@ -87,10 +87,10 @@ model2<-lmer(Wilt ~ Origin * CtrlPopMass.log+ PC1+(1|Pop), family=poisson,data=m
 model3<-lmer(Wilt ~ Origin * CtrlPopMass.log+ PC1+(1|blank), family=poisson,data=modeldata) # Test population effect
 anova(model2,model1) # mom not sig
 anova(model3,model2) # pop is sig. If it says there are 0 d.f. then what you want to do is a Chi-square test using the X2 value and 1 d.f. freedom to get the p value.
-1-pchisq(2.4076,1)
+1-pchisq(4.6924,1)
 
-# modelint <- lmer(Wilt ~ Origin + CtrlPopMass.log+ PC1+ (1|Pop/Mom), family=poisson,data=modeldata)
-# anova(modelint, model1)
+modelint <- lmer(Wilt ~ Origin + CtrlPopMass.log+ PC1+ (1|Pop), family=poisson,data=modeldata)
+anova(modelint, model2)
 # 
 # modelcov <- lmer(Wilt ~ Origin + CtrlPopMass.log + (1|Pop/Mom), family=poisson,data=modeldata)
 # anova(modelcov, modelint)
@@ -144,6 +144,7 @@ anova(modelg3, test="LRT")
 
 CI.LS.poisson(modelg3, conf=95)
 
+############other traits.....check file name######################
 ###Bolt.date####################
 modeldata<-frend[!is.na(frend$Bolt.date),]
 modeldata <- subset(modeldata, Trt%in%"drought"&Origin%in%c("inv", "nat"))
