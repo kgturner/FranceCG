@@ -12,14 +12,14 @@ library(plyr)
 #read
 Frdatcline.l<- read.table("FrTraitClimDat_cline_long.txt", header=T, sep="\t",quote='"', row.names=1)
 
-#argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
-#load climate table
-Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
-Frdatcline.l<- subset(Frdatcline.l, select=c(1:23))
-
-Frdatcline.l<- merge(Frdatcline.l,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
-#write table
-write.table(Frdatcline.l, file="FrTraitClimDat_cline_long.txt")
+# #argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
+# #load climate table
+# Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
+# Frdatcline.l<- subset(Frdatcline.l, select=c(1:23))
+# 
+# Frdatcline.l<- merge(Frdatcline.l,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
+# #write table
+# write.table(Frdatcline.l, file="FrTraitClimDat_cline_long.txt")
 
 ####models with (m.date|tagged)####
 ###lfc##############
