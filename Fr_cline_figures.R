@@ -47,11 +47,12 @@ pCrown.2 <- ggplot(grd_c,aes(PC1, popCrown,color=Origin))+geom_point(aes(shape=O
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Root crown diameter at harvest [mm](log)")+ 
-  annotate(geom="text", x=-4, y=3.5, label="(a)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=3.5, label="(a)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.justification=c(1,0), legend.position=c(1,0),
         legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+        legend.text = element_text(size = 13))+
+  ggtitle("(a)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pCrown.2
 # # position=position_jitter(width=0.25,height=0.25)
 # 
@@ -122,16 +123,17 @@ grd_r <- ddply(grdat_cr, .(Pop, Origin, Treatment, PC1), summarize, popCount=len
 # 
 #trts faceted
 pRose.5 <- ggplot(grd_r,aes(PC1, popRose, color=Origin))+ facet_grid(. ~ Treatment)+
-  geom_point()+
+  geom_point(aes(shape=Origin, color=Origin), size=3)+
   
   geom_smooth(method=glm, se=TRUE)+
   
   xlab("PC1")+
   ylab("Rosette area at harvest [m2](log)")+ 
   #title("Performance in drought vs. control treatments")+
-  annotate(geom="text", x=-4, y=-0.8, label="(b)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=-0.8, label="(b)",fontface="bold", size=5)+
   theme_bw()+
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pRose.5
 # 
 # ####RoseAh.log w/ int data####
@@ -196,15 +198,16 @@ grd2 <- ddply(grdat_d, .(Pop, Origin,  PC1), summarize, popCount=length(Pop),
 # pMass.2 <- qplot(data=grd2, PC1, popMass,  color=Origin)+geom_smooth(method=glm, se=TRUE)
 # pMass.2
 
-pMass.2<- ggplot(grd2,aes(PC1, popMass,color=Origin))+geom_point() + #facet_grid(. ~ Trt)
+pMass.2<- ggplot(grd2,aes(PC1, popMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Shoot mass at harvest [g](log)")+ 
-  annotate(geom="text", x=-4, y=4.6, label="(b)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=4.6, label="(b)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.justification=c(1,0), legend.position=c(1,0),
         legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+        legend.text = element_text(size = 13))+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pMass.2
 # # position=position_jitter(width=1,height=.5)
 # 
@@ -213,11 +216,9 @@ pShoot <- ggplot(grdat_d,aes(Origin, Shoot.mass.gH, fill=Origin))+ #facet_grid(.
   geom_boxplot()+
   xlab("Origin")+ylab("Shoot mass at harvest [g]")+ 
   scale_x_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa"), labels=c("Invasive","Native"))+
-  annotate(geom="text", x=0.7, y=260, label="(a)",fontface="bold", size=5)+
-  theme_bw() +  theme(legend.position="none")
-#   theme(legend.justification=c(1,1), legend.position=c(1,1),
-#         legend.title = element_text(size=14, face="bold"),
-#         legend.text = element_text(size = 13))
+#   annotate(geom="text", x=0.7, y=260, label="(a)",fontface="bold", size=5)+
+  theme_bw() +  theme(legend.position="none")+
+  ggtitle("(a)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pShoot
 
 
@@ -405,37 +406,12 @@ pBolt <- ggplot(grBatHStd, aes(ymin = RevStackymin, ymax = RevStackymax, xmin=xm
 # pBolt
 # annotate 
 pBolt <- pBolt + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())+
-  annotate(geom="text", x=0.5, y=95, label="(c)",fontface="bold", size=5)+
-  theme(legend.position="none")
-#         , axis.title.x = element_text(size=15, face="bold", vjust=-0.4), 
-#         axis.title.y = element_text(size=15, face="bold"),axis.text.x = element_text(size=12 )) #+
+#   annotate(geom="text", x=0.5, y=95, label="(c)",fontface="bold", size=5)+
+  theme(legend.position="none")+
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 
-#annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=105, label=grBatHStd$Origin, size=4) +
-#annotate(geom="text", x=(grBatHStd$xmax-grBatHStd$xmin)/2 + grBatHStd$xmin, y=grBatHStd$ymin+2, label=grBatHStd$BoltedatH, size=4)+ 
-#   annotate('point',x = 20, y = 50, pch=8, color="red",parse=T, size=4)+
-#   annotate('point',x = 20, y = 54, pch=8, color="red",parse=T, size=4)+
-#   annotate('point',x = 20, y = 50, pch=0, color="red",parse=T, size=6)+
-#   annotate('point',x = 20, y = 54, pch=0, color="red",parse=T, size=6)+
-#   
-#   annotate('point',x = 60, y = 50, pch=8, color="red",parse=T,size=4)+
-#   annotate('point',x = 60, y = 54, pch=8, color="red",parse=T,size=4)+
-#   annotate('point',x = 60, y = 58, pch=8, color="red",parse=T,size=4)+
-#   annotate('point',x = 60, y = 50, pch=0, color="red",parse=T,size=6)+
-#   annotate('point',x = 60, y = 54, pch=0, color="red",parse=T,size=6)+
-#   annotate('point',x = 60, y = 58, pch=0, color="red",parse=T,size=6)+
-#   
-#   annotate(geom="text", x=2.5, y=98, label="(c)",fontface="bold", size=5)
 pBolt
-# 
-# 
-# 
-# 
-# 
-# 
-# # origincol <- c("#F8766D", "#00BA38", "#619CFF")
-# # 
-# # legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
-# #        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
+
 ####bolt.bin, scatterplot popmean include PC1####
 moddata <- ddply(frendcline, .(Pop, Origin, PC1), summarize, popCount=length(Pop), popbolt=mean(bolt.bin, na.rm=TRUE))
 levels(moddata$Origin)[levels(moddata$Origin)=="inv"] <- "Invasive C. diffusa"
@@ -447,11 +423,10 @@ pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=O
   #   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
   #   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
   xlab("Environmental cline")+ylab("Bolting probability")+
-  annotate(geom="text", x=-4, y=0.95, label="(d)",fontface="bold", size=5)+
-  theme_bw() + theme(legend.position="none")
-#   theme(legend.justification=c(1,1), legend.position=c(1,1),
-#         legend.title = element_text(size=14, face="bold"),
-#         legend.text = element_text(size = 13))
+#   annotate(geom="text", x=-4, y=0.95, label="(d)",fontface="bold", size=5)+
+  theme_bw() + theme(legend.position="none")+
+  ggtitle("(d)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+
 pBolt.3
 
 # ####bolt.bin scatterplot for ppt####
@@ -597,14 +572,15 @@ grd_l2 <- ddply(grdat_l, .(Pop, Origin,  PC1,time), summarize, popCount=length(P
                 poplfw=mean(lfw,na.rm = TRUE)) #avg per timepoint
 
 #time goes right
-plfw.2 <- ggplot(grd_l2,aes(PC1, poplfw,color=Origin))+geom_point()+ 
+plfw.2 <- ggplot(grd_l2,aes(PC1, poplfw,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3)+ 
   facet_grid( ~ time,scales="free_y")+
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Population mean width of longest leaf [cm]")+ 
-  annotate(geom="text", x=-4, y=8, label="(d)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=8, label="(d)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  ggtitle("(d)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 plfw.2
 # # position=position_jitter(width=1,height=.5)
 # # scales="free", space="free"
@@ -626,36 +602,39 @@ grd_w <- ddply(frendcline, .(Pop, Origin, Trt, PC1), summarize, popCount=length(
                popWilt=mean(Wilt,na.rm = TRUE))
 
 pWilt<- ggplot(grd_w,aes(PC1, popWilt,color=Origin))+ facet_grid(. ~ Trt)+
-  geom_point() +
+  geom_point(aes(shape=Origin, color=Origin), size=3) +
 
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Wilt date")+ 
-  annotate(geom="text", x=-4, y=55, label="(b)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=55, label="(b)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pWilt
 
 ####Yellow int pop means####
-pYell<- ggplot(grd2,aes(PC1, popYellow,color=Origin))+geom_point() + #facet_grid(. ~ Trt)
+pYell<- ggplot(grd2,aes(PC1, popYellow,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Yellow date")+ 
-  annotate(geom="text", x=-4, y=55, label="(c)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=55, label="(c)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pYell
 
 ####Boltdate int pop means####
-pBoltD<- ggplot(grd2,aes(PC1, popboltD,color=Origin))+geom_point() + #facet_grid(. ~ Trt)
+pBoltD<- ggplot(grd2,aes(PC1, popboltD,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
   xlab("PC1")+ylab("Population mean bolt date")+ 
-  annotate(geom="text", x=-4, y=59, label="(a)",fontface="bold", size=5)+
+#   annotate(geom="text", x=-4, y=59, label="(a)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.justification=c(1,0), legend.position=c(1,0),
         legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))
+        legend.text = element_text(size = 13))+
+  ggtitle("(a)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pBoltD
 
 # ####make sngl figs####
@@ -688,11 +667,10 @@ pBoltD
 # 
 pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
 # png("KTurnerFig3.png",width=800, height = 800, pointsize = 12)
+svg("KTurnerFig3.svg", width=6.65, height=9, pointsize = 12)
 multiplot(pShoot, pBolt, pMass.2, pBolt.3, cols=2)
-# legend("top", c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), 
-#        pch=c(16,17,15), fill=origincol,  bg="white", title = "Sampled populations", cex=1)
 dev.off()
-# ggsave()
+# ggsave("KTurnerFig3.svg", width=6.65, height=9, pointsize = 12)
 
 png("Fr_Supp_DKtraits_size.png",width=800, height = 800, pointsize = 12)
 multiplot(pCrown.2 ,plfc.3 , pRose.5,plfw.2,  cols=2)

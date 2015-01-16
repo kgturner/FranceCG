@@ -303,13 +303,17 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC2"))
 )
 
-plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+plot <- plot + coord_equal(ratio=5/4) + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
                                          size = 4, vjust=1, color="gray47", alpha=0.75)
 plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot
 # dev.off()
 ggsave("KTurnerFig2.pdf", width=4.4, height=4.8, pointsize = 12)
+
+svg("KTurnerFig2.svg", width=4.4, height=4.8, pointsize = 12)
+plot
+dev.off()
 # 
 # ####PC1 vs PC3 fig for ppt####
 # png("FrClimatePCA_forppt.png",width=800, height = 600, pointsize = 26)

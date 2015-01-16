@@ -353,8 +353,8 @@ write.table(allclim2, file="Cdif_allocc_bioclimPCA.txt")
 # # 
 # allclim <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
 
-####95% conf limits of clusters####
-http://stackoverflow.com/questions/20260434/test-significance-of-clusters-on-a-pca-plot
+####all occ main fig; 95% conf limits of clusters####
+# http://stackoverflow.com/questions/20260434/test-significance-of-clusters-on-a-pca-plot
 # draw 95% confidence ellipses around clusters. Note that stat_ellipse(...) uses the bivariate t-distribution.
 scores <- allclim.pca$x[,1:3]                        # scores for first three PC's
 
@@ -392,6 +392,10 @@ Oplot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
 Oplot
 ggsave("KTurnerFig4.pdf", width=6.65, height = 5)
 
+svg("KTurnerFig4.svg", width=6.65, height=5, pointsize = 12)
+Oplot
+dev.off()
+
 #PC1 vs PC3
 plot <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
   geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
@@ -408,23 +412,23 @@ head(subset(allclim2, PC2< -4))
 head(subset(allclim2, PC2> 4))
 
 ####exploratory clustering####
-# library(devtools)
-# install_github("dgrtwo/broom")
-# library(broom)
-# 
-# library(dplyr)
-# 
-# kclusts <- data.frame(k=1:9) %>% group_by(k) %>% do(km=kmeans(scores, .$k))
-# clusters <- kclusts %>% group_by(k) %>% do(tidy(.$km[[1]]))
-# assignments <- kclusts %>% group_by(k) %>% do(augment(.$km[[1]], scores))
-# clusterings <- kclusts %>% group_by(k) %>% do(glance(.$km[[1]]))
-# 
-# p1 <- ggplot(assignments, aes(PC1, PC2)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
-# p1
-# p2 <- ggplot(assignments, aes(PC1, PC3)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
-# p2
-# p3 <- p1 + geom_point(data=clusters, size=10, shape="x")
-# p3
+library(devtools)
+install_github("dgrtwo/broom")
+library(broom)
+
+library(dplyr)
+
+kclusts <- data.frame(k=1:9) %>% group_by(k) %>% do(km=kmeans(scores, .$k))
+clusters <- kclusts %>% group_by(k) %>% do(tidy(.$km[[1]]))
+assignments <- kclusts %>% group_by(k) %>% do(augment(.$km[[1]], scores))
+clusterings <- kclusts %>% group_by(k) %>% do(glance(.$km[[1]]))
+
+p1 <- ggplot(assignments, aes(PC1, PC2)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+p1
+p2 <- ggplot(assignments, aes(PC1, PC3)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+p2
+p3 <- p1 + geom_point(data=clusters, size=10, shape="x")
+p3
 
 ####ade4 to quantify centroid shift####
 library(ade4)
@@ -440,36 +444,203 @@ allclim.bca$ratio
 randtest(allclim.bca, nrept=999)
 plot(randtest(allclim.bca, nrept=999))
 
-####Perhaps unneccessary PC1 vs PC2 fig####
-#pts instead of labels for pops
+####inherent clusters?####
+scores <- allclim.pca$x[,1:3]                        # scores for first three PC's
+
+# k-means clustering [assume 2 clusters]
+km     <- kmeans(scores, centers=2, nstart=10)
+ggdata <- data.frame(scores, Cluster=km$cluster, Origin=allclim$Origin, alt=allclim$alt,Pop=allclim$Pop,Latitude=allclim$Latitude)
+
+# stat_ellipse is not part of the base ggplot package
+source("https://raw.github.com/low-decarie/FAAV/master/r/stat-ellipse.R") 
+
+#PC1 vs PC2
+plot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
+  geom_point(aes(color=factor(Cluster),shape=Origin), size=5) +
+  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Cluster)),
+               geom="polygon", level=0.95, alpha=0.2) +
+  guides(color=guide_legend("Cluster"),fill=guide_legend("Cluster"))
+plot
+
+####subset pops, same pattern?####
+#remove pops that are more than 2 std dev away from mean in either pc1 or 2
+mean(allclim2$PC1)
+[1] 1.79859e-16
+sd(allclim2$PC1)
+[1] 2.602386
+PC1up <- mean(allclim2$PC1)+2*sd(allclim2$PC1)
+PC1low <- mean(allclim2$PC1)-2*sd(allclim2$PC1)
+mean(allclim2$PC2)
+[1] -2.037455e-16
+sd(allclim2$PC2)
+[1] 2.39145
+PC2up <- mean(allclim2$PC2)+2*sd(allclim2$PC2)
+PC2low <- mean(allclim2$PC2)-2*sd(allclim2$PC2)
+
+#pca on subset
+acsubset <- subset(allclim2, PC1>PC1low&PC1<PC1up&PC2>PC2low&PC2<PC2up, select=-c(27:29))
+
+acsubset.pca <- prcomp(acsubset[c(2,7:26)], center=TRUE, retx=T, scale.=TRUE)
+summary(acsubset.pca)
+
+loadings <- acsubset.pca$rotation[,1]
+sort(abs(loadings), decreasing=TRUE)
+#      bio17      bio14       bio2       bio7      bio18       bio5 
+# 0.32713176 0.32685789 0.32023825 0.30460886 0.29634896 0.28816759 
+# BIO14 = Precipitation of driest month
+# BIO17 = Precipitation of driest quarter
+# BIO2 = Mean diurnal temperature range (mean of monthly (max temp – min temp))
+# BIO18 = Precipitation of Warmest Quarter
+
+#find top loadings (for PC2)
+loadings2 <- acsubset.pca$rotation[,2]
+sort(abs(loadings2), decreasing=TRUE)
+#      bio11       bio1       bio6      bio10       bio9       bio4 
+# 0.45600558 0.44321086 0.41396779 0.33865248 0.24396497 0.24200044 
+# BIO19 = Precipitation of coldest quarter
+# BIO16 = Precipitation of wettest quarter
+# BIO11 = Mean Temperature of Coldest Quarter
+# BIO13 = Precipitation of wettest month
+
+#find top loadings (for PC3)
+loadings3 <- acsubset.pca$rotation[,3]
+sort(abs(loadings3), decreasing=TRUE)
+#       bio19       bio16       bio13       bio12       bio15 
+# 0.446496036 0.431596200 0.429458611 0.293021594 0.290832118 
+# BIO10 = Mean Temperature of Warmest Quarter
+# BIO1 = Annual Mean Temperature
+# BIO11 = Mean Temperature of Coldest Quarter
+# BIO6 = Min temperature of coldest month
+
+#ellipses
+# http://stackoverflow.com/questions/20260434/test-significance-of-clusters-on-a-pca-plot
+# draw 95% confidence ellipses around clusters. Note that stat_ellipse(...) uses the bivariate t-distribution.
+scores <- acsubset.pca$x[,1:3]                        # scores for first three PC's
+
+# k-means clustering [assume 2 clusters]
+km     <- kmeans(scores, centers=2, nstart=5)
+ggdata <- data.frame(scores, Cluster=km$cluster, Origin=acsubset$Origin, alt=acsubset$alt,Pop=acsubset$Pop)
+levels(ggdata$Origin)[levels(ggdata$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(ggdata$Origin)[levels(ggdata$Origin)=="nat"] <- "Native C. diffusa"
+
+# stat_ellipse is not part of the base ggplot package
+source("https://raw.github.com/low-decarie/FAAV/master/r/stat-ellipse.R") 
+
+#centroid based on origin
+centroids <- aggregate(cbind(PC1,PC2)~Origin,data=ggdata,mean)
+pacsub <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
+               geom="polygon", level=0.95, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.position="none")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+
+pacsub
+ggsave("Fr_subsetocc_niche.png")
+
+#centroid based on origin PC1 vs PC3
+centroids <- aggregate(cbind(PC1,PC3)~Origin,data=ggdata,mean)
+pacsub_PC3 <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC3,fill=factor(Origin)),
+               geom="polygon", level=0.95, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC3, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1),
+        legend.title = element_text(size=10, face="bold"),
+        legend.text = element_text(size = 10))+
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+
+pacsub_PC3
+# ggsave("Fr_subsetocc_niche.png")
+
+
+#centroid shift
+library(ade4)
+
+acsubset.dudi <- dudi.pca(acsubset[c(2,7:26)], center = TRUE, scale = TRUE,scannf = TRUE, nf = 2)
+2
+acsubset.bca <- bca(acsubset.dudi, fac=acsubset$Origin, scannf=TRUE, nf=2) #p36
+2
+summary(acsubset.bca)
+print(acsubset.bca)
+acsubset.bca$ratio
+[1] 0.09314062
+randtest(acsubset.bca, nrept=999)
+plot(randtest(acsubset.bca, nrept=999))
+
+####sup mat fig for subset####
+
+library(gridBase) #necessary to plot ggplots and base plots together
+
+# pdf("KTurnerSup_MontPCA.pdf", useDingbats=FALSE, width=13.38)
+png("KTurnerSup_subsetoccPCA.png", width=800, height = 800) #,,pointsize = 12
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+plot.new()
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(2, 2)))
+
+pushViewport(viewport(layout.pos.col = 1, layout.pos.row=1))
+par(fig = gridFIG(), new = TRUE, adj=0)
+plot(acsubset.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.3)
+popViewport()
+
+pushViewport(viewport(layout.pos.col = 2, layout.pos.row=1))
+print(pacsub, newpage = FALSE)
+popViewport()
+
+pushViewport(viewport(layout.pos.col = 1, layout.pos.row=2))
+print(pacsub_PC3, newpage = FALSE)
+popViewport()
+
+dev.off()
+# par(mfrow=c(2,2),adj=0)
+# 
+# plot(acsubset.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.3)
+# plot.new()
+# vps <- baseViewports()
+# pushViewport(vps$figure)
+# vp1 <- plotViewport(c(0,0,0,0))
+# print(pacsub, vp=vp1)
+# plot.new()
+# pushViewport(vps$figure)
+# # vps <- baseViewports()
+# # pushViewport(vps$figure)
+# 
+# vp2 <- plotViewport(c(0,0,0,0))
+# print(pacsub_PC3, vp=vp2)
+
+
+
+
+####all occ PC1 vs PC2 fig####
 # library("ggplot2")
 # library("grid") 
 data <- data.frame(obsnames=row.names(allclim.pca$x), allclim.pca$x)
 data <- merge(data, allclim[,c(1,3:5)],by.x="obsnames", by.y="Pop")
-# levels(data$Origin)[levels(data$Origin)=="inv"] <- "Invasive C. diffusa"
-# levels(data$Origin)[levels(data$Origin)=="nat"] <- "Native C. diffusa"
-# levels(data$Origin)[levels(data$Origin)=="sk"] <- "Native C. stoebe"
-# # data$pch <- 15
-# # data[data$Origin %in% "nat",]$pch <- 16
-# # data[data$Origin %in% "sk",]$pch <- 17
-# 
+levels(data$Origin)[levels(data$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(data$Origin)[levels(data$Origin)=="nat"] <- "Native C. diffusa"
+
 # pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
 # # png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
 # # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 # 
-plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
+pall <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
   geom_point(aes(shape=Origin, color=Origin), size=3) +
   #   scale_x_continuous(expand = c(0,1)) #+
   theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0), 
-        legend.title = element_text(size=7, face="bold"), 
-        legend.text = element_text(size = 7),
-        axis.title = element_text( size=7),
-        axis.text  = element_text(size=5), axis.text.y= element_text(angle=0))
+  theme(legend.position="none")
 
-plot
+pall
 
-plot <- plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+pall <- pall + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 datapc <- data.frame(varnames=rownames(allclim.pca$rotation), allclim.pca$rotation)
 mult <- min(
   (max(data[,"PC2"]) - min(data[,"PC2"])/(max(datapc[,"PC2"])-min(datapc[,"PC2"]))),
@@ -480,15 +651,16 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC2"))
 )
 
-plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
-                                         size = 4, vjust=1, color="gray47", alpha=0.75)
-plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
-plot
+pall <- pall + coord_equal(ratio=4/7) + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                         size = 6, vjust=1, color="gray47", alpha=0.75)
+pall <- pall + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+pall
 ggsave("allClimPCA.png")
 # dev.off()
 
-#PC1 vs PC3
+####PC1 vs PC3####
 # pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
 # # png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
 # # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
@@ -522,6 +694,72 @@ plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2),
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot
 # dev.off()
+
+#pc1 vs pc3 overlap
+scores <- allclim.pca$x[,1:3]                        # scores for first three PC's
+km     <- kmeans(scores, centers=2, nstart=5)
+ggdata <- data.frame(scores, Cluster=km$cluster, Origin=allclim$Origin, alt=allclim$alt,Pop=allclim$Pop)
+levels(ggdata$Origin)[levels(ggdata$Origin)=="inv"] <- "Invasive C. diffusa"
+levels(ggdata$Origin)[levels(ggdata$Origin)=="nat"] <- "Native C. diffusa"
+
+centroids <- aggregate(cbind(PC1,PC3)~Origin,data=ggdata,mean)
+OpPC3 <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC3,fill=factor(Origin)),
+               geom="polygon", level=0.95, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC3, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=10, face="bold"),
+        legend.text = element_text(size = 10))+
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+
+OpPC3
+
+####all occ sup mat fig####
+library(gridBase) #necessary to plot ggplots and base plots together
+
+# pdf("KTurnerSup_MontPCA.pdf", useDingbats=FALSE, width=13.38)
+png("KTurnerSup_alloccPCA.png", width=800, height = 800) #,,pointsize = 12
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+plot.new()
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(2, 2)))
+
+pushViewport(viewport(layout.pos.col = 1, layout.pos.row=1))
+par(fig = gridFIG(), new = TRUE, adj=0)
+plot(allclim.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.1)
+popViewport()
+
+pushViewport(viewport(layout.pos.col = 2, layout.pos.row=1))
+print(pall, newpage = FALSE)
+popViewport()
+
+pushViewport(viewport(layout.pos.col = 1, layout.pos.row=2))
+print(OpPC3, newpage = FALSE)
+popViewport()
+
+dev.off()
+
+# par(mfrow=c(2,2),adj=0)
+# 
+# plot(acsubset.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.3)
+# plot.new()
+# vps <- baseViewports()
+# pushViewport(vps$figure)
+# vp1 <- plotViewport(c(0,0,0,0))
+# print(pacsub, vp=vp1)
+# plot.new()
+# pushViewport(vps$figure)
+# # vps <- baseViewports()
+# # pushViewport(vps$figure)
+# 
+# vp2 <- plotViewport(c(0,0,0,0))
+# print(pacsub_PC3, vp=vp2)
+
 
 # ####multiplot####
 # multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {

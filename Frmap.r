@@ -90,15 +90,7 @@ sPointsDFmark <- spTransform(markings, CRS=projectionCRS)
 ####plot map####
 pdf("KTurnerFig1.pdf", useDingbats=FALSE, width=6.65, height = 5, pointsize = 12) #4.4 or 6.65
 # png("FrMap.png", width=600, height = 600, pointsize = 16)
-#svg("collectionMap_bw.svg", pointsize = 12)
-# setEPS( horizontal = FALSE, onefile = FALSE, paper = "special") #340 mm is c. 13 in, height and width in in
-# postscript("colMap_bw.eps")
-# postscript("KTurnerFig1.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
-
-# eps <- function(file, onefile=FALSE, width=5.5, height = 5.5, horizontal=FALSE,paper="special", ...){
-#   postscript(file=file,width=width,height=height,onefile=onefile,horizontal=horizontal,paper=paper,title=file,...)
-#   par(bty='l')
-# }
+svg("KTurnerFig1.svg", width=6.65, height = 5, pointsize = 12)
 
 par(mar=c(0,0,0,0))
 mapCountryData(sPDF, nameColumnToPlot="colCode", mapTitle=NA,
@@ -106,8 +98,6 @@ mapCountryData(sPDF, nameColumnToPlot="colCode", mapTitle=NA,
                xlim=xlim, ylim=ylim, catMethod=c(0,1,2,3,4))
 #note that catMethod defines the breaks and values go in a category if they are <= upper end
 #mapTitle=bquote(Global~range~of~italic(Centaurea)~italic(diffusa)) 
-
-
 points(sPointsDF, pch=pop$pch, cex=1.2, lwd=2)
 
 llgridlines(sPDF, easts=c(-90,-180,0,90,180), norths=seq(0,90,by=15), 
@@ -115,12 +105,9 @@ llgridlines(sPDF, easts=c(-90,-180,0,90,180), norths=seq(0,90,by=15),
 text(sPointsDFmark, labels = sPointsDFmark$name, cex=1) #pch2 for triangles
 
 legend("topright", c("Invasive C. diffusa","Native C. diffusa", "Experimental field"), 
-       pch=c(1,17,0,8),  bg="white", title = "Sampled populations", cex=1)
+       pch=c(1,17,8),  bg="white", title = "Sampled populations", cex=1)
 legend("bottomleft", c("Invasive", "Native","Naturalized"), fill=colourPalette,
        title="Ranges of C. diffusa", bg="white", cex=1)
 box(lty="solid", col = "black")
-# #shameless plug !
-# mtext("map made using rworldmap", line=-1, side=1, adj=1, cex=0.6)
-
-# 
+ 
 dev.off()
