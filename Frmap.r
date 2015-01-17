@@ -88,9 +88,9 @@ proj4string(markings) <- CRS("+proj=longlat +ellps=WGS84")
 sPointsDFmark <- spTransform(markings, CRS=projectionCRS)
 
 ####plot map####
-pdf("KTurnerFig1.pdf", useDingbats=FALSE, width=6.65, height = 5, pointsize = 12) #4.4 or 6.65
-# png("FrMap.png", width=600, height = 600, pointsize = 16)
-svg("KTurnerFig1.svg", width=6.65, height = 5, pointsize = 12)
+# pdf("KTurnerFig1.pdf", useDingbats=FALSE, width=6.65, height = 5, pointsize = 12) #4.4 or 6.65
+png("KTurnerFig1.png", width=665, height = 500, pointsize = 12)
+# svg("KTurnerFig1.svg", width=6.65, height = 5, pointsize = 12)
 
 par(mar=c(0,0,0,0))
 mapCountryData(sPDF, nameColumnToPlot="colCode", mapTitle=NA,

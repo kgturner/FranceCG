@@ -310,6 +310,7 @@ plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2),
 plot
 # dev.off()
 ggsave("KTurnerFig2.pdf", width=4.4, height=4.8, pointsize = 12)
+ggsave("KTurnerFig2.png", width=4.4, height=4.8, pointsize = 12)
 
 svg("KTurnerFig2.svg", width=4.4, height=4.8, pointsize = 12)
 plot

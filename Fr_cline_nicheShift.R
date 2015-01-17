@@ -391,6 +391,7 @@ Oplot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
   
 Oplot
 ggsave("KTurnerFig4.pdf", width=6.65, height = 5)
+ggsave("KTurnerFig4.png", width=6.65, height = 5)
 
 svg("KTurnerFig4.svg", width=6.65, height=5, pointsize = 12)
 Oplot
