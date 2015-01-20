@@ -351,7 +351,7 @@ allclim2 <- cbind(allclim, PC1, PC2, PC3)
 # #write table
 write.table(allclim2, file="Cdif_allocc_bioclimPCA.txt")
 # # 
-# allclim <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
+# allclim2 <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
 
 ####all occ main fig; 95% conf limits of clusters####
 # http://stackoverflow.com/questions/20260434/test-significance-of-clusters-on-a-pca-plot

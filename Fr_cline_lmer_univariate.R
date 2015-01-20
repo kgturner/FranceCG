@@ -21,14 +21,14 @@ library(broom)
 #read
 Frdatcline<- read.table("FrTraitClimDat_cline.txt")
 
-#argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
-#load climate table
-Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
-Frdatcline<- subset(Frdatcline, select=c(1:21))
-
-Frdatcline<- merge(Frdatcline,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
-#write table
-write.table(Frdatcline, file="FrTraitClimDat_cline.txt")
+# #argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
+# #load climate table
+# Frclimdat.dk <- read.table("FrbioclimPCA_DKdat.txt", header=TRUE)
+# Frdatcline<- subset(Frdatcline, select=c(1:21))
+# 
+# Frdatcline<- merge(Frdatcline,Frclimdat.dk[,c(1,22:27)], all.x=TRUE ) #add pc1, 2,3 by=c("Pop","Origin","Latitude","Longitude",
+# #write table
+# write.table(Frdatcline, file="FrTraitClimDat_cline.txt")
 
 ###Crown.log####
 modeldata <- Frdatcline
@@ -281,7 +281,7 @@ summary(modelg1)
 
 ############end models (mostly poisson/binomial)#############################
 #read
-frendcline<- read.table("FrEnd_cline.txt", header=T, sep="\t",quote='"', row.names=1)
+frendcline<- read.table("FrEnd_cline.txt", header=T)
 
 #argh! use pc1 from pca that includes only experimental pops, maybe, hmmm?
 #load climate table
@@ -563,6 +563,19 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 
+se <- function(x) sqrt(var(x)/length(x))
+mean(subset(modeldata, Origin%in%"inv"&Trt%in%"control")$Shoot.mass.gH)
+[1] 83.96333
+se(subset(modeldata, Origin%in%"inv"&Trt%in%"control")$Shoot.mass.gH)
+[1] 7.659977
+mean(subset(modeldata, Origin%in%"nat"&Trt%in%"control")$Shoot.mass.gH)
+[1] 51.45732
+se(subset(modeldata, Origin%in%"nat"&Trt%in%"control")$Shoot.mass.gH)
+[1] 6.265873
+
+
+
+
 #check pop sig only
 #PC1
 modelOr <- lmer(Mass.log  ~ Origin * PC1 + Trt+ (Origin|Pop/Mom), family=gaussian,data=modeldata)
@@ -642,6 +655,17 @@ modeldata$Mom<-as.factor(modeldata$Mom)
 summary(modeldata$Origin)
 summary(modeldata$Pop)
 xtabs(~bolt.bin+Origin, data=modeldata)
+
+se <- function(x) sqrt(var(x)/length(x))
+mean(subset(modeldata, Origin%in%"inv"&Trt%in%"control")$bolt.bin)
+[1] 0.295082
+se(subset(modeldata, Origin%in%"inv"&Trt%in%"control")$bolt.bin)
+[1] 0.05887962
+mean(subset(modeldata, Origin%in%"nat"&Trt%in%"control")$bolt.bin)
+[1] 0.5238095
+se(subset(modeldata, Origin%in%"nat"&Trt%in%"control")$bolt.bin)
+[1] 0.0548198
+
 
 #need to scale to test random effects?
 modeldata$bolt.scale <-as.vector(scale(modeldata$bolt.bin, center=FALSE, scale=TRUE))

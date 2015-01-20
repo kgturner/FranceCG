@@ -1,7 +1,7 @@
 #France cline data figures
 
 #read
-Frdatcline.l<- read.table("FrTraitClimDat_cline_long.txt", header=T, sep="\t",quote='"', row.names=1)
+Frdatcline.l<- read.table("FrTraitClimDat_cline_long.txt", header=T)
 #read
 Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T, sep="\t",quote='"', row.names=1)
 #read
@@ -46,13 +46,11 @@ grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop),
 pCrown.2 <- ggplot(grd_c,aes(PC1, popCrown,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC1")+ylab("Root crown diameter at harvest [mm](log)")+ 
+  xlab("PC1")+ylab("Root crown diameter [mm](log)")+ 
 #   annotate(geom="text", x=-4, y=3.5, label="(a)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))+
-  ggtitle("(a)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+  theme(legend.position="none")+
+  ggtitle("(f)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pCrown.2
 # # position=position_jitter(width=0.25,height=0.25)
 # 
@@ -133,7 +131,7 @@ pRose.5 <- ggplot(grd_r,aes(PC1, popRose, color=Origin))+ facet_grid(. ~ Treatme
 #   annotate(geom="text", x=-4, y=-0.8, label="(b)",fontface="bold", size=5)+
   theme_bw()+
   theme(legend.position="none")+
-  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pRose.5
 # 
 # ####RoseAh.log w/ int data####
@@ -151,21 +149,21 @@ pRose.5
 # grd_c <- ddply(grdat_cr, .(Pop, Origin,  PC1), summarize, popCount=length(Pop), 
 #                popCrown=mean(Crown.log,na.rm = TRUE), popRose=mean(RoseAh.log, na.rm=TRUE),
 #                popCrownDiam=mean(CrownDiam.mm, na.rm=TRUE), popRose.Area=mean(Rose.AreaH.m2, na.rm=TRUE))
-
-pRose.4 <- ggplot(grd_c,aes(PC1, popRose.Area, color=Origin))+ #facet_grid(. ~ Treatment)+
-  geom_point(aes(shape=Origin, color=Origin), size=3)+
-  geom_smooth(method=glm, se=TRUE)+
-  xlab("Environmental cline")+ylab("Rosette area at harvest [m2]")+ 
-  #title("Performance in drought vs. control treatments")+
-  annotate(geom="text", x=-4, y=0.38, label="(b)",fontface="bold", size=5)+
-  theme_bw()+theme(legend.position="none")
-#   theme(legend.justification=c(0,0), legend.position=c(0,0),
-#         legend.title = element_text(size=14, face="bold"),
-#         legend.text = element_text(size = 13))
-pRose.4
+# 
+# pRose.4 <- ggplot(grd_c,aes(PC1, popRose.Area, color=Origin))+ #facet_grid(. ~ Treatment)+
+#   geom_point(aes(shape=Origin, color=Origin), size=3)+
+#   geom_smooth(method=glm, se=TRUE)+
+#   xlab("Environmental cline")+ylab("Rosette area at harvest [m2]")+ 
+#   #title("Performance in drought vs. control treatments")+
+#   annotate(geom="text", x=-4, y=0.38, label="(b)",fontface="bold", size=5)+
+#   theme_bw()+theme(legend.position="none")
+# #   theme(legend.justification=c(0,0), legend.position=c(0,0),
+# #         legend.title = element_text(size=14, face="bold"),
+# #         legend.text = element_text(size = 13))
+# pRose.4
 
 ####Mass, bolt, harvest, wilt, yellow, death.date####
-grdat_d <- frendcline[, c(1:9,10,12,18:19, 23,26:31)]
+grdat_d <- frendcline[, c(1:9,10,12,15,18:19, 23,26:31)]
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="inv"] <- "Invasive C. diffusa"
 levels(grdat_d$Origin)[levels(grdat_d$Origin)=="nat"] <- "Native C. diffusa"
 # levels(grdat_d$Origin)[levels(grdat_d$Origin)=="sk"] <- "Native C. stoebe"
@@ -201,12 +199,12 @@ grd2 <- ddply(grdat_d, .(Pop, Origin,  PC1), summarize, popCount=length(Pop),
 pMass.2<- ggplot(grd2,aes(PC1, popMass,color=Origin))+geom_point(aes(shape=Origin, color=Origin), size=3) + #facet_grid(. ~ Trt)
   geom_smooth(method=glm, se=TRUE)+ #ylim(0,1)+
   #   coord_cartesian(ylim = c(0, 1.02)) +
-  xlab("PC1")+ylab("Shoot mass at harvest [g](log)")+ 
+  xlab("PC1")+ylab("Shoot mass [g](log)")+ 
 #   annotate(geom="text", x=-4, y=4.6, label="(b)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))+
+  theme(legend.justification=c(1.05,0), legend.position=c(1.05,0),
+        legend.title = element_text(size=12, face="bold"),
+        legend.text = element_text(size = 12))+
   ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pMass.2
 # # position=position_jitter(width=1,height=.5)
@@ -214,7 +212,7 @@ pMass.2
 ####Shoot mass box####
 pShoot <- ggplot(grdat_d,aes(Origin, Shoot.mass.gH, fill=Origin))+ #facet_grid(. ~ Treatment)+
   geom_boxplot()+
-  xlab("Origin")+ylab("Shoot mass at harvest [g]")+ 
+  xlab("Origin")+ylab("Shoot mass [g]")+ 
   scale_x_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa"), labels=c("Invasive","Native"))+
 #   annotate(geom="text", x=0.7, y=260, label="(a)",fontface="bold", size=5)+
   theme_bw() +  theme(legend.position="none")+
@@ -538,9 +536,10 @@ plfc.3 <- ggplot(grdat_l,aes(Origin, lfc, fill=Origin))+
   geom_boxplot()+
   facet_grid(. ~ time,scales="free_y")+
   xlab("Origin")+ylab("Leaf number")+
-  geom_text(data = ann_text,label = "(c)", fontface="bold", size=5)+
+#   geom_text(data = ann_text,label = "(c)", fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  ggtitle("(a)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 #   theme(legend.justification=c(1,0), legend.position=c(1,1),
 #         legend.title = element_text(size=14, face="bold"),
 #         legend.text = element_text(size = 13))
@@ -580,7 +579,7 @@ plfw.2 <- ggplot(grd_l2,aes(PC1, poplfw,color=Origin))+geom_point(aes(shape=Orig
 #   annotate(geom="text", x=-4, y=8, label="(d)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.position="none")+
-  ggtitle("(d)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 plfw.2
 # # position=position_jitter(width=1,height=.5)
 # # scales="free", space="free"
@@ -610,7 +609,7 @@ pWilt<- ggplot(grd_w,aes(PC1, popWilt,color=Origin))+ facet_grid(. ~ Trt)+
 #   annotate(geom="text", x=-4, y=55, label="(b)",fontface="bold", size=5)+
   theme_bw() +
   theme(legend.position="none")+
-  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+  ggtitle("(d)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pWilt
 
 ####Yellow int pop means####
@@ -620,8 +619,10 @@ pYell<- ggplot(grd2,aes(PC1, popYellow,color=Origin))+geom_point(aes(shape=Origi
   xlab("PC1")+ylab("Yellow date")+ 
 #   annotate(geom="text", x=-4, y=55, label="(c)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.position="none")+
-  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+  theme(legend.justification=c(1.05,0), legend.position=c(1.05,0),
+        legend.title = element_text(size=12, face="bold"),
+        legend.text = element_text(size = 12))+
+  ggtitle("(e)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pYell
 
 ####Boltdate int pop means####
@@ -631,10 +632,8 @@ pBoltD<- ggplot(grd2,aes(PC1, popboltD,color=Origin))+geom_point(aes(shape=Origi
   xlab("PC1")+ylab("Population mean bolt date")+ 
 #   annotate(geom="text", x=-4, y=59, label="(a)",fontface="bold", size=5)+
   theme_bw() +
-  theme(legend.justification=c(1,0), legend.position=c(1,0),
-        legend.title = element_text(size=14, face="bold"),
-        legend.text = element_text(size = 13))+
-  ggtitle("(a)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+  theme(legend.position="none")+
+  ggtitle("(e)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pBoltD
 
 # ####make sngl figs####
@@ -664,21 +663,33 @@ pBoltD
 # 
 # ####make multi figs####
 # origincol <- c("#F8766D", "#00BA38", "#619CFF")
-# 
-# pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
-png("KTurnerFig3.png",width=665, height = 900, pointsize = 12)
+#main figure 3 
+pdf("KTurnerFig3.pdf", useDingbats=FALSE,width=6.65, height=9, pointsize = 12)
+# png("KTurnerFig3.png",width=665, height = 900, pointsize = 12)
 # svg("KTurnerFig3.svg", width=6.65, height=9, pointsize = 12)
-multiplot(pShoot, pBolt, pMass.2, pBolt.3, cols=2)
-dev.off()
-# ggsave("KTurnerFig3.svg", width=6.65, height=9, pointsize = 12)
-
-png("Fr_Supp_DKtraits_size.png",width=800, height = 800, pointsize = 12)
-multiplot(pCrown.2 ,plfc.3 , pRose.5,plfw.2,  cols=2)
+multiplot(pShoot, pBolt,pBoltD, pMass.2, pBolt.3,  pCrown.2,  cols=2) #plfc.3, pYell,
 dev.off()
 
-png("Fr_Supp_DKtraits_lh.png",width=800, height = 800, pointsize = 12)
-multiplot(pBoltD,  pYell, pWilt, cols=2)
+#sup fig
+png("Fr_Supp_DKtraits.png",width=665, height = 900, pointsize = 12)
+multiplot(plfc.3 , pRose.5, pYell,plfw.2, pWilt,  cols=2)
 dev.off()
+
+
+# # pdf("KTurnerFig3.pdf", useDingbats=FALSE, width=6.65, height=9, pointsize = 12) #3.149, 4.4 or 6.65
+# png("KTurnerFig3.png",width=665, height = 900, pointsize = 12)
+# # svg("KTurnerFig3.svg", width=6.65, height=9, pointsize = 12)
+# multiplot(pShoot, pBolt, pMass.2, pBolt.3, cols=2)
+# dev.off()
+# # ggsave("KTurnerFig3.svg", width=6.65, height=9, pointsize = 12)
+# 
+# png("Fr_Supp_DKtraits_size.png",width=800, height = 800, pointsize = 12)
+# multiplot(pCrown.2 ,plfc.3 , pRose.5,plfw.2,  cols=2)
+# dev.off()
+# 
+# png("Fr_Supp_DKtraits_lh.png",width=800, height = 800, pointsize = 12)
+# multiplot(pBoltD,  pYell, pWilt, cols=2)
+# dev.off()
 
 ##########
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
