@@ -351,7 +351,7 @@ allclim2 <- cbind(allclim, PC1, PC2, PC3)
 # #write table
 write.table(allclim2, file="Cdif_allocc_bioclimPCA.txt")
 # # 
-# allclim2 <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
+allclim2 <- read.table("Cdif_allocc_bioclimPCA.txt", header=TRUE)
 
 ####all occ main fig; 95% conf limits of clusters####
 # http://stackoverflow.com/questions/20260434/test-significance-of-clusters-on-a-pca-plot
@@ -376,7 +376,7 @@ centroids <- aggregate(cbind(PC1,PC2)~Origin,data=ggdata,mean)
 #                geom="polygon", level=0.95, alpha=0.2) +
 #   guides(color=guide_legend("Cluster"),fill=guide_legend("Cluster"))
 # plot
-
+#95% plot
 Oplot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
   geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
   guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
@@ -397,6 +397,36 @@ svg("KTurnerFig4.svg", width=6.65, height=5, pointsize = 12)
 Oplot
 dev.off()
 
+#99%plot
+plot99 <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
+               geom="polygon", level=0.99, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=10, face="bold"),
+        legend.text = element_text(size = 10))
+
+plot99
+ggsave("KTurnerFig4_99.png", width=6.65, height = 5)
+#99.9%plot
+plot999 <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
+               geom="polygon", level=0.999, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.justification=c(1,0), legend.position=c(1,0),
+        legend.title = element_text(size=10, face="bold"),
+        legend.text = element_text(size = 10))
+
+plot999
+ggsave("KTurnerFig4_999.png", width=6.65, height = 5)
 #PC1 vs PC3
 plot <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
   geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
@@ -543,6 +573,34 @@ pacsub <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
 pacsub
 ggsave("Fr_subsetocc_niche.png")
 
+#99% subset plot
+pacsub99 <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
+               geom="polygon", level=0.99, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.position="none")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+
+pacsub99
+ggsave("Fr_subsetocc99_niche.png")
+#99.9% subset plot
+pacsub999 <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
+  geom_point(aes(color=factor(Origin),shape=Origin), size=3) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Origin)),
+               geom="polygon", level=0.999, alpha=0.2) +
+  geom_point(data=centroids, aes(x=PC1, y=PC2, color=Origin, shape=Origin), size=8)+
+  #coord_cartesian(ylim = c(-6.5, 8.5)) +
+  theme_bw() + 
+  theme(legend.position="none")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+
+pacsub999
+ggsave("Fr_subsetocc999_niche.png")
 #centroid based on origin PC1 vs PC3
 centroids <- aggregate(cbind(PC1,PC3)~Origin,data=ggdata,mean)
 pacsub_PC3 <- ggplot(ggdata, aes_string(x="PC1", y="PC3")) +
