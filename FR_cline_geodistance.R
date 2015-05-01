@@ -25,12 +25,12 @@ distances <- allclim2 %>%
 sum(1:375)
 
 ## the distribution of pairwise distances
+
+pdf("AllOccDist_hist.pdf", useDingbats=FALSE,width=6.65, height=9, pointsize = 12)
+par(mfrow=c(1,2))
 hist(filter(distances, Origin == "inv")$distlist[[1]])
-
-ggsave("AllOccDist_hist_inv.pdf", width=6.65, height = 5)
-
 hist(filter(distances, Origin == "nat")$distlist[[1]])
-ggsave("AllOccDist_hist_nat.pdf", width=6.65, height = 5)
+dev.off()
 
 #sampling random subset 1/3 of data, keeping Origin groups proportional
 ?sample_frac
@@ -70,10 +70,12 @@ tot_distances %>%
   tally
 
 ## the distribution of distances
+
+pdf("SampOccDist_hist.pdf", useDingbats=FALSE,width=6.65, height=9, pointsize = 12)
+par(mfrow=c(1,2))
 hist(filter(samp_dist, Origin == "inv")$totaldist)
-ggsave("SampOccDist_hist_inv.pdf", width=6.65, height = 5)
 hist(filter(samp_dist, Origin == "nat")$totaldist)
-ggsave("SampOccDist_hist_nat.pdf", width=6.65, height = 5)
+dev.off()
 
 ####subset climate data and rerun PCA####
 sampclim <- subset(allclim, Pop%in%samp_dist$Pop)
@@ -255,8 +257,11 @@ tot_distances %>%
   tally
 
 ## the distribution of distances
+# pdf("SampOccDist_hist.pdf", useDingbats=FALSE,width=6.65, height=9, pointsize = 12)
+# par(mfrow=c(1,2))
 hist(filter(samp_dist3, Origin == "inv")$totaldist)
 hist(filter(samp_dist3, Origin == "nat")$totaldist)
+# dev.off()
 
 sampclim3 <- subset(allclim, Pop%in%samp_dist3$Pop)
 
@@ -355,10 +360,11 @@ tot_distances %>%
   tally
 
 ## the distribution of distances
+pdf("SampOccCubeDist_hist.pdf", useDingbats=FALSE,width=6.65, height=9, pointsize = 12)
+par(mfrow=c(1,2))
 hist(filter(samp_dist_cube, Origin == "inv")$totaldist)
-ggsave("SampOccCubeDist_hist_inv.pdf", width=6.65, height = 5)
 hist(filter(samp_dist_cube, Origin == "nat")$totaldist)
-ggsave("SampOccCubeDist_hist_nat.pdf", width=6.65, height = 5)
+dev.off()
 
 sampclim_cube <- subset(allclim, Pop%in%samp_dist_cube$Pop)
 

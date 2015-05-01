@@ -493,7 +493,7 @@ plot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
   guides(color=guide_legend("Cluster"),fill=guide_legend("Cluster"))
 plot
 
-####subset pops, same pattern?####
+####subset pops to w/in std dev, same pattern?####
 #remove pops that are more than 2 std dev away from mean in either pc1 or 2
 mean(allclim2$PC1)
 [1] 1.79859e-16
