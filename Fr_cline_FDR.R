@@ -31,7 +31,7 @@ allFEX <- c(0.03,0.39, 8.5,0.39,9.88,8.35,37.19,0.01,1.05,9.34,14.44,6.28,25.89,
           0.49,0,0,1.14,0.05, #PC1
           5.82,3.14,3.70,0.12,2.49) #origin
 allFEP <- 1-pchisq(allFEX,1)
-allFEQ <- qvalue(p=allFEP, lambda=seq(0,0.90,0.05), pi0.method="smoother", fdr.level=0.05, robust=FALSE, gui=FALSE, 
+allFEQ <- qvalue(p=allFEP, lambda=seq(0,0.90,0.05), pi0.method="smoother", fdr.level=0.05, robust=FALSE, #gui=FALSE, 
                smooth.df=3, smooth.log.pi0=FALSE)
 #ok, trt in rose area and origin in lfc no longer significant
 allFEQ.2 <- qvalue(p=allFEP, fdr.level=0.05)
