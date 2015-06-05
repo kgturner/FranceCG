@@ -3,9 +3,9 @@
 #read
 Frdatcline.l<- read.table("FrTraitClimDat_cline_long.txt", header=T)
 #read
-Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T, sep="\t",quote='"', row.names=1)
+Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T) #, sep="\t",quote='"', row.names=1
 #read
-frendcline<- read.table("FrEnd_cline.txt", header=T, sep="\t",quote='"', row.names=1)
+frendcline<- read.table("FrEnd_cline.txt", header=T) #, sep="\t",quote='"', row.names=1
 
 library(ggplot2)
 library(plyr)
@@ -420,7 +420,7 @@ pBolt.3 <- ggplot(moddata,aes(PC1, popbolt,color=Origin))+geom_point(aes(shape=O
   coord_cartesian(ylim = c(0, 1.02)) +
   #   scale_color_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
   #   scale_shape_discrete(breaks=c("Invasive C. diffusa","Native C. diffusa", "Native C. stoebe"), labels=c("Invasive","Native","C. stoebe"))+
-  xlab("Environmental cline")+ylab("Bolting probability")+
+  xlab("PC1")+ylab("Bolting probability")+
 #   annotate(geom="text", x=-4, y=0.95, label="(d)",fontface="bold", size=5)+
   theme_bw() + theme(legend.position="none")+
   ggtitle("(d)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
@@ -691,7 +691,48 @@ dev.off()
 # multiplot(pBoltD,  pYell, pWilt, cols=2)
 # dev.off()
 
-##########
+####trait correlation matrix####
+library(ggplot2)
+library(reshape)
+
+longtrait.t1 <- subset(Frdatcline.l, time==1, select=c(tagged,lfl, lfw, lfc))
+longtrait.t2 <- subset(Frdatcline.l, time==2, select=c(tagged,lfl, lfw, lfc, rd))
+longtrait.t3 <- subset(Frdatcline.l, time==3, select=c(tagged,lfl, lfw, rd))
+
+names(longtrait.t1) <- c("tagged","lfl.t1","lfw.t1", "lfc.t1")
+names(longtrait.t2) <- c("tagged","lfl.t2","lfw.t2", "lfc.t2","rd.t2")
+names(longtrait.t3) <- c("tagged","lfl.t3","lfw.t3", "rd.t3")
+
+traitM <- merge(Frdatcline[,c(9,12:13,17:19)], frendcline[,c(5,10,12,24)], all=T) #boltdate is frdat 11;  endbin is frend 27; including these two breaks cor
+traitM <- merge(traitM, longtrait.t1, all=T)
+traitM <- merge(traitM, longtrait.t2, all=T)
+traitM <- merge(traitM, longtrait.t3, all=T)
+names(traitM) <- c("tagged","Harvest.date","Bolting.probability","Rosette.area.harvest","Root.crown.diameter","Shoot.mass",
+                   "Wilt.date","Yellow.date","Specific.leaf.area", "Leaf.length.t1","Leaf.width.t1","Leaf.count.t1", 
+                   "Leaf.length.t2","Leaf.width.t2","Leaf.count.t2","Rosette.diameter.t2","Leaf.length.t3","Leaf.width.t3","Rosette.diameter.t3")
+
+traitM <- data.matrix(traitM[,2:19])
+summary(traitM)
+
+z <- cor(traitM, use="complete", method="kendall")
+z.m <- melt(z)
+
+# ggplot(z.m, aes(X1, X2, fill = value)) + geom_tile() + 
+#   scale_fill_gradient(low = "blue",  high = "yellow")
+
+cormat <- ggplot(z.m, aes(X1, X2, fill = value)) + geom_tile() + 
+  scale_fill_gradient2(low = "blue", mid="black", high = "yellow")+
+  theme(axis.text.x  = element_text(angle=90, vjust=0.5,size=12),
+        axis.text.y  = element_text(size=12))  #axis.title.x = element_text(face="bold", colour="#990000", size=20),
+cormat
+ggsave("KTurner_SupMat_traitcor.pdf", width=6.65, height = 5)
+ggsave("KTurner_SupMat_traitcor.png", width=6.65, height = 5)
+
+svg("KTurner_SupMat_traitcor.svg", width=6.65, height=5, pointsize = 12)
+cormat
+dev.off()
+
+
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   require(grid)
   

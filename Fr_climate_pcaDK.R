@@ -16,7 +16,7 @@ Frclimdat.dk <- droplevels(subset(Frclimdat, Origin%in%c("inv", "nat"), select=1
 
 #match to pops used in trait data
 #read
-Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T, sep="\t",quote='"', row.names=1)
+Frdatcline<- read.table("FrTraitClimDat_cline.txt", header=T)
 expops <- levels(Frdatcline$Pop)
 Frclimdat.dk <- droplevels(subset(Frclimdat.dk, Pop%in%expops))
 
@@ -139,10 +139,10 @@ source("https://raw.github.com/low-decarie/FAAV/master/r/stat-ellipse.R")
 
 #PC1 vs PC2
 plot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) +
-  geom_point(aes(color=factor(Cluster),shape=Origin), size=5) +
-  stat_ellipse(aes(x=PC1,y=PC2,fill=factor(Cluster)),
+  geom_point(aes(color=factor(Origin), shape=Origin), size=5) +  #,
+  stat_ellipse(aes(x=PC1,y=PC2),  #,fill=factor(Cluster)
                geom="polygon", level=0.95, alpha=0.2) +
-  guides(color=guide_legend("Cluster"),fill=guide_legend("Cluster"))
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))
 plot
 
 # plot <- ggplot(data, aes_string(x="PC1", y="PC2")) + 
@@ -263,7 +263,7 @@ p3
 # #                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 # # plot
 # 
-####PC1 vs PC2 fig####
+####Main fig 2: PC1 vs PC2 fig####
 #pts instead of labels for pops
 # library("ggplot2")
 library("grid") 
@@ -303,8 +303,8 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC2"))
 )
 
-plot <- plot + coord_equal(ratio=5/4) + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
-                                         size = 4, vjust=1, color="gray47", alpha=0.75)
+plot <- plot + coord_equal(ratio=5/4) #+ 
+#   geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), size = 4, vjust=1, color="gray47", alpha=0.75)
 plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
                             arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")
 plot
@@ -315,6 +315,57 @@ ggsave("KTurnerFig2.png", width=4.4, height=4.8, pointsize = 12)
 svg("KTurnerFig2.svg", width=4.4, height=4.8, pointsize = 12)
 plot
 dev.off()
+
+####sup fig S1b: PC1 vs PC2 more details####
+#clustering
+scores <- FrclimDK.pca$x[,1:3]                        # scores for first three PC's
+
+# k-means clustering [assume 2 clusters]
+km     <- kmeans(scores, centers=2, nstart=10)
+ggdata <- data.frame(scores, Cluster=km$cluster, Frclimdat.dk)
+
+# stat_ellipse is not part of the base ggplot package
+source("https://raw.github.com/low-decarie/FAAV/master/r/stat-ellipse.R") 
+
+## pdf("KTurnerFig2.pdf", useDingbats=FALSE, width=4.4, height=4.8, pointsize = 12) #3.149, 4.4 or 6.65
+# png("FrClimatePCA.png",width=800, height = 600, pointsize = 16)
+# postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
+
+S1plot <- ggplot(ggdata, aes_string(x="PC1", y="PC2")) + 
+  geom_point(aes(color=factor(Origin), shape=Origin), size=3) +
+  stat_ellipse(aes(x=PC1,y=PC2),geom="polygon", level=0.95, alpha=0.2) +
+  guides(color=guide_legend("Origin"),fill=guide_legend("Origin"))+
+  theme_bw() + 
+  theme(legend.position="none",
+                 axis.title = element_text( size=9),
+                 axis.text  = element_text(size=7), axis.text.y= element_text(angle=0))
+
+# S1plot
+
+S1plot <- S1plot + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
+datapc <- data.frame(varnames=rownames(FrclimDK.pca$rotation), FrclimDK.pca$rotation)
+mult <- min(
+  (max(data[,"PC2"]) - min(data[,"PC2"])/(max(datapc[,"PC2"])-min(datapc[,"PC2"]))),
+  (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
+)
+datapc <- transform(datapc,
+                    v1 = .7 * mult * (get("PC1")),
+                    v2 = .7 * mult * (get("PC2"))
+)
+
+S1plot <- S1plot + coord_equal(ratio=4.4/4) + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                                  size = 6, vjust=1, color="black", alpha=0.75)
+S1plot <- S1plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="black")+
+  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+S1plot
+# dev.off()
+# ggsave("KTurnerFig2.pdf", width=4.4, height=4.8, pointsize = 12)
+# ggsave("KTurnerFig2.png", width=4.4, height=4.8, pointsize = 12)
+# 
+# svg("KTurnerFig2.svg", width=4.4, height=4.8, pointsize = 12)
+# plot
+# dev.off()
 # 
 # ####PC1 vs PC3 fig for ppt####
 # png("FrClimatePCA_forppt.png",width=800, height = 600, pointsize = 26)
@@ -368,7 +419,7 @@ pPC3 <- ggplot(data, aes_string(x="PC1", y="PC3")) +
 
 pPC3 <- pPC3 + geom_hline(aes(0), size=.2) + geom_vline(aes(0), size=.2)
 
-datapc <- data.frame(varnames=rownames(Frclim.pca$rotation), Frclim.pca$rotation)
+datapc <- data.frame(varnames=rownames(FrclimDK.pca$rotation), FrclimDK.pca$rotation)
 mult <- min(
   (max(data[,"PC3"]) - min(data[,"PC3"])/(max(datapc[,"PC3"])-min(datapc[,"PC3"]))),
   (max(data[,"PC1"]) - min(data[,"PC1"])/(max(datapc[,"PC1"])-min(datapc[,"PC1"])))
@@ -378,34 +429,40 @@ datapc <- transform(datapc,
                     v2 = .7 * mult * (get("PC3"))
 )
 
-pPC3 <- pPC3  +coord_equal(ratio=6.1/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
-                                                   size = 6, vjust=1, color="gray47", alpha=0.75)
+pPC3 <- pPC3  +coord_equal(ratio=6.5/4)+ geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), 
+                                                   size = 6, vjust=1, color="black", alpha=0.75)
 
 pPC3 <- pPC3 + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), 
-                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="gray47")+
-  ggtitle("(b)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
+                            arrow=arrow(length=unit(0.2,"cm")), alpha=0.4, color="black")+
+  ggtitle("(c)")+theme(plot.title = element_text(lineheight=2, face="bold",hjust = 0))
 pPC3
 
 # dev.off()
 ggsave("FrClimatePCA1v3.png") #width=800, height = 600, pointsize = 16
 
-####supp. fig####
+####supp. fig S1 all togther####
 library(gridBase) #necessary to plot ggplots and base plots together
 
 # pdf("KTurnerSup_MontPCA.pdf", useDingbats=FALSE, width=13.38)
-png("KTurnerSup_MontPCA.png",width=800, height = 500, pointsize = 12)
+png("KTurnerSup_MontPCA.png",width=800, height = 800)   #, pointsize = 12
 # postscript("KTurnerFig2.eps", horizontal = FALSE, onefile = FALSE, paper = "special", height = 7, width = 13.38)
 
-par(mfcol=c(1,2),adj=0)
-
-plot(FrclimDK.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.3)
 plot.new()
-vps <- baseViewports()
-pushViewport(vps$figure)
-vp1 <- plotViewport(c(0,0,0,0))
-print(pPC3, vp=vp1)
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(2, 2)))
 
+pushViewport(viewport(layout.pos.col = 1, layout.pos.row=1))
+par(fig = gridFIG(), new = TRUE, adj=0)
+plot(FrclimDK.pca, main="(a)", xlab="Principal component", ylim=c(0,8), cex.main=1.3)
+popViewport()
 
+pushViewport(viewport(layout.pos.col = 2, layout.pos.row=1))
+print(S1plot, newpage = FALSE)
+popViewport()
+
+pushViewport(viewport(layout.pos.col = 1, layout.pos.row=2))
+print(pPC3, newpage = FALSE)
+popViewport()
 
 dev.off()
 
