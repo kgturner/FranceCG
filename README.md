@@ -3,7 +3,7 @@ Field common garden and climate niche analysis of Centaurea diffusa.
 
 Code and data associated with:
 
-Turner KG, Freville H, Rieseberg LH (2015) Adaptive plasticity and niche expansion in an invasive thistle. Evolution and Ecology (accepted): ECE-2015-03-00175.
+Turner KG, Fréville H, Rieseberg LH (2015) Adaptive plasticity and niche expansion in an invasive thistle. Ecology and Evolution, DOI: 10.1002/ece3.1599.
 
 This data is also deposited at Dryad:
 
